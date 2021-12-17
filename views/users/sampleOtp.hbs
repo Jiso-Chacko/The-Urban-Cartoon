@@ -1,0 +1,176 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otp verify</title>
+    <link rel="stylesheet" type="text/css" href="otp.css">
+
+
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/css/util.css">
+    <link rel="stylesheet" type="text/css" href="users/userLogin/css/main.css">
+    <!--===============================================================================================-->
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: #fff;
+            /* fallback for old browsers */
+            background: #fff;
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: #fff;
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        .container {
+            display: flex;
+            flex-flow: column;
+            height: 100%;
+            align-items: space-around;
+            justify-content: center;
+        }
+
+        .userInput {
+            display: flex;
+            justify-content: center;
+        }
+
+        input {
+            margin: 10px;
+            height: 40px;
+            width: 65px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            font-family: arimo;
+            font-size: 1.2rem;
+            background: rgb(157, 197, 176);
+
+        }
+
+        h1 {
+            text-align: center;
+            font-family: arimo;
+            color: honeydew;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100 p-t-50 p-b-20">
+
+
+                <form class="login100-form validate-form" method="POST" action="/verifyOtp">
+
+                    <span class="login100-form-title p-b-40">
+                        Enter OTP
+                    </span>
+
+                    {{#if otpErr}}
+                    <span style="color: brown;">Please enter valid OTP</span>
+                    {{/if}}
+
+                    <div class="userInput">
+                        <input type="text" id='ist' maxlength="1" onkeyup="clickEvent(this,'sec')" name="first">
+                        <input type="text" id="sec" maxlength="1" onkeyup="clickEvent(this,'third')" name="second">
+                        <input type="text" id="third" maxlength="1" onkeyup="clickEvent(this,'fourth')" name="third">
+                        <input type="text" id="fourth" maxlength="1" onkeyup="clickEvent(this,'fifth')" name="fourth">
+                        {{!-- <input type="text" id="fifth" maxlength="1"> --}}
+
+                    </div>
+                    <div class="d-flex justify-content-between mt-4">
+                        <div>
+                            <a href="/login" class="txt2">
+                                resend OTP!
+                            </a>
+                        </div>
+                        <span class="txt1" id="timer" style="color: brown;">
+                           
+                        </span>
+
+
+                    </div>
+
+                    <div class="container-login100-form-btn">
+                        <button class="login100-form-btn mt-5" type="submit" style="width: 10rem;" id="submit">
+                            Submit
+                        </button>
+                        {{!-- <a class="login100-form-btn mt-5" type="submit" style="width: 10rem;">Submit</a> --}}
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function clickEvent(first, last) {
+            if (first.value.length) {
+                document.getElementById(last).focus();
+            }
+        }
+
+
+        let timerOn = true;
+
+        function timer(remaining) {
+            var m = Math.floor(remaining / 60);
+            var s = remaining % 60;
+
+            m = m < 10 ? '0' + m : m;
+            s = s < 10 ? '0' + s : s;
+            document.getElementById('timer').innerHTML = m + ':' + s;
+            remaining -= 1;
+
+            if (remaining >= 0 && timerOn) {
+                setTimeout(function () {
+                    timer(remaining);
+                }, 1000);
+                return;
+            }
+
+            if (!timerOn) {
+                // Do validate stuff here
+                return;
+            }
+
+            // Do timeout stuff here
+            document.getElementById('timer').innerHTML = 'OTP expired resend again';
+            document.getElementById("submit").disabled = true;
+
+        }
+
+        timer(120);
+    </script>
+</body>
+
+</html>

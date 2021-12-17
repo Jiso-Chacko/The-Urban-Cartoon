@@ -1,0 +1,327 @@
+
+
+ <!-- ========== MAIN CONTENT ========== -->
+        <main id="content" role="main" class="checkout-page">
+            <!-- breadcrumb -->
+            <div class="bg-gray-13 bg-md-transparent">
+                <div class="container">
+                    <!-- breadcrumb -->
+                    <div class="my-md-3">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                                <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="https://transvelo.github.io/electro-html/2.0/html/home/index.html">Home</a></li>
+                                <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Checkout</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <!-- End breadcrumb -->
+                </div>
+            </div>
+            <!-- End breadcrumb -->
+
+            <div class="container">
+                <div class="mb-5">
+                    <h1 class="text-center">Checkout</h1>
+                </div>
+                
+
+               
+                <form class="js-validate" novalidate="novalidate">
+                    <div class="row">
+                        <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
+                            <div class="pl-lg-3 ">
+                                <div class="bg-gray-1 rounded-lg">
+                                    <!-- Order Summary -->
+                                    <div class="p-4 mb-4 checkout-table">
+                                        <!-- Title -->
+                                        <div class="border-bottom border-color-1 mb-5">
+                                            <h3 class="section-title mb-0 pb-2 font-size-25">Your order</h3>
+                                        </div>
+                                        <!-- End Title -->
+
+                                        <!-- Product Content -->
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th class="product-name">Product</th>
+                                                    <th class="product-total">Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                {{#each cartProducts}}
+                                                <tr class="cart_item">
+                                                    <td>{{#each productDetails}}{{this.productName}}{{/each}}<strong class="product-quantity"> × {{this.quantity}}</strong></td>
+                                                    <td>{{this.individualSum}}</td>
+                                                </tr>
+                                                {{/each}}
+                                            </tbody>
+                                            <tfoot>
+                                                {{!-- <tr>
+                                                    <th>Subtotal</th>
+                                                    <td>$1,785.00</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Shipping</th>
+                                                    <td>Flat rate $300.00</td>
+                                                </tr> --}}
+                                                <tr>
+                                                    <th>Total</th>
+                                                    <td><strong>{{totalAmount}}</strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <!-- End Product Content -->
+                                        <div class="border-top border-width-3 border-color-1 pt-3 mb-3">
+                                            <!-- Basics Accordion -->
+                                            <div id="basicsAccordion1">
+                                                <!-- Card -->
+                                                {{!-- <div class="border-bottom border-color-1 border-dotted-bottom">
+                                                    <div class="p-3" id="basicsHeadingOne">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="stylishRadio1" name="stylishRadio" checked>
+                                                            <label class="custom-control-label form-label" for="stylishRadio1"
+                                                                data-toggle="collapse"
+                                                                data-target="#basicsCollapseOnee"
+                                                                aria-expanded="true"
+                                                                aria-controls="basicsCollapseOnee">
+                                                                Direct bank transfer
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="basicsCollapseOnee" class="collapse show border-top border-color-1 border-dotted-top bg-dark-lighter"
+                                                        aria-labelledby="basicsHeadingOne"
+                                                        data-parent="#basicsAccordion1">
+                                                        <div class="p-4">
+                                                            Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
+                                                <!-- End Card -->
+
+                                                <!-- Card -->
+                                                {{!-- <div class="border-bottom border-color-1 border-dotted-bottom">
+                                                    <div class="p-3" id="basicsHeadingTwo">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="secondStylishRadio1" name="stylishRadio">
+                                                            <label class="custom-control-label form-label" for="secondStylishRadio1"
+                                                                data-toggle="collapse"
+                                                                data-target="#basicsCollapseTwo"
+                                                                aria-expanded="false"
+                                                                aria-controls="basicsCollapseTwo">
+                                                                Check payments
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="basicsCollapseTwo" class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter"
+                                                        aria-labelledby="basicsHeadingTwo"
+                                                        data-parent="#basicsAccordion1">
+                                                        <div class="p-4">
+                                                            Please send a check to Store Name, Store Street, Store Town, Store State / County, Store Postcode.
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
+                                                <!-- End Card -->
+
+                                                <!-- Card -->
+                                                <div class="border-bottom border-color-1 border-dotted-bottom">
+                                                    <div class="p-3" id="basicsHeadingThree">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="thirdstylishRadio1" name="stylishRadio">
+                                                            <label class="custom-control-label form-label" for="thirdstylishRadio1"
+                                                                data-toggle="collapse"
+                                                                data-target="#basicsCollapseThree"
+                                                                aria-expanded="false"
+                                                                aria-controls="basicsCollapseThree">
+                                                                Cash on delivery
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="basicsCollapseThree" class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter"
+                                                        aria-labelledby="basicsHeadingThree"
+                                                        data-parent="#basicsAccordion1">
+                                                        <div class="p-4">
+                                                            Pay with cash upon delivery.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Card -->
+
+                                                <!-- Card -->
+                                                {{!-- <div class="border-bottom border-color-1 border-dotted-bottom">
+                                                    <div class="p-3" id="basicsHeadingFour">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" class="custom-control-input" id="FourstylishRadio1" name="stylishRadio">
+                                                            <label class="custom-control-label form-label" for="FourstylishRadio1"
+                                                                data-toggle="collapse"
+                                                                data-target="#basicsCollapseFour"
+                                                                aria-expanded="false"
+                                                                aria-controls="basicsCollapseFour">
+                                                                PayPal <a href="#" class="text-blue">What is PayPal?</a>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div id="basicsCollapseFour" class="collapse border-top border-color-1 border-dotted-top bg-dark-lighter"
+                                                        aria-labelledby="basicsHeadingFour"
+                                                        data-parent="#basicsAccordion1">
+                                                        <div class="p-4">
+                                                            Pay via PayPal; you can pay with your credit card if you don’t have a PayPal account.
+                                                        </div>
+                                                    </div>
+                                                </div> --}}
+                                                <!-- End Card -->
+                                            </div>
+                                            <!-- End Basics Accordion -->
+                                        </div>
+                                        <div class="form-group d-flex align-items-center justify-content-between px-3 mb-5">
+                                            
+                                        </div>
+                                        <button type="submit" class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place order</button>
+                                    </div>
+                                    <!-- End Order Summary -->
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <div class="col-lg-7 order-lg-1">
+                            <div class="pb-7 mb-7">
+                                <!-- Title -->
+                                <div class="border-bottom border-color-1 mb-5">
+                                    <h3 class="section-title mb-0 pb-2 font-size-25">Billing details</h3>
+                                </div>
+                                <!-- End Title -->
+
+                                <!-- Billing Form -->
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                First name
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="firstName" placeholder="{{userFname}}" aria-label="Jack" required="" data-msg="Please enter your frist name." data-error-class="u-has-error" data-success-class="u-has-success" autocomplete="off">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                Last name
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="lastName" placeholder="{{userLname}}" aria-label="Wayley" required="" data-msg="Please enter your last name." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="w-100"></div>
+
+                                    <div class="col-md-12">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                Address
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="companyName" placeholder="{{address.address}}" aria-label="Company Name" data-msg="Please enter a company name." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                State
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="companyName" placeholder="{{address.state}}" aria-label="Company Name" data-msg="Please enter a company name." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                   
+
+                                    <div class="col-md-8">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                District
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="streetAddress" placeholder="{{address.district}}" aria-label="470 Lucy Forks" required="" data-msg="Please enter a valid address." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    
+
+                                    <div class="col-md-6">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                City
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="cityAddress" placeholder="{{address.city}}" aria-label="London" required="" data-msg="Please enter a valid address." data-error-class="u-has-error" data-success-class="u-has-success" autocomplete="off">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                Postcode/Zip
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" name="postcode" placeholder="{{address.postcode}}" aria-label="99999" required="" data-msg="Please enter a postcode or zip code." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="w-100"></div>
+
+                                    
+
+                                    <div class="col-md-6">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                Email address
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="email" class="form-control" name="emailAddress" placeholder="{{address.email}}" aria-label="jackwayley@gmail.com" required="" data-msg="Please enter a valid email address." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <!-- Input -->
+                                        <div class="js-form-message mb-6">
+                                            <label class="form-label">
+                                                Phone
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="{{address.phone}}" aria-label="+1 (062) 109-9222" data-msg="Please enter your last name." data-error-class="u-has-error" data-success-class="u-has-success">
+                                        </div>
+                                        <!-- End Input -->
+                                    </div>
+
+                                    <div class="w-100"></div>
+                                </div>
+                                <!-- End Billing Form -->
+                               
+                            
+                               
+                               
+                               
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <!-- ========== END MAIN CONTENT ========== -->

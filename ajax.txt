@@ -1,0 +1,268 @@
+ if (response) {
+
+            $.ajax({
+                url: '/admin/editProduct/'+pId,
+                method: 'get',
+                success: (response) => {
+                    console.log(response)
+                }
+            })
+
+        }
+
+
+
+
+        function addProductSpec(value) {
+        console.log('This is' + value)
+
+        if (value == "mobile") {
+
+            document.getElementById('laptop').innerHTML = '';
+            document.getElementById('titleLaptop').innerHTML = '';
+            var selectedMobile = true;
+            var thediv = document.getElementById('titleMobile');
+            var extras = document.createElement('div');
+            extras.innerHTML = '<h4>Add mobile Specs</h4>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "width" class="form-control mb-5" name="width"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Dimension" class="form-control mb-5" name="dimension"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "size" class="form-control mb-5" name="size"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "color" class="form-control mb-5" name="color"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML = '<h4>Technical Specifications</h4>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Item height" class="form-control mb-5" name="itemHeight"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Screen size" class="form-control mb-5" name="screenSize"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Item width" class="form-control mb-5" name="itemWidth"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Product dimensions" class="form-control mb-5" name="productDimentions"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Item model number" class="form-control mb-5" name="itemModelNumber"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Processor" class="form-control mb-5" name="processor"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Ram" class="form-control mb-5" name="ram"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('mobile');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Avg battery life" class="form-control mb-5" name="avgBatteryLife"></input>'
+            thediv.appendChild(extras)
+
+        }
+
+        if (value == "laptop") {
+            document.getElementById('mobile').innerHTML = '';
+            document.getElementById('titleMobile').innerHTML = '';
+            var selectedLaptop = true;
+            var thediv = document.getElementById('titleLaptop');
+            var extras = document.createElement('div');
+            extras.innerHTML = '<h4>Add laptop Specs</h4>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "width" class="form-control mb-5" name="width"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Dimension" class="form-control mb-5" name="dimension"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "size" class="form-control mb-5" name="size"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "color" class="form-control mb-5" name="color"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML = '<h4>Technical Specifications</h4>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Item height" class="form-control mb-5" name="itemHeight"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Screen size" class="form-control mb-5" name="screenSize"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Item width" class="form-control mb-5" name="itemWidth"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Product dimensions" class="form-control mb-5" name="productDimensions"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Item model number" class="form-control mb-5" name="itemModelNumber"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Processor" class="form-control mb-5" name="processor"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Ram" class="form-control mb-5" name="ram"></input>'
+            thediv.appendChild(extras)
+
+            var thediv = document.getElementById('laptop');
+            var extras = document.createElement('div');
+            extras.innerHTML =
+                '<input type="text" style = "width:400px" placeholder = "Avg battery life" class="form-control mb-5" name="avgBatteryLife"></input>'
+            thediv.appendChild(extras)
+
+        }
+
+        return name;
+    }
+</script>
+
+
+ if(price.trim() == " " || price.length < 5 || isNaN(price)){
+            document.getElementById("productTitle").focus
+            if(price == ""){
+            document.getElementById("productNameErr").innerHTML = "Filed cannot be empty"
+            }else if(price.length < 3){
+             document.getElementById("productNameErr").innerHTML = "Minimum length required"   
+            }
+            event.preventDefault()
+        }
+
+
+         setTimeout(function () {
+            document.getElementById("invalid").innerHTML = "";
+        }, 4000);
+
+
+        button {
+            width: 50px;
+            height: 40px;
+            margin: 25px auto 0px auto;
+            font-family: arimo;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 5px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            background: #616161;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #9bc5c3, #616161);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #9bc5c3, #616161);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+
+        // ajax call for login with phone number
+	$('#logPhone').click(function(e) {
+		console.log("This is ajax call")
+		$.ajax({
+			url : "/enterPhn",
+			method :  "GET",
+			success : function (){
+				
+			}
+		})
+	})
+	
+
+    {
+                    $project : {
+                        productDetails : 1,
+                        quantity : 1
+                    }
+                }
+
+
+
+                {
+                    $group : {
+                        _id : null,
+                        totalAmount : {
+                            $sum :{
+                                $multiply :['$quantity','($productDetails.price)']
+                            }
+                        }
+                    }
+                }

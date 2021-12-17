@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>User Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="users/userLogin/css/util.css">
+    <link rel="stylesheet" type="text/css" href="users/userLogin/css/main.css">
+    <!--===============================================================================================-->
+
+    <style>
+
+        body, html {
+	height: 100%;
+	margin: 0;
+	font-family: 'Raleway', sans-serif;
+	font-weight: 200;
+}
+
+body {
+	background-color: black;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+.digit-group {
+	input {
+		width: 30px;
+		height: 50px;
+		background-color: lighten(white, 5%);
+		border: none;
+		line-height: 50px;
+		text-align: center;
+		font-size: 24px;
+		font-family: 'Raleway', sans-serif;
+		font-weight: 200;
+		color: white;
+		margin: 0 2px;
+	}
+
+	.splitter {
+		padding: 0 5px;
+		color: blue;
+		font-size: 24px;
+	}
+}
+
+.prompt {
+	margin-bottom: 20px;
+	font-size: 20px;
+	color: blue;
+}
+    </style>
+</head>
+
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100 p-t-10 p-b-20">
+                {{!-- <form class="login100-form validate-form" method="POST" id="otpForm" name="otpForm" action="/otp">
+					<span class="login100-form-title p-b-70">
+						Pleasr verify your number
+					</span>
+				
+					
+					<div class="wrap-input100 validate-input m-t-10 m-b-35" data-validate = "Enter phone number">
+						<input class="input100" type="text" name="phone" id="phone" placeholder="Enter phone number" oninput="phoneValid()">
+						<span class="focus-input100" ></span>
+						<span style="color: brown;" id="phnErr"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+						<input class="input100" type="otp" name="otp" id="otp" placeholder="Enter OTP" >
+						<span class="focus-input100" ></span>
+					</div>
+					
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn" type="submit">
+							Submit
+						</button>
+					</div>
+					
+
+				</form> --}}
+
+
+                <form method="get" class="digit-group" data-group-name="digits" data-autosubmit="false"
+                    autocomplete="off">
+                    <input type="text" id="digit-1" name="digit-1" data-next="digit-2" />
+                    <input type="text" id="digit-2" name="digit-2" data-next="digit-3" data-previous="digit-1" />
+                    <input type="text" id="digit-3" name="digit-3" data-next="digit-4" data-previous="digit-2" />
+                    <span class="splitter">&ndash;</span>
+                    <input type="text" id="digit-4" name="digit-4" data-next="digit-5" data-previous="digit-3" />
+                    <input type="text" id="digit-5" name="digit-5" data-next="digit-6" data-previous="digit-4" />
+                    <input type="text" id="digit-6" name="digit-6" data-previous="digit-5" />
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="dropDownSelect1"></div>
+
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginvendor/jquery/jquery-3.2.1.min.js"></script> --}}
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginvendor/animsition/js/animsition.min.js"></script> --}}
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginvendor/bootstrap/js/popper.js"></script> --}}
+    {{!-- <script src="users/userLoginvendor/bootstrap/js/bootstrap.min.js"></script> --}}
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginvendor/select2/select2.min.js"></script> --}}
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginvendor/daterangepicker/moment.min.js"></script> --}}
+    {{!-- <script src="users/userLoginvendor/daterangepicker/daterangepicker.js"></script> --}}
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginvendor/countdowntime/countdowntime.js"></script> --}}
+    <!--===============================================================================================-->
+    {{!-- <script src="users/userLoginjs/main.js"></script> --}}
+
+
+    <script>
+
+        // otp js
+        $('.digit-group').find('input').each(function() {
+	$(this).attr('maxlength', 1);
+	$(this).on('keyup', function(e) {
+		var parent = $($(this).parent());
+		
+		if(e.keyCode === 8 || e.keyCode === 37) {
+			var prev = parent.find('input#' + $(this).data('previous'));
+			
+			if(prev.length) {
+				$(prev).select();
+			}
+		} else if((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 65 && e.keyCode <= 90) || (e.keyCode >= 96 && e.keyCode <= 105) || e.keyCode === 39) {
+			var next = parent.find('input#' + $(this).data('next'));
+			
+			if(next.length) {
+				$(next).select();
+			} else {
+				if(parent.data('autosubmit')) {
+					parent.submit();
+				}
+			}
+		}
+	});
+});
+
+
+
+
+
+
+
+
+        /// my validation
+        document.otpForm.addEventListener("submit", function (event) {
+            var phone = this.querySelector("input[id=phone]").value;
+
+            if (phone.trim() == "" || phone.length < 10) {
+                document.getElementById("phone").focus();
+                event.preventDefault();
+            }
+        });
+
+        function phoneValid() {
+
+            var phn = document.getElementById("phone").value
+            var pattern = /^[6-9]\d{9}$/;
+            if (!phn.match(pattern)) {
+                document.getElementById("phnErr").innerHTML = "Please enter valid phone number"
+            } else if (phn.length > 10) {
+                document.getElementById("phnErr").innerHTML = "Maximum length exceeded"
+            } else if (phn.length < 10) {
+                document.getElementById("phnErr").innerHTML = "Minimum length required"
+            } else {
+                document.getElementById("phnErr").innerHTML = " "
+            }
+        }
+    </script>
+
+</body>
+
+</html>

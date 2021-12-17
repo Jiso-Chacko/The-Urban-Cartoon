@@ -1,0 +1,2071 @@
+<main id="content" role="main">
+    {{!-- <h1>{{title}}</h1>
+<p>Welcome to {{title}}</p>
+
+<h1>This is index page</h1> --}}
+
+
+
+    <!-- Slider Section -->
+
+    <div class="mb-4">
+        <div class="bg-img-hero" style="background-image: url(../../users/assets/img/1920X422/img2.jpg);">
+            <div class="container overflow-hidden">
+                <div class="js-slick-carousel u-slick"
+                    data-pagi-classes="text-center position-absolute right-0 bottom-0 left-0 u-slick__pagination u-slick__pagination--long justify-content-center mb-3 mb-md-4">
+                    {{#each slider}}
+                    <div class="js-slide">
+                        <div class="row pt-7 py-md-0">
+                            <div class="d-none d-wd-block offset-1"></div>
+                            <div class="col-xl col col-md-6 mt-md-8 mt-lg-10">
+                                <div class="ml-xl-4">
+                                    <h6 class="font-size-15 font-weight-bold mb-2 text-cyan"
+                                        data-scs-animation-in="fadeInUp">
+                                        {{!-- SHOP TO GET WHAT YOU LOVE --}}
+                                        {{this.sliderTitle}}
+                                    </h6>
+                                    <h1 class="font-size-46 text-lh-50 font-weight-light mb-8"
+                                        data-scs-animation-in="fadeInUp" data-scs-animation-delay="200">
+                                        {{this.sliderTagline}} <stong class="font-weight-bold">40% OFF</stong>
+                                    </h1>
+                                    <a href="https://transvelo.github.io/electro-html/2.0/html/shop/single-product-fullwidth.html"
+                                        class="btn btn-primary transition-3d-hover rounded-lg font-weight-normal py-2 px-md-7 px-3 font-size-16"
+                                        data-scs-animation-in="fadeInUp" data-scs-animation-delay="300">
+                                        Start Buying
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-7 col-6 d-flex align-items-end ml-auto ml-md-0"
+                                data-scs-animation-in="fadeInRight" data-scs-animation-delay="500">
+                                <img class="img-fluid ml-auto mr-10 mr-wd-auto"
+                                    src="../../users/assets/img/468X417/img1.png" alt="Image Description">
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- End Slider Section -->
+
+
+    <div class="container">
+        <!-- Banner -->
+        <div class="row mb-6 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+            <div class="col-md-6 mb-4 mb-xl-0 col-xl-4 col-wd-3 flex-shrink-0 flex-xl-shrink-1">
+
+                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/shop.html"
+                    class="min-height-146 py-1 py-xl-2 py-wd-1  d-flex align-items-center text-gray-90">
+                    {{#each banner}}
+                    <div class="col-6 col-xl-7 col-wd-6 pr-0">
+                        <img class="img-fluid" src="/productimages/{{this.bannerImage}}" alt="Image Description">
+                    </div>
+                    <div class="col-6 col-xl-5 col-wd-6 pr-xl-4 pr-wd-3">
+                        <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
+                            {{!-- CATCH BIG <strong>DEALS</strong> ON THE CAMERAS --}}
+                            {{this.bannerTitle}}
+                        </div>
+                        <div class="link text-gray-90 font-weight-bold font-size-15" href="#">
+                            Shop now
+                            <span class="link__icon ml-1">
+                                <span class="link__icon-inner"><i class="ec ec-arrow-right-categproes"></i></span>
+                            </span>
+                        </div>
+                    </div>
+                    {{/each}}
+                </a>
+
+            </div>
+
+        </div>
+        <!-- End Banner -->
+
+
+
+        <div class="mb-6 row border rounded-lg mx-0 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+            <!-- Feature List -->
+            <div class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-transport font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Free Delivery</span>
+                    <div class=" text-secondary">from $50</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
+
+            <!-- Feature List -->
+            <div
+                class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-customers font-size-56"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">99 % Customer</span>
+                    <div class=" text-secondary">Feedbacks</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
+
+            <!-- Feature List -->
+            <div
+                class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-returning font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">365 Days</span>
+                    <div class=" text-secondary">for free return</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
+
+            <!-- Feature List -->
+            <div
+                class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-payment font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Payment</span>
+                    <div class=" text-secondary">Secure System</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
+
+            <!-- Feature List -->
+            <div
+                class="media col px-6 px-xl-4 px-wd-8 flex-shrink-0 flex-xl-shrink-1 min-width-270-all border-left py-3">
+                <div class="u-avatar mr-2">
+                    <i class="text-primary ec ec-tag font-size-46"></i>
+                </div>
+                <div class="media-body text-center">
+                    <span class="d-block font-weight-bold text-dark">Only Best</span>
+                    <div class=" text-secondary">Brands</div>
+                </div>
+            </div>
+            <!-- End Feature List -->
+        </div>
+
+
+
+        <!-- Tab Prodcut Section -->
+        <div class="mb-6">
+            <!-- Nav Classic -->
+            <div class="position-relative bg-white text-center z-index-2">
+                <ul class="nav nav-classic nav-tab justify-content-center" id="pills-tab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active js-animation-link" id="pills-one-example1-tab" data-toggle="pill"
+                            href="#pills-one-example1" role="tab" aria-controls="pills-one-example1"
+                            aria-selected="true" data-target="#pills-one-example1" data-link-group="groups"
+                            data-animation-in="slideInUp">
+                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                Featured
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-animation-link" id="pills-two-example1-tab" data-toggle="pill"
+                            href="#pills-two-example1" role="tab" aria-controls="pills-two-example1"
+                            aria-selected="false" data-target="#pills-two-example1" data-link-group="groups"
+                            data-animation-in="slideInUp">
+                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                On Sale
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-animation-link" id="pills-three-example1-tab" data-toggle="pill"
+                            href="#pills-three-example1" role="tab" aria-controls="pills-three-example1"
+                            aria-selected="false" data-target="#pills-three-example1" data-link-group="groups"
+                            data-animation-in="slideInUp">
+                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                Top Rated
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <!-- End Nav Classic -->
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="pills-tabContent">
+
+                {{!-- ***********************  This is featured category starts ********************************* --}}
+                <div class="tab-pane fade pt-2 show active" id="pills-one-example1" role="tabpanel"
+                    aria-labelledby="pills-one-example1-tab" data-target-group="groups">
+                    <ul class="row list-unstyled products-group no-gutters">
+
+                        {{#each featured}}
+                        <li class="col-6 col-md-4 col-xl product-item">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner px-xl-4 p-3">
+                                    <div class="product-item__body pb-xl-2">
+                                        <div class="mb-2"><a
+                                                
+                                                class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                        <h5 class="mb-1 product-item__title"><a
+                                                href="/viewProduct?id={{this._id}}"
+                                                class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                        <div class="mb-2">
+                                            <a href=""
+                                                class="d-block text-center"><img class="img-fluid"
+                                                    style="width:10rem; height:10rem"
+                                                    src="/productimages/{{this.imageName.[0]}}"
+                                                    alt="Image Description"></a>
+                                        </div>
+                                        <div class="flex-center-between mb-1">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-item__footer">
+                                        <div class="border-top pt-2 flex-center-between flex-wrap">
+                                            
+                                            {{!-- <a href="" id="tag"
+                                                class="text-gray-6 font-size-13"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a> --}}
+                                                    <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                    {{!-- <button class="text-gray-6 font-size-13" onclick="sweetAlert()"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist </button> --}}
+                                                    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+                {{!-- ***********************  This is featured category ends ********************************* --}}
+
+                {{!-- ************************* This is onSale category starts *************************** --}}
+
+                <div class="tab-pane fade pt-2" id="pills-two-example1" role="tabpanel"
+                    aria-labelledby="pills-two-example1-tab" data-target-group="groups">
+                    <ul class="row list-unstyled products-group no-gutters">
+
+                        {{#each onSale}}
+                        <li class="col-6 col-md-4 col-xl product-item">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner px-xl-4 p-3">
+                                    <div class="product-item__body pb-xl-2">
+                                        <div class="mb-2"><a
+                                                href=""
+                                                class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                        <h5 class="mb-1 product-item__title"><a
+                                                href="/viewProduct?id={{this._id}}"
+                                                class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                        <div class="mb-2">
+                                            <a href=""
+                                                class="d-block text-center"><img class="img-fluid"
+                                                    style="width:10rem; height:10rem"
+                                                    src="/productimages/{{this.imageName.[0]}}"
+                                                    alt="Image Description"></a>
+                                        </div>
+                                        <div class="flex-center-between mb-1">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-item__footer">
+                                        <div class="border-top pt-2 flex-center-between flex-wrap">
+                                        
+                                            <a href="" onclick="addToWishlist('{{this._id}}')"
+                                                class="text-gray-6 font-size-13"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+
+
+
+
+
+
+
+
+
+
+                    </ul>
+                </div>
+
+                {{!-- ************************* This is onSale category ends *************************** --}}
+
+                {{!-- **************************** This is topRated category ********************************* --}}
+                <div class="tab-pane fade pt-2" id="pills-three-example1" role="tabpanel"
+                    aria-labelledby="pills-three-example1-tab" data-target-group="groups">
+                    <ul class="row list-unstyled products-group no-gutters">
+                        {{#each topRated}}
+                        <li class="col-6 col-md-4 col-xl product-item">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner px-xl-4 p-3">
+                                    <div class="product-item__body pb-xl-2">
+                                        <div class="mb-2"><a
+                                                href=""
+                                                class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                        <h5 class="mb-1 product-item__title"><a
+                                                href="/viewProduct?id={{this._id}}"
+                                                class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                        <div class="mb-2">
+                                            <a href=""
+                                                class="d-block text-center"><img class="img-fluid"
+                                                    style="width:10rem; height:10rem"
+                                                    src="/productimages/{{this.imageName.[0]}}"
+                                                    alt="Image Description"></a>
+                                        </div>
+                                        <div class="flex-center-between mb-1">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-item__footer">
+                                        <div class="border-top pt-2 flex-center-between flex-wrap">
+                                           
+                                            <a href="" onclick="addToWishlist('{{this._id}}')"
+                                                class="text-gray-6 font-size-13"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                </div>
+
+                {{!-- **************************** This is topRated category ends********************************* --}}
+
+            </div>
+            <!-- End Tab Content -->
+        </div>
+        <!-- End Tab Prodcut Section -->
+    </div>
+
+
+    <div class="container">
+        <!-- Laptops & Computers -->
+        <div class="mb-6 position-relative">
+            <dv
+                class="d-flex justify-content-between border-bottom border-color-1 flex-md-nowrap flex-wrap border-sm-bottom-0">
+                <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">Laptops & Computers</h3>
+            </dv>
+
+            <div class="js-slick-carousel position-static u-slick u-slick--gutters-1 overflow-hidden u-slick-overflow-visble pt-3 pb-3"
+                data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
+                data-arrow-left-classes="fa fa-angle-left right-1" data-arrow-right-classes="fa fa-angle-right right-0"
+                data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+                <div class="js-slide">
+
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each laptop}}
+                        <li
+                            class="col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto col-xl-5 col-wd-auto product-media-left">
+                                        <a href="/viewProduct?id={{this._id}}"
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div
+                                        class="col col-xl-7 col-wd product-item__body pl-2 pl-lg-3 pl-xl-0 pl-wd-3 mr-wd-1">
+                                        <div class="mb-4 mb-xl-2 mb-wd-6">
+                                            <div class="mb-2"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/compare.html"
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/wishlist.html"
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+
+
+
+
+
+
+                    </ul>
+                </div>
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each laptop}}
+                        <li
+                            class="col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block" tabindex="0"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4 mb-xl-2 mb-wd-6">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5" tabindex="0">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold" tabindex="0">{{this.productName}}
+                                                    </a></h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="#" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"
+                                                    tabindex="0"><i class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href="#" class="text-gray-6 font-size-13" tabindex="0"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href="#" class="text-gray-6 font-size-13" tabindex="0"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                         {{/each}}
+                    </ul>
+                </div>
+
+                <div class="js-slide">
+
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                         {{#each laptop}}
+                        <li
+                            class="col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto col-xl-5 col-wd-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div
+                                        class="col col-xl-7 col-wd product-item__body pl-2 pl-lg-3 pl-xl-0 pl-wd-3 mr-wd-1">
+                                        <div class="mb-4 mb-xl-2 mb-wd-6">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Laptops & Computers -->
+
+        <!-- Trending Products -->
+        <div class="mb-8 position-relative">
+            <dv
+                class="d-flex justify-content-between border-bottom border-color-1 flex-md-nowrap flex-wrap border-sm-bottom-0">
+                <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">Trending Products</h3>
+            </dv>
+            <div class="js-slick-carousel position-static u-slick u-slick--gutters-1 overflow-hidden u-slick-overflow-visble pt-3 pb-3"
+                data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
+                data-arrow-left-classes="fa fa-angle-left right-1" data-arrow-right-classes="fa fa-angle-right right-0"
+                data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each onSale}}
+                        <li
+                            class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                </div>
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each onSale}}
+                        <li
+                            class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href="" 
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each onSale}}
+                        <li
+                            class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End Trending Products -->
+
+
+        <!-- Smartphone Products -->
+        <div class="mb-8 position-relative">
+            <dv
+                class="d-flex justify-content-between border-bottom border-color-1 flex-md-nowrap flex-wrap border-sm-bottom-0">
+                <h3 class="section-title section-title__full mb-0 pb-2 font-size-22">Smartphone Products</h3>
+            </dv>
+            <div class="js-slick-carousel position-static u-slick u-slick--gutters-1 overflow-hidden u-slick-overflow-visble pt-3 pb-3"
+                data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
+                data-arrow-left-classes="fa fa-angle-left right-1" data-arrow-right-classes="fa fa-angle-right right-0"
+                data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-4">
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each smartPhone}}
+                        <li
+                            class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        {{/each}}
+
+
+                    </ul>
+                </div>
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each smartPhone}}
+                        <li
+                            class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+
+                <div class="js-slide">
+                    <ul class="row list-unstyled products-group no-gutters mb-0 overflow-visible">
+                        {{#each smartPhone}}
+                        <li
+                            class="col-wd-3 col-md-4 product-item product-item__card pb-2 mb-2 pb-md-0 mb-md-0 border-bottom border-md-bottom-0">
+                            <div class="product-item__outer h-100 w-100">
+                                <div class="product-item__inner p-md-3 row no-gutters">
+                                    <div class="col col-lg-auto product-media-left">
+                                        <a href=""
+                                            class="max-width-150 d-block"><img class="img-fluid"
+                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                    </div>
+                                    <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
+                                        <div class="mb-4">
+                                            <div class="mb-2"><a
+                                                    href=""
+                                                    class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="product-item__title"><a
+                                                    href="/viewProduct?id={{this._id}}"
+                                                    class="text-blue font-weight-bold">{{this.productName}}</a>
+                                            </h5>
+                                        </div>
+                                        <div class="flex-center-between mb-3">
+                                            <div class="prodcut-price">
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                            </div>
+                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                    class="btn-add-cart btn-primary transition-3d-hover"><i
+                                                        class="ec ec-add-to-cart"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href=""
+                                                    class="text-gray-6 font-size-13"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- End smartphone Products -->
+    </div>
+
+    <!-- Products-8-1 -->
+            <div class="products-group-8-1 space-1 bg-gray-7 mb-6">
+                <h2 class="sr-only">Products Grid</h2>
+                <div class="container">
+                    <!-- Nav nav-pills -->
+                    <div class="position-relative text-center z-index-2 mb-3">
+                        <div class=" d-flex justify-content-between border-bottom border-color-1 flex-lg-nowrap flex-wrap border-md-down-top-0 border-md-down-bottom-0">
+                            <h3 class="section-title mb-0 pb-2 font-size-22">Bestsellers</h3>
+
+                            <ul class="nav nav-pills nav-tab-pill mb-2 pt-3 pt-lg-0 mb-0 border-top border-color-1 border-lg-top-0 align-items-center font-size-15 font-size-15-lg flex-nowrap flex-lg-wrap overflow-auto overflow-lg-visble pr-0" id="pills-tab-1" role="tablist">
+                                <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
+                                    <a class="nav-link rounded-pill active" id="Tpills-one-example1-tab" data-toggle="pill" href="#Tpills-one-example1" role="tab" aria-controls="Tpills-one-example1" aria-selected="true">Top 20</a>
+                                </li>
+                                <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
+                                    <a class="nav-link rounded-pill" id="Tpills-two-example1-tab" data-toggle="pill" href="#Tpills-two-example1" role="tab" aria-controls="Tpills-two-example1" aria-selected="false">Smart Phones & Tablets</a>
+                                </li>
+                                <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
+                                    <a class="nav-link rounded-pill" id="Tpills-three-example1-tab" data-toggle="pill" href="#Tpills-three-example1" role="tab" aria-controls="Tpills-three-example1" aria-selected="false">Laptops &amp; Computers</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Nav Pills -->
+
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="Tpills-tabContent">
+
+                        <div class="tab-pane fade pt-2 show active" id="Tpills-one-example1" role="tabpanel" aria-labelledby="Tpills-one-example1-tab">
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0">
+                                        {{#each topRated}}
+                                        <li class="col-md-6 col-lg-4 col-wd-3 product-item remove-divider">
+                                            <div class="product-item__outer h-100 w-100 w-100 prodcut-box-shadow">
+                                                <div class="product-item__inner bg-white p-3">
+                                                    <div class="product-item__body pb-xl-2">
+                                                        <div class="mb-2"><a href="" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                                        <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                                        <div class="mb-2">
+                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="prodcut-price">
+                                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                                            </div>
+                                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                                <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-item__footer">
+                                                        <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Add to Wishlist</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade pt-2" id="Tpills-two-example1" role="tabpanel" aria-labelledby="Tpills-two-example1-tab">
+
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0">
+                                    {{#each smartPhone}}
+                                        <li class="col-md-6 col-lg-4 col-wd-3 product-item remove-divider">
+                                            <div class="product-item__outer h-100 w-100 w-100 prodcut-box-shadow">
+                                                <div class="product-item__inner bg-white p-3">
+                                                    <div class="product-item__body pb-xl-2">
+                                                        <div class="mb-2"><a href="" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                                        <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                                        <div class="mb-2">
+                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="prodcut-price">
+                                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                                            </div>
+                                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                                <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-item__footer">
+                                                        <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Add to Wishlist</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                    </ul>
+                                </div>
+
+
+                               
+
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade pt-2" id="Tpills-three-example1" role="tabpanel" aria-labelledby="Tpills-three-example1-tab">
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0">
+                                        {{#each laptop}}
+                                        <li class="col-md-6 col-lg-4 col-wd-3 product-item remove-divider">
+                                            <div class="product-item__outer h-100 w-100 w-100 prodcut-box-shadow">
+                                                <div class="product-item__inner bg-white p-3">
+                                                    <div class="product-item__body pb-xl-2">
+                                                        <div class="mb-2"><a href="" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                                        <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                                        <div class="mb-2">
+                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="prodcut-price">
+                                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                                            </div>
+                                                            <div class="d-none d-xl-block prodcut-add-cart">
+                                                                <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="product-item__footer">
+                                                        <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Add to Wishlist</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    {{/each}}
+                                    </ul>
+                                </div>
+
+                               
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    <!-- End Tab Content -->
+                </div>
+
+                <!-- Content Placeholder -->
+                <div class="container space-2 d-none">
+                    <!-- Nav Pills -->
+                    <div class="position-relative text-center z-index-2 mb-3">
+                        <div class=" d-flex justify-content-between border-bottom border-color-1 flex-lg-nowrap flex-wrap border-md-down-top-0 border-md-down-bottom-0">
+                            <h3 class="section-title mb-0 pb-2 font-size-22">Bestsellers</h3>
+
+                            <ul class="nav nav-pills nav-tab-pill mb-2 pt-3 pt-lg-0 mb-0 border-top border-color-1 border-lg-top-0 align-items-center font-size-15 font-size-15-lg flex-nowrap flex-lg-wrap overflow-auto overflow-lg-visble pr-0" id="pills-tab-2" role="tablist">
+                                <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
+                                    <a class="nav-link rounded-pill active" id="Gpills-one-example1-tab" data-toggle="pill" href="#Gpills-one-example1" role="tab" aria-controls="Gpills-one-example1" aria-selected="true">Top 20</a>
+                                </li>
+                                <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
+                                    <a class="nav-link rounded-pill" id="Gpills-two-example1-tab" data-toggle="pill" href="#Gpills-two-example1" role="tab" aria-controls="Gpills-two-example1" aria-selected="false">Smart Phones & Tablets</a>
+                                </li>
+                                <li class="nav-item flex-shrink-0 flex-lg-shrink-1">
+                                    <a class="nav-link rounded-pill" id="Gpills-three-example1-tab" data-toggle="pill" href="#Gpills-three-example1" role="tab" aria-controls="Gpills-three-example1" aria-selected="false">Laptops &amp; Computers</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- End Nav Pills -->
+
+                    <!-- Tab Content -->
+                    <div class="tab-content" id="Gpills-tabContent">
+                        <div class="tab-pane fade pt-2 show active" id="Gpills-one-example1" role="tabpanel" aria-labelledby="Gpills-one-example1-tab">
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0 w-100">
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6 col-lg-5 col-wd-4 products-group-1">
+                                    <ul class="row list-unstyled products-group no-gutters bg-white h-100 mb-0">
+                                        <li class="col product-item remove-divider">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="mb-1">
+                                                            <div class="mb-2">
+                                                                <div class="bg-gray-1 bg-animation rounded height-10 w-40"></div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 mb-1 w-90"></div>
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-450"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <!-- Gallery -->
+                                                            <div class="row mx-gutters-2">
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+                                                                <div class="col"></div>
+                                                            </div>
+                                                            <!-- End Gallery -->
+                                                        </div>
+                                                        <div class="flex-center-between">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-40"></div>
+                                                            <div class="bg-gray-1 height-35 width-134 rounded-pill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade pt-2" id="Gpills-two-example1" role="tabpanel" aria-labelledby="Gpills-two-example1-tab">
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0 w-100">
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-6 col-lg-5 col-wd-4 products-group-1">
+                                    <ul class="row list-unstyled products-group no-gutters bg-white h-100 mb-0">
+                                        <li class="col product-item remove-divider">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="mb-1">
+                                                            <div class="mb-2">
+                                                                <div class="bg-gray-1 bg-animation rounded height-10 w-40"></div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 mb-1 w-90"></div>
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-450"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <!-- Gallery -->
+                                                            <div class="row mx-gutters-2">
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+                                                                <div class="col"></div>
+                                                            </div>
+                                                            <!-- End Gallery -->
+                                                        </div>
+                                                        <div class="flex-center-between">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-40"></div>
+                                                            <div class="bg-gray-1 height-35 width-134 rounded-pill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade pt-2" id="Gpills-three-example1" role="tabpanel" aria-labelledby="Gpills-three-example1-tab">
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0 w-100">
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-md-6 col-lg-5 col-wd-4 products-group-1">
+                                    <ul class="row list-unstyled products-group no-gutters bg-white h-100 mb-0">
+                                        <li class="col product-item remove-divider">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="mb-1">
+                                                            <div class="mb-2">
+                                                                <div class="bg-gray-1 bg-animation rounded height-10 w-40"></div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 mb-1 w-90"></div>
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-450"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <!-- Gallery -->
+                                                            <div class="row mx-gutters-2">
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+                                                                <div class="col"></div>
+                                                            </div>
+                                                            <!-- End Gallery -->
+                                                        </div>
+                                                        <div class="flex-center-between">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-40"></div>
+                                                            <div class="bg-gray-1 height-35 width-134 rounded-pill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane fade pt-2" id="Gpills-four-example1" role="tabpanel" aria-labelledby="Gpills-four-example1-tab">
+                            <div class="row no-gutters">
+                                <div class="col-md-6 col-lg-7 col-wd-8 d-md-flex d-wd-block">
+                                    <ul class="row list-unstyled products-group no-gutters mb-0 w-100">
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-lg-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="col-md-6 col-lg-4 col-wd-3 d-md-none d-wd-block">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="pb-xl-2">
+                                                        <div class="mb-2">
+                                                            <div class="bg-gray-1 bg-animation rounded height-10 w-60"></div>
+                                                        </div>
+                                                        <div class="mb-3">
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 mb-1"></div>
+                                                            <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-190"></div>
+                                                        </div>
+                                                        <div class="flex-center-between mb-1">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-60"></div>
+                                                            <div class="bg-gray-1 height-35 width-35 rounded-circle"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6 col-lg-5 col-wd-4 products-group-1">
+                                    <ul class="row list-unstyled products-group no-gutters bg-white h-100 mb-0">
+                                        <li class="col product-item remove-divider">
+                                            <div class="h-100 w-100 prodcut-box-shadow">
+                                                <div class="bg-white p-3">
+                                                    <div class="d-flex flex-column">
+                                                        <div class="mb-1">
+                                                            <div class="mb-2">
+                                                                <div class="bg-gray-1 bg-animation rounded height-10 w-40"></div>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 mb-1 w-90"></div>
+                                                                <div class="bg-gray-1 bg-animation rounded height-12 w-80"></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <div class="bg-gray-1 height-450"></div>
+                                                        </div>
+                                                        <div class="mb-4">
+                                                            <!-- Gallery -->
+                                                            <div class="row mx-gutters-2">
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+
+                                                                <div class="col-auto">
+                                                                    <div class="bg-gray-1 width-60 height-60"></div>
+                                                                </div>
+                                                                <div class="col"></div>
+                                                            </div>
+                                                            <!-- End Gallery -->
+                                                        </div>
+                                                        <div class="flex-center-between">
+                                                            <div class="bg-gray-1 bg-animation rounded height-20 w-40"></div>
+                                                            <div class="bg-gray-1 height-35 width-134 rounded-pill"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Tab Content -->
+                </div>
+                <!-- End Content Placeholder -->
+            </div>
+            <!-- End Products-8-1 -->
+
+    
+    <!-- Recommendation for you -->
+                <div class="position-relative">
+                    <div class="border-bottom border-color-1 mb-2">
+                        <h3 class="section-title section-title__full d-inline-block mb-0 pb-2 font-size-22">Recommendation for you</h3>
+                    </div>
+                    <div class="js-slick-carousel u-slick position-static overflow-hidden u-slick-overflow-visble pb-7 pt-2 px-1"
+                        data-pagi-classes="text-center right-0 bottom-1 left-0 u-slick__pagination u-slick__pagination--long mb-0 z-index-n1 mt-3 mt-md-0"
+                        data-slides-show="7"
+                        data-slides-scroll="1"
+                        data-arrows-classes="position-absolute top-0 font-size-17 u-slick__arrow-normal top-10"
+                        data-arrow-left-classes="fa fa-angle-left right-1"
+                        data-arrow-right-classes="fa fa-angle-right right-0"
+                        data-responsive='[{
+                          "breakpoint": 1400,
+                          "settings": {
+                            "slidesToShow": 6
+                          }
+                        }, {
+                            "breakpoint": 1200,
+                            "settings": {
+                              "slidesToShow": 3
+                            }
+                        }, {
+                          "breakpoint": 992,
+                          "settings": {
+                            "slidesToShow": 3
+                          }
+                        }, {
+                          "breakpoint": 768,
+                          "settings": {
+                            "slidesToShow": 2
+                          }
+                        }, {
+                          "breakpoint": 554,
+                          "settings": {
+                            "slidesToShow": 2
+                          }
+                        }]'>
+                         {{#each products}}
+                        <div class="js-slide products-group">
+                            <div class="product-item">
+                                <div class="product-item__outer h-100 w-100">
+                                   
+                                    <div class="product-item__inner px-wd-4 p-2 p-md-3">
+                                        <div class="product-item__body pb-xl-2">
+                                            <div class="mb-2"><a href="https://transvelo.github.io/electro-html/2.0/html/shop/product-categories-7-column-full-width.html" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
+                                            <h5 class="mb-1 product-item__title"><a href="https://transvelo.github.io/electro-html/2.0/html/shop/single-product-fullwidth.html" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                                            <div class="mb-2">
+                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/single-product-fullwidth.html" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                            </div>
+                                            <div class="flex-center-between mb-1">
+                                                <div class="prodcut-price">
+                                                    <div class="text-gray-100">₹{{this.price}}</div>
+                                                </div>
+                                                <div class="d-none d-xl-block prodcut-add-cart">
+                                                    <a href="https://transvelo.github.io/electro-html/2.0/html/shop/single-product-fullwidth.html" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="product-item__footer">
+                                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/compare.html" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
+                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/wishlist.html" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>     
+                    {{/each}}
+                    </div>
+                </div>
+                <!-- End Recommendation for you -->
+
+
+</main>
+
+
