@@ -295,7 +295,7 @@ module.exports = {
                 userId : ObjectID(userId),
                 proId : ObjectID(proId)
             })
-            console.log("This is addtowishlist");
+            console.log("This is addtowishlist promise");
             console.log(product);
             if(product == null){
                 db.get().collection(collection.WISHLIST_COLLECTION).insertOne({
@@ -314,9 +314,25 @@ module.exports = {
 
     getProductsForWishlist : (userId) => {
         return new Promise(async (resolve,reject) => {
+            let proId = await db.get().collection(collection.WISHLIST_COLLECTION).aggregate([
+              {
+                $match: {
+                    userId: ObjectID(userId) 
+                },
+               
+              },{
+                  $project : {
+                      proId : 1,
+                      _id : 0
+                  }
+              }  
+            ]).toArray()
+         
+            console.log(proId);
+
             let products = await db.get().collection(collection.WISHLIST_COLLECTION).aggregate([{
                 $match: {
-                    userId: userId
+                    userId: ObjectID(userId) 
                 }
             },
             {
@@ -326,13 +342,46 @@ module.exports = {
                     foreignField: '_id',
                     as: 'productDetails'
                 }
+            },
+            {
+                $unwind: '$productDetails'                                
+            },{
+                $project: {               
+                    "productDetails.price": 1,
+                    "productDetails.productName" : 1,
+                    "productDetails.imageName" : 1,
+                    "_id" : 1
+                },
+                
             }
+
 
         ]).toArray()
         console.log("this is getproducts for wihlist");
-        console.log(products);
-        resolve(products)
+        let product = []
+        for(i=0;i<products.length;i++){ 
+           product.push(products[i].productDetails) 
+        }
+       for(i=0;i<product.length;i++){
+           console.log(product[i]);
+           product[i].proId = proId[i].proId
+       }      
+        console.log(product);
+        resolve(product)
         })
         
+    },
+
+    deleteProductFromWishlist : (userId, proId) => {
+        console.log("This is delete wishlist in database");
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.WISHLIST_COLLECTION).deleteOne({
+                userId: ObjectID(userId),
+                proId: ObjectID(proId)
+                
+            })
+            console.log("Product deleted");
+            resolve(deleted = true)
+        })
     }
 }

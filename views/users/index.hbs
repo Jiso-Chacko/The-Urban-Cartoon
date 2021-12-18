@@ -222,9 +222,13 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+
+                                                 <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>
+
                                             </div>
                                         </div>
                                     </div>
@@ -278,18 +282,19 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="product-item__footer">
                                         <div class="border-top pt-2 flex-center-between flex-wrap">
                                         
-                                            <a href="" onclick="addToWishlist('{{this._id}}')"
-                                                class="text-gray-6 font-size-13"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                         </div>
                                     </div>
                                 </div>
@@ -338,18 +343,19 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                     </div>
                                     <div class="product-item__footer">
                                         <div class="border-top pt-2 flex-center-between flex-wrap">
                                            
-                                            <a href="" onclick="addToWishlist('{{this._id}}')"
-                                                class="text-gray-6 font-size-13"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                         </div>
                                     </div>
                                 </div>
@@ -410,19 +416,17 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/compare.html"
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href="https://transvelo.github.io/electro-html/2.0/html/shop/wishlist.html"
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                               <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -466,16 +470,18 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="#" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"
-                                                    tabindex="0"><i class="ec ec-add-to-cart"></i></a>
+                                                {{!-- <a href="#" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"
+                                                    tabindex="0"><i class="ec ec-add-to-cart"></i></a> --}}
+                                                <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>    
+
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href="#" class="text-gray-6 font-size-13" tabindex="0"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href="#" class="text-gray-6 font-size-13" tabindex="0"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                                
+                                                <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -515,19 +521,18 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                              
+                                                <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -580,19 +585,20 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>
+
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                               
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -631,19 +637,18 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href="" 
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                               
+                                             <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -681,19 +686,18 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            
+                                                <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -747,19 +751,19 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                            
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -799,19 +803,19 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                              
+                                     <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -849,19 +853,18 @@
                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                             </div>
                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                <a href="" onclick="addToCart('{{this._id}}')"
+                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')"
                                                     class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                        class="ec ec-add-to-cart"></i></a>
+                                                        class="ec ec-add-to-cart"></i></a> --}}
+                                            <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>            
                                             </div>
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                <a href=""
-                                                    class="text-gray-6 font-size-13"><i
-                                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
+                                
+                                         <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -923,14 +926,16 @@
                                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                                             </div>
                                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                                <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a> --}}
+                                                                <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="product-item__footer">
                                                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Add to Wishlist</a>
+                                                           <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -963,14 +968,16 @@
                                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                                             </div>
                                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                                <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a> --}}
+                                                                <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="product-item__footer">
                                                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Add to Wishlist</a>
+                                                  <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1005,14 +1012,16 @@
                                                                 <div class="text-gray-100">₹{{this.price}}</div>
                                                             </div>
                                                             <div class="d-none d-xl-block prodcut-add-cart">
-                                                                <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>
+                                                                {{!-- <a href="" onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a> --}}
+                                                                <a class="btn-add-cart btn-primary transition-3d-hover" style="cursor: pointer;" onclick="addToCart('{{this._id}}')"><i
+                                                    class="ec ec-add-to-cart"></i></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="product-item__footer">
                                                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-compare mr-1 font-size-15"></i> Compare</a>
-                                                            <a href="" class="text-gray-6 font-size-13"><i class="ec ec-favorites mr-1 font-size-15"></i> Add to Wishlist</a>
+                                                           <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
                                                         </div>
                                                     </div>
                                                 </div>

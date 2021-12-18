@@ -25,9 +25,8 @@
                     <h1 class="text-center">My wishlist on Electro</h1>
                 </div>
                 <div class="mb-16 wishlist-table">
-                    <form class="mb-4" action="#" method="post">
                         <div class="table-responsive">
-                            <table class="table" cellspacing="0">
+                            <table class="table" cellspacing="0" id="wishlist_table">
                                 <thead>
                                     <tr>
                                         <th class="product-remove">&nbsp;</th>
@@ -39,62 +38,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                    {{#each wishlistProducts}}
+                                    <tr>                                        
                                         <td class="text-center">
                                             <a href="#" class="text-gray-32 font-size-26">×</a>
                                         </td>
                                         <td class="d-none d-md-table-cell">
-                                            <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="../../assets/img/300X300/img6.jpg" alt="Image Description"></a>
+                                            <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
                                         </td>
 
                                         <td data-title="Product">
-                                            <a href="#" class="text-gray-90">Ultra Wireless S50 Headphones S50 with Bluetooth</a>
+                                            <a  class="text-gray-90">{{this.productName}}</a>
                                         </td>
 
                                         <td data-title="Unit Price">
-                                            <span class="">$1,100.00</span>
+                                            <span class="">₹{{this.price}}</span>
                                         </td>
 
                                         <td data-title="Stock Status">
                                             <!-- Stock Status -->
-                                            <span>In stock</span>
+                                            <span>In stock {{this.proId}}</span>
                                             <!-- End Stock Status -->
                                         </td>
 
                                         <td>
-                                            <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Add to Cart</button>
-                                        </td>
+                                            <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto" onclick="addToCart('{{this.proId}}'), removeFromWishlist('{{this.proId}}')">Add to Cart</button>
+                                        </td>                                       
                                     </tr>
-                                    <tr class="">
-                                        <td class="text-center">
-                                            <a href="#" class="text-gray-32 font-size-26">×</a>
-                                        </td>
-                                        <td class="d-none d-md-table-cell">
-                                            <a href="#"><img class="img-fluid max-width-100 p-1 border border-color-1" src="../../assets/img/300X300/img7.png" alt="Image Description"></a>
-                                        </td>
+                                    {{/each}}
+                                    
 
-                                        <td data-title="Product">
-                                            <a href="#" class="text-gray-90">Widescreen NX Mini F1 SMART NX</a>
-                                        </td>
-
-                                        <td data-title="Unit Price">
-                                            <span class="">$685.00</span>
-                                        </td>
-
-                                        <td data-title="Stock Status">
-                                            <!-- Stock Status -->
-                                            <span>In stock</span>
-                                            <!-- End Stock Status -->
-                                        </td>
-
-                                        <td>
-                                            <button type="button" class="btn btn-soft-secondary mb-3 mb-md-0 font-weight-normal px-5 px-md-4 px-lg-5 w-100 w-md-auto">Add to Cart</button>
-                                        </td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
-                    </form>
+                   
                 </div>
             </div>
         </main>
