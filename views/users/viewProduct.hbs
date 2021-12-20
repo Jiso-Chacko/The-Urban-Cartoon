@@ -34,16 +34,32 @@
                         data-arrow-right-classes="fas fa-arrow-right u-slick__arrow-classic-inner u-slick__arrow-classic-inner--right mr-lg-2 mr-xl-4"
                         data-nav-for="#sliderSyncingThumb">
                         <div class="js-slide">
-                            <img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description">
+                            <div id="imgDiv1">
+                                <img class="img-fluid" src="/productimages/{{this.imageName.[0]}}"
+                                    alt="Image Description" id="img1">
+
+                            </div>
                         </div>
                         <div class="js-slide">
-                            <img class="img-fluid" src="/productimages/{{this.imageName.[1]}}" alt="Image Description">
+                            <div id="imgDiv2">
+                                <img class="img-fluid" src="/productimages/{{this.imageName.[1]}}" alt="Image Description"
+                                id="img2">
+                            </div>
+                            
                         </div>
                         <div class="js-slide">
-                            <img class="img-fluid" src="/productimages/{{this.imageName.[2]}}" alt="Image Description">
+                            <div id="imgDiv3">
+                                <img class="img-fluid" src="/productimages/{{this.imageName.[2]}}" alt="Image Description"
+                                id="img3">
+                            </div>
+                            
                         </div>
                         <div class="js-slide">
-                            <img class="img-fluid" src="/productimages/{{this.imageName.[3]}}" alt="Image Description">
+                            <div id="imgDiv4">
+                                <img class="img-fluid" src="/productimages/{{this.imageName.[3]}}" alt="Image Description"
+                                id="img4">
+                            </div>
+                            
                         </div>
 
                     </div>
@@ -266,7 +282,7 @@
                                             <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
                                         </tr>
 
-                                       
+
 
                                         <tr>
                                             <th class="px-4 px-xl-5">Processor Speed</th>
@@ -609,3 +625,103 @@
     </div>
 </main>
 <!-- ========== END MAIN CONTENT ========== -->
+
+<style>
+    #imgDiv {
+        text-align: center;
+        overflow: hidden;
+    }
+
+    #imgDiv1 {
+        text-align: center;
+        overflow: hidden;
+    }
+
+    #imgDiv2 {
+        text-align: center;
+        overflow: hidden;
+    }
+
+    #imgDiv3 {
+        text-align: center;
+        overflow: hidden;
+    }
+</style>
+
+<script>
+    const container1 = document.getElementById('imgDiv1')
+    const container2 = document.getElementById('imgDiv2')
+    const container3 = document.getElementById('imgDiv3')
+    const container4 = document.getElementById('imgDiv4')
+
+
+    const img1 = document.getElementById('img1')
+    const img2 = document.getElementById('img2')
+    const img3 = document.getElementById('img3')
+    const img4 = document.getElementById('img4')
+
+
+    container1.addEventListener('mousemove', (e) => {
+       const x = e.pageX - $('#sliderSyncingNav').offset().left;
+        const y = e.pageY - $('#sliderSyncingNav').offset().top;
+
+        console.log(x, y)
+        img1.style.transformOrigin = `${x}px ${y}px`
+        img1.style.transform = 'scale(2)'
+
+    })
+
+    container2.addEventListener('mousemove', (e) => {
+        const x = e.pageX - $('#sliderSyncingNav').offset().left;
+        const y = e.pageY - $('#sliderSyncingNav').offset().top;
+
+        console.log(x, y)
+
+        img2.style.transformOrigin = `${x}px ${y}px`
+        img2.style.transform = 'scale(2)'
+    })
+
+    container3.addEventListener('mousemove', (e) => {
+        const x = e.pageX - $('#sliderSyncingNav').offset().left;
+        const y = e.pageY - $('#sliderSyncingNav').offset().top;
+
+        console.log(x, y)
+
+        img3.style.transformOrigin = `${x}px ${y}px`
+        img3.style.transform = 'scale(2)'
+
+    })
+
+    container4.addEventListener('mousemove', (e) => {
+        const x = e.pageX - $('#sliderSyncingNav').offset().left;
+        const y = e.pageY - $('#sliderSyncingNav').offset().top;
+
+        console.log(x, y)
+
+        img4.style.transformOrigin = `${x}px ${y}px`
+        img4.style.transform = 'scale(2)'
+    })
+
+
+
+    container1.addEventListener('mouseleave', (e) => {
+        img1.style.transform = " scale(1)"
+    })
+
+    container2.addEventListener('mouseleave', (e) => {
+
+        img2.style.transform = " scale(1)"
+
+
+    })
+
+    container3.addEventListener('mouseleave', (e) => {
+        img3.style.transform = " scale(1)"
+
+    })
+
+    container4.addEventListener('mouseleave', (e) => {
+        img4.style.transform = " scale(1)"
+
+    })
+</script>

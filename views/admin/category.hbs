@@ -1,0 +1,49 @@
+<div class="container">
+
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+                <h4 class="card-title">Add New Category</h4>
+                {{!-- <p class="card-description"> Basic form elements </p> --}}
+                <form class="forms-sample" method="POST" action="/admin/addNewCategory">
+
+                    <div class="form-group">
+                        <label for="exampleInputCategory1">Category Name</label>
+                        <input type="text" class="form-control" id="exampleInputName1" placeholder="Category Name"
+                            name="categoryName" required>
+                    </div>
+
+                    <div id="submitdiv">
+                        <button type="submit" class="btn btn-gradient-primary mr-2">Add</button>
+                        <button class="btn btn-light" type="reset" value="Reset">Cancel</button>
+                    </div>
+
+                    <h3 class="mt-5">View existing Category</h3>
+                </form>
+
+
+                <table class="table table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>Category name</th>
+                            <th>View product</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each brands}}
+                        <tr>
+                            <td>{{this.categoryName}}</td>
+                            <td><a class="btn btn-sm btn-success">View products</a></td>
+
+                        </tr>
+                        {{/each}}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

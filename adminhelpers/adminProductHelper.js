@@ -157,5 +157,20 @@ module.exports = {
             })
             
         })
+    },
+
+    getAllBrands : () => {
+        return new Promise(async (resolve,reject) => {
+
+           let brands = await db.get().collection(collection.CATEGORY_COLLECTION).find({}).toArray()
+           let brand = {}
+        //    for(i=0;i<brands.length;i++){
+        //     brand.categoryName = brands[i].categoryName
+        //     brand.brand = brands[i].brand
+        
+        //    }
+        //    console.log(brand);
+            resolve(brands)
+        })
     }
 }

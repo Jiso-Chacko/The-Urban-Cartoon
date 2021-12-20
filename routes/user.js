@@ -659,4 +659,9 @@ router.get('/sweetAlert', (req, res, next) => {
 })
 
 
+
+router.get('/zoom',(req,res,next) => {
+  res.render('users/sweetAlertSample')
+})
+
 module.exports = router;

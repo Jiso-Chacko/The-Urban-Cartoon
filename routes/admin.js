@@ -7,6 +7,7 @@ var fs = require('fs')
 const multer = require('multer')
 const path = require('path');
 const { response } = require('express');
+const userHelper = require('../userhelpers/userHelper');
 
 var username = "jiso"
 var password = 987
@@ -68,12 +69,16 @@ router.post('/login',(req,res) => {
 })
 
 // Get addCategory
-router.get('/addCategory', verifyAdminLogin,function(req, res, next) {
+router.get('/addCategory', verifyAdminLogin,async function(req, res, next) {
   
-  res.render('admin/addCategory',{layout : 'admin/layout',"brandExists":req.session.brandExists});
+  let brands = await adminProductHelper.getAllBrands()
+  console.log("This is brands");
+  console.log(brands);
+  res.render('admin/addCategory',{layout : 'admin/layout',"brandExists":req.session.brandExists, brands : brands});
   req.session.brandExists = false
   
 });
+
 
 // add Category post
 router.post('/addCategory', function(req, res, next) {
@@ -90,6 +95,16 @@ router.post('/addCategory', function(req, res, next) {
   res.redirect('/admin/addCategory')
   })
 });
+
+// ********** addNewCategory ***************** 
+router.get('/addNewCategory',async (req,res,next) => {
+  let brands = await adminProductHelper.getAllBrands()
+  res.render('admin/category',
+  {
+    layout : 'admin/layout',
+    brands : brands
+  })
+})
 
 // Get addProduct
 router.get('/addProduct',verifyAdminLogin, async function(req, res, next) {
@@ -275,6 +290,17 @@ router.get('/deleteProduct',verifyAdminLogin, (req,res,next) => {
   adminProductHelper.deleteProduct(proId).then((result) => {
   })
   res.redirect('/admin/viewProducts')
+})
+
+// ********* user Mangement **********
+router.get('/userManagement',async (req,res,next) => {
+  
+  let users =  await userHelper.getUsersForAdmin()
+  res.render('admin/userManagement',
+  {
+    layout : 'admin/layout',
+    users : users
+  })
 })
 
 module.exports = router;

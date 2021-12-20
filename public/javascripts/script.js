@@ -180,21 +180,21 @@ function changeQuantity(userId, proId, cartId, count) {
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!'
-                  }).then((result) => {
+                }).then((result) => {
                     if (result.isConfirmed) {
-                      Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                      )
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
                     }
-                  }).then(() => {
+                }).then(() => {
                     var elements = $(result.renderHtml);
                     var found = $('#cart_table', elements);
                     var found2 = $('#total_cart', elements);
                     $('#cart_table').html(found)
                     $('#total_cart').html(found2)
-                  })
+                })
             }
         }
     })
@@ -280,13 +280,12 @@ function removeFromWishlist(proId) {
         },
         success: function (response) {
             if (response) {
-                console.log("jiso");
                 var elements = $(response);
-            var found = $('#wishlist_table', elements);
-            $('#wishlist_table').html(found)
+                var found = $('#wishlist_table', elements);
+                $('#wishlist_table').html(found)
             }
-            
 
         }
     })
 }
+
