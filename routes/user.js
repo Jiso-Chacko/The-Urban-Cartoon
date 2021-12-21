@@ -555,8 +555,18 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   console.log("This is /checkout");
-  let UserAddress = address[0].address
-  console.log(UserAddress);
+  console.log("Address status : "+address.status);
+
+  
+  
+  if(address.status == false){
+    req.session.addressErr = true
+    req.session.userAddress = null
+  }else{
+    req.session.userAddress = address.address[0]
+    req.session.addressErr = false  
+  }
+  console.log(req.session);
 
   let userFname = req.session.user.userFirstName
   let userLname = req.session.user.userLastName
@@ -569,18 +579,32 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   }
 
 
-
   res.render('users/checkout', {
     layout: 'users/layout',
     cartProducts: cartProducts,
     totalAmount: price.totalSum,
     userFname: userFname,
     userLname: userLname,
-    address: UserAddress,
+    address : req.session.userAddress,
+    "addressErr" : req.session.addressErr,
     "loggIn": userLoggedIn,
     user: user,
     userCartCount: userCartCount
   })
+})
+
+
+// ************** checkout post router ******************************
+router.post('/checkout',async (req,res,next) => {
+  console.log("This is /checkout post");
+  // console.log(req.body);
+  // console.log(req.session.user._id);
+  let cartProducts = await  userProductHelper.getProductsForCart(req.session.user._id)
+  let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
+  userProductHelper.placeOrder(req.session.user._id,req.body,cartProducts,totalAmount).then((result) => {
+
+  })
+  res.send('checkout successful')
 })
 
 
@@ -608,7 +632,15 @@ router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) =>
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn
   userCartCount = req.session.cartCount
-  console.log(address);
+  
+  let userAddress = address.address
+  if(address.status == false){
+    req.session.addressErr = true
+  }
+  else{
+    req.session.addressErr = false
+  }
+
   if (req.session.user.addressAdded) {
     req.session.addressMssg = true
   } else {
@@ -620,7 +652,8 @@ router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) =>
     layout: 'users/layout',
     userId: userId,
     "Messg": req.session.addressMssg,
-    address: address,
+    "addressErr" : req.session.addressErr,
+    address: userAddress,
     "loggIn": userLoggedIn,
     user: user,
     userCartCount: userCartCount

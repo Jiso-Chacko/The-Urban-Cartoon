@@ -13,36 +13,45 @@
 <style>
     #MyForm {
         display: none;
-
     }
 </style>
 <div class="container">
 
     <div class="col-md-6 mr-xl-auto mr-md-auto mr-xl-0 mb-8 mb-md-0 mt-5">
-        {{#each address}}
+        {{#if addressErr}}
+        <h2>Please add a new address</h2>
+        {{else}}
+        <h2>Your saved address</h2>
 
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item"><h3>{{this.addressType}}</h3></li>
-            <li class="list-group-item">Address : {{this.address.address}}</li>
-            <li class="list-group-item">City : {{this.address.city}}</li>
-            <li class="list-group-item">District : {{this.address.district}}</li>
-            <li class="list-group-item">Postcode : {{this.address.postcode}}</li>
-            <li class="list-group-item">State : {{this.address.state}}</li>
-            <li class="list-group-item">Email : {{this.address.email}}</li>
-            <li class="list-group-item">Phone : {{this.address.phone}}</li>
-        </ul>
-        {{/each}}
+        <div class="col-md-6 mr-xl-auto mr-md-auto mr-xl-0 mb-8 mb-md-0 mt-5">
+            {{#each address}}
+            <div id="shopCartHeadingOne" class="alert alert-primary mb-2" role="alert">
+                <a class="alert-link" aria-expanded="false" aria-controls="shopCartOne"
+                    style="text-transform:uppercase">{{this.addressType}}</a>
+            </div>
+            <div class="mt-2 mb-5">
+                <span>{{this.address.address}},</span><span>{{this.address.city}},</span><span>{{this.address.district}},</span><span>{{this.address.state}},</span><span>{{this.address.postcode}},</span><span>+91{{this.address.phone}}</span>
+                <a href="#">Edit</a><span> </span><span><a href="#">Delete</a></span><span> </span><span><a href="#">Set
+                        default</a></span>
+            </div>
+            {{/each}}
+        </div>
+
+        {{/if}}
     </div>
 </div>
 
-<div class="col-md-6 mr-xl-auto mr-md-auto mr-xl-0 mb-8 mb-md-0 mt-5">
-    <div id="shopCartHeadingOne" class="alert alert-primary mb-0" role="alert">
-        {{!-- <a  class="alert-link"  
+    <div class="col-md-3 mr-xl-auto mr-md-auto mr-xl-0 mb-8 mb-md-0 mt-5 ml-8">
+        <div id="shopCartHeadingOne" class="alert alert-primary mb-5" role="alert">
+            {{!-- <a  class="alert-link"  
                             aria-expanded="false" aria-controls="shopCartOne">Your address</a> --}}
-        <button id="Mybtn" class="btn btn-primary" type="button">Add new address</button>
+            <button id="Mybtn" class="btn btn-primary" type="button">Add new address</button>
+        </div>
+
     </div>
 
-</div>
+
+
 {{!-- 
 <button id="Mybtn" class="btn btn-primary" type="button" >Add new address</button> --}}
 
@@ -205,13 +214,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 
-{{#if Messg}}
-<script>
-    $(document).ready(function () {
-        alert("Address added successfully!")
-    })
-</script>
-{{/if}}
+
+
 
 <script>
     $(document).ready(function () {

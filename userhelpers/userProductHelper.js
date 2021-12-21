@@ -383,5 +383,17 @@ module.exports = {
             console.log("Product deleted");
             resolve(deleted = true)
         })
+    },
+
+    placeOrder : (userId,order,products,totalAmount) => {
+        return new Promise((resolve,reject) => {
+        console.log("This is create order");
+        console.log(userId);
+        console.log(products);
+        console.log(totalAmount);
+        console.log(order);
+        resolve(status = true)
+        })
+        
     }
 }

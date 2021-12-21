@@ -162,13 +162,11 @@ function changeQuantity(userId, proId, cartId, count) {
                     $('#total_cart').html(found2)
 
                 } else {
-
                     var elements = $(result.renderHtml);
                     var found = $('#cart_table', elements);
                     var found2 = $('#total_cart', elements);
                     $('#cart_table').html(found)
                     $('#total_cart').html(found2)
-
                 }
 
             } else {
@@ -286,6 +284,17 @@ function removeFromWishlist(proId) {
             }
 
         }
+    })
+}
+
+function checkSave(){
+
+    Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        denyButtonText: `Don't save`,
     })
 }
 

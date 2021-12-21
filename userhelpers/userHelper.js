@@ -177,8 +177,14 @@ module.exports = {
             let address = await db.get().collection(collection.ADDRESS_COLLECTION).find({
                 userId : ObjectID(userId)
             }).toArray()
-            console.log(address);
-            resolve(address)
+            
+            console.log("This is addess array :"+address.length);
+            if(address.length == 0){
+                resolve({status : false, address : null})
+            }
+            else{
+                resolve({status : true , address : address})
+            }
         })
     },
 
