@@ -172,5 +172,31 @@ module.exports = {
         //    console.log(brand);
             resolve(brands)
         })
+    },
+
+    getAllOrders : () => {
+
+        return new Promise(async (resolve, reject) => {
+           let orders = await db.get().collection(collection.ORDER_COLLECTION).find({}).toArray()
+        //    console.log(orders);
+           resolve(orders)
+        })
+    },
+
+    changeOrderStatus : (body) => {
+        console.log("This is change order status");
+        return new Promise((resolve,reject) => {
+
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                _id : ObjectID(body.orderId)
+            },
+            {
+                $set: {
+                    status : body.value
+                }
+                
+            })
+            resolve()
+        })
     }
 }

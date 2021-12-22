@@ -29,7 +29,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.js">
+    </script>
+
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
     <script src="/javascripts/script.js"></script>
 
 
@@ -252,10 +256,10 @@
                         </a>
                         <div class="collapse" id="ui-basic3">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/addSlider">Slider Section</a></li>
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/addBanner">Bannner Section</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin/addSlider">Slider Section</a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin/addBanner">Bannner Section</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -270,10 +274,9 @@
                         </a>
                         <div class="collapse" id="ui-basic1">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/addProduct">Add Product</a></li>
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/viewProducts">View Product</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin/addProduct">Add Product</a></li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin/viewProducts">View Product</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -288,10 +291,10 @@
 
                         <div class="collapse" id="ui-basic2">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/addCategory">Brand Mangement</a></li>
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/addNewCategory">Add new category</a></li>        
+                                <li class="nav-item"> <a class="nav-link" href="/admin/addCategory">Brand Mangement</a>
+                                </li>
+                                <li class="nav-item"> <a class="nav-link" href="/admin/addNewCategory">Add new
+                                        category</a></li>
                             </ul>
                         </div>
 
@@ -307,15 +310,33 @@
 
                         <div class="collapse" id="ui-basic4">
                             <ul class="nav flex-column sub-menu">
-                                <li class="nav-item"> <a class="nav-link"
-                                        href="/admin/userManagement">User Mangement</a></li>
-                                      
+                                <li class="nav-item"> <a class="nav-link" href="/admin/userManagement">User
+                                        Mangement</a></li>
+
                             </ul>
                         </div>
 
                     </li>
 
-                                        
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false"
+                            aria-controls="ui-basic">
+                            <span class="menu-title">Product Management</span>
+                            <i class="menu-arrow"></i>
+                            <i class="mdi mdi-account-multiple"></i>
+                        </a>
+
+                        <div class="collapse" id="ui-basic5">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item"> <a class="nav-link" href="/admin/productMangement">Product
+                                        Mangement</a></li>
+
+                            </ul>
+                        </div>
+
+                    </li>
+
+
                 </ul>
             </nav>
 

@@ -298,3 +298,43 @@ function checkSave(){
     })
 }
 
+
+
+    function changeStatus(event,value,orderId) {
+        console.log(value,orderId);
+        
+        $.ajax({
+            url : '/admin/changeStatus',
+            method : 'post',
+            data : {
+                value,
+                orderId
+            },
+            success : (renderHtml) => {
+                // console.log(status);
+                // if(status.status === 'shipped'){
+                //    var placed = document.getElementsByClassName('placed')  
+                //    console.log(event.target.querySelector('.placed')) 
+                //    event.target.querySelector('.placed').style.display = 'none'           
+                // }
+                // else if(status.status === 'delivered'){
+                //    document.getElementById('shipped').style.display = 'none'                         
+                //    document.getElementById('delivered').style.display = 'block'
+                // }
+
+                var elements = $(renderHtml);
+                var found = $('#myTable', elements);
+                $('#myTable').html(found)  
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Status changed!',
+                    showConfirmButton: false,
+                    timer: 1500
+                })         
+            },
+            error : (err) => {
+                console.log(err);
+            } 
+        })
+    }

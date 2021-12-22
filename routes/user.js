@@ -601,12 +601,38 @@ router.post('/checkout',async (req,res,next) => {
   // console.log(req.session.user._id);
   let cartProducts = await  userProductHelper.getProductsForCart(req.session.user._id)
   let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
-  userProductHelper.placeOrder(req.session.user._id,req.body,cartProducts,totalAmount).then((result) => {
-
+  userProductHelper.placeOrder(req.session.user._id,req.body,cartProducts,totalAmount).then((orderId) => {
+    
+    if(req.body.payment === 'cod'){
+      res.send({status : true,response : null})
+    }else{  
+      userProductHelper.generateRazorpay(orderId,totalAmount.totalSum).then((response) => {
+        res.send({status : false,response})
+      }) 
+    }
   })
-  res.send('checkout successful')
 })
 
+// ******** order success get page *******************
+router.get('/checkout/orderSuccess',(req,res,next) => {
+  res.render('users/orderSuccess',{layout : 'users/layout'})
+})
+
+
+// ****************** razorpay verifypayment router **************
+router.post('/verifyPayment',(req,res,next) => {
+  console.log("This is verify payment router");
+  console.log(req.body);
+  userProductHelper.verifyPayment(req.body).then((result) => {
+    userProductHelper.changePaymentStatus(req.body['order[receipt]']).then((response) => {
+      console.log("Payment successful");
+      res.send({status : true})
+    }).catch((err) => {
+      console.log(err);
+      res.send({status : false})
+    })
+  })
+})
 
 // user profile get route
 router.get('/viewProfile/:id', verifyUserLogg, getCartCount, (req, res, next) => {
@@ -691,6 +717,14 @@ router.get('/sweetAlert', (req, res, next) => {
   })
 })
 
+
+// ******* view all orders get *******************
+router.get('/viewProfile/:id/orders',(req,res,next) => {
+
+  res.render('users/viewOrders',{
+    layout : 'users/layout'
+  })
+})
 
 
 router.get('/zoom',(req,res,next) => {
