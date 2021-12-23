@@ -2,6 +2,8 @@ var db = require('../config/connections')
 var collection = require('../config/collections')
 var ObjectID = require('mongodb').ObjectID
 var Razorpay = require('razorpay')
+var dateFormat = require('dateformat');
+var now = new Date();
 const {
     response
 } = require('express')
@@ -413,7 +415,11 @@ module.exports = {
                 products: products,
                 totalAmount: totalAmount,
                 status: status,
-                date: new Date()
+                placed: true,
+                shipped: false,
+                deliverd: false,
+                cancelled: false,
+                date: dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT")
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((result) => {
@@ -448,31 +454,129 @@ module.exports = {
 
     verifyPayment: (paymentDetails) => {
         return new Promise((resolve, reject) => {
-          const crypto = require('crypto')
-          let hmac = crypto.createHmac('sha256', 'IVpXzwOA8VwACuTueX9eHepI')
-          hmac.update(paymentDetails['payment[razorpay_order_id]']+'|'+paymentDetails['payment[razorpay_payment_id]']);
-          hmac = hmac.digest('hex')
-          if(hmac = paymentDetails['payment[razorpay_signature]']){
-            resolve()
-          }
-          else{
-              reject()
-          }
+            const crypto = require('crypto')
+            let hmac = crypto.createHmac('sha256', 'IVpXzwOA8VwACuTueX9eHepI')
+            hmac.update(paymentDetails['payment[razorpay_order_id]'] + '|' + paymentDetails['payment[razorpay_payment_id]']);
+            hmac = hmac.digest('hex')
+            if (hmac = paymentDetails['payment[razorpay_signature]']) {
+                resolve()
+            } else {
+                reject()
+            }
         })
     },
 
-    changePaymentStatus : (orerId) => {
+    changePaymentStatus: (orerId) => {
         console.log("This is change payment status");
-        return new Promise((resolve,reject) => {
+        return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).updateOne({
-                _id : ObjectID(orerId)
-            },{
-                $set : {
-                    status : 'placed'
+                _id: ObjectID(orerId)
+            }, {
+                $set: {
+                    status: 'placed'
+                }
+            })
+            resolve()
+        })
+    },
+
+    getAllOrders: (userId) => {
+        return new Promise(async (resolve, reject) => {
+
+            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({
+                userId: ObjectID(userId)
+            }).toArray()
+
+            console.log("This is orders :", orders);
+            resolve(orders)
+        })
+    },
+
+    cancelOrder: (body) => {
+        console.log("This is cancel order from database");
+        // console.log(body.orderId,body.proId);
+        return new Promise(async (resolve, reject) => {
+                   
+            let product = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
+                    $match: {
+                        _id: ObjectID(body.orderId)
+                    },
+                },
+                {
+                    $project: {
+                        products: 1,
+                        _id: 0
+                    }
+                },
+                {
+                    $unwind: '$products'
+                },
+                {
+                    $match: {
+                        'products.product': ObjectID(body.proId)
+                    }
+                }
+            ]).toArray()
+            
+            console.log([product[0].products]);
+            console.log(product.length);
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                _id: ObjectID(body.orderId)
+            }, {
+                $pull: {
+                    products: {
+                        product: ObjectID(body.proId)
+                    }
+                }
+            })
+
+            let productLen = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
+                $match: {
+                    _id: ObjectID(body.orderId)
+                }
+            },
+            {
+                $project: {
+                    products: 1,
+                    _id: 0
                 }
             }
-            )
+        ]).toArray()
+        console.log(productLen);
+
+            let copy = await db.get().collection(collection.ORDER_COLLECTION).findOne({
+                _id: ObjectID(body.orderId)
+            }, {
+                projection: {
+                    _id: 0
+                }
+            })
+            db.get().collection(collection.ORDER_COLLECTION).insertOne(copy)
+
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                _id: ObjectID(body.orderId)
+            }, {
+                $unset : 'products'
+            },
+            {
+                $set: {
+                    products : product,
+                    status: 'cancelled',
+                    placed: false,
+                    shipped: false,
+                    deliverd: false,
+                    cancelled: true,
+                }
+            })
+
+            if(productLen.length <= 1){
+                db.get().collection(collection.ORDER_COLLECTION).deleteOne({
+                    _id : ObjectID(body.orderId)
+                })
+            }
+
             resolve()
         })
     }
+
 }

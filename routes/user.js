@@ -719,13 +719,28 @@ router.get('/sweetAlert', (req, res, next) => {
 
 
 // ******* view all orders get *******************
-router.get('/viewProfile/:id/orders',(req,res,next) => {
+router.get('/viewProfile/:id/orders',async (req,res,next) => {
 
-  res.render('users/viewOrders',{
-    layout : 'users/layout'
-  })
+  console.log(req.params.id);
+  let orders = await  userProductHelper.getAllOrders(req.params.id)
+  
+    res.render('users/viewOrders',{
+      layout : 'users/layout',
+      orders : orders
+    })
+  
 })
 
+// ******* cancel product from orders ************
+
+router.post('/cancelProduct',(req,res,next) => {
+
+  console.log(req.body);
+  console.log("This is cancel order router");
+  userProductHelper.cancelOrder(req.body)
+  // userProductHelper.cancelTrail(req.body)
+  res.send(status = true)
+})
 
 router.get('/zoom',(req,res,next) => {
   res.render('users/sweetAlertSample')

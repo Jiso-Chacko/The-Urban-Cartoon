@@ -180,7 +180,7 @@ router.post('/addProduct', function (req, res, next) {
     if (err) {
       console.log(err);
     } else {
-      // console.log("This is addProduct");
+      // console.log("This is addProduct"); 
       // console.log(req.body);
       console.log(res.req.body);
       var body = res.req.body
@@ -362,7 +362,7 @@ router.post('/changeStatus',async (req, res, next) => {
 
   adminProductHelper.changeOrderStatus(req.body).then(() => {
     console.log("status changed");
-    console.log(req.body.value);
+    console.log(req.body);
     
     hb.render('views/admin/productManagement.hbs', {
       layout : 'admin/layout',
@@ -371,6 +371,14 @@ router.post('/changeStatus',async (req, res, next) => {
       res.send(renderHtml)
     })
   })
+})
+
+// ********** cancel product from admin side **********
+router.post('/cancelProduct',(req,res,next) => {
+
+  console.log(req.body);  
+  adminProductHelper.changeOrderStatus(req.body)
+  res.send('Cancelled product')
 })
 
 module.exports = router;

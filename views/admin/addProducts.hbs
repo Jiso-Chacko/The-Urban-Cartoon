@@ -6,20 +6,24 @@
             <div class="card-body">
                 <h4 class="card-title">Add Product</h4>
                 {{!-- <p class="card-description"> Basic form elements </p> --}}
-                <form class="forms-sample" method="POST" action="/admin/addProduct" enctype="multipart/form-data" name="addProductForm">
+                <form class="forms-sample" method="POST" action="/admin/addProduct" enctype="multipart/form-data"
+                    name="addProductForm" id="addProductForm">
 
                     <div class="form-group">
                         <label for="exampleInputName1">Name of Product</label>
                         <input type="text" class="form-control" id="productName" placeholder="Product name"
-                            name="productName" >
-                            <span id="productNameErr"></span>
+                            name="productName" oninput="proNameValid()">
+                        <span id="productNameErr"></span>
+                        <span style="color: brown;" id="nameReq"></span>
+
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputName1">Product Title</label>
                         <input type="text" class="form-control" id="productTitle" placeholder="Product title"
-                            name="productTitle" >
-                            <span id="productTitleErr"></span>
+                            name="productTitle" oninput="proTitle()">
+                        <span style="color: brown;" id="titleReq"></span>
+
                     </div>
                     <div class="d-flex">
                         <div class="form-check mb-2">
@@ -43,26 +47,32 @@
                     <div class="form-group">
                         <label for="exampleTextarea1">Description</label>
                         <textarea class="form-control" id="description" rows="4" name="description"
-                            ></textarea>
-                            <span id="descriptionErr"></span>
+                            oninput="proDescription()"></textarea>
+                        <span id="descriptionErr"></span>
+                        <span style="color: brown;" id="proDescriptionErr"></span>
+
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputPrice1">Price</label>
                         <input type="text" class="form-control" id="price" placeholder="Price" name="price"
-                            >
-                            <span id="priceErr"></span>
+                            oninput="proPrice()">
+                        {{!-- <span id="priceErr"></span> --}}
+                        <span style="color: brown;" id="priceErr"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputQuantiity1">Quantity</label>
-                        <input type="text" class="form-control" id="quantity" placeholder="Quantity"
-                            name="quantity" >
-                            <span id="quantityErr"></span>
+                        <input type="text" class="form-control" id="quantity" placeholder="Quantity" name="quantity"
+                            oninput="proQuantity()">
+                        {{!-- <span id="quantityErr"></span> --}}
+                        <span style="color: brown;" id="quantityErr"></span>
+
                     </div>
                     <div class="form-group">
                         <label for="exampleSelectCategory">Category</label>
-                        <select class="form-control" id="change_category" name="category" onchange="addProductSpec(this.value)">
+                        <select class="form-control" id="change_category" name="category"
+                            onchange="addProductSpec(this.value)">
                             <option value="">Select Category</option>
                             {{#each category}}
                             <option value="{{this.categoryName}}">{{this.categoryName}}</option>
@@ -106,8 +116,8 @@
                         </div>
                         <div class="col-12 col-md-9">
                             <img style="width: 3rem; margin: 10px" src="" id="img1">
-                            <input required type="file" id="fileinputimage1" name="fileinputimage1"
-                                class="form-control-file" onchange="viewimage1(event)">
+                            <input type="file" id="fileinputimage1" name="fileinputimage1" class="form-control-file"
+                                onchange="viewimage1(event)">
                             {{!-- <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea> --}}
                         </div>
                     </div>
@@ -118,8 +128,8 @@
                         </div>
                         <div class="col-12 col-md-9">
                             <img style="width: 3rem; margin: 10px" src="" id="img2">
-                            <input required type="file" id="fileinputimage2" name="fileinputimage2"
-                                class="form-control-file" onchange="viewimage2(event)">
+                            <input type="file" id="fileinputimage2" name="fileinputimage2" class="form-control-file"
+                                onchange="viewimage2(event)">
                             {{!-- <textarea name="pro_img2" id="pro_img2" style="display: none;"></textarea> --}}
                         </div>
                     </div>
@@ -130,8 +140,8 @@
                         </div>
                         <div class="col-12 col-md-9">
                             <img style="width: 3rem; margin: 10px" src="" id="img3">
-                            <input required type="file" id="fileinputimage3" name="fileinputimage3"
-                                class="form-control-file" onchange="viewimage3(event)">
+                            <input type="file" id="fileinputimage3" name="fileinputimage3" class="form-control-file"
+                                onchange="viewimage3(event)">
                             {{!-- <textarea name="pro_img3" id="pro_img3" style="display: none;"></textarea> --}}
                         </div>
                     </div>
@@ -142,8 +152,8 @@
                         </div>
                         <div class="col-12 col-md-9">
                             <img style="width: 3rem; margin: 10px" src="" id="img4">
-                            <input required type="file" id="fileinputimage4" name="fileinputimage4"
-                                class="form-control-file" onchange="viewimage4(event)">
+                            <input type="file" id="fileinputimage4" name="fileinputimage4" class="form-control-file"
+                                onchange="viewimage4(event)">
                         </div>
                     </div>
 
@@ -176,7 +186,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/canvasjs/1.7.0/canvasjs.min.js"></script>
 
 <script>
-
     // dynamic dropdown
     $('#change_category').change(function (e) {
         var category = $(this).val();
@@ -185,7 +194,7 @@
             method: "GET",
             success: function (result) {
                 let str = '<option value="">Select Brand</option>';
-                for (var i=0; i< result.brand.length;i++){
+                for (var i = 0; i < result.brand.length; i++) {
                     let brandName = result.brand[i]
                     str += `<option value="${brandName}">${brandName}</option>`
                 }
@@ -196,45 +205,171 @@
     })
 
 
-    // form validation 
-    document.addProductForm.addEventListener("submit", function(event){
-        var productName = this.querySelector("input[id=productName]").value;
-        var productTitle = this.querySelector("input[id=productTitle]").value;
-        var description = this.querySelector("input[id=description]").value;
-        var price = this.querySelector("input[id=price]").value;
-        var quantity = this.querySelector("input[id=quantity]").value;
-        
-        
 
-        if(productName.trim() == " " || productName.length < 3){
-            document.getElementById("productName").focus
-            if(productName == ""){
-            document.getElementById("productNameErr").innerHTML = "Filed cannot be empty"
-            }else if(productName.length < 3){
-             document.getElementById("productNameErr").innerHTML = "Minimum length required"   
-            }
-            event.preventDefault();
+
+    // form validation 
+   
+    $("#addProductForm").submit(function (event) {
+        
+        var Product = document.getElementById("productName").value;
+        var title = document.getElementById("productTitle").value;
+        var description = document.getElementById("description").value;
+        var price = document.getElementById("price").value;
+        var quantity = document.getElementById("quantity").value;
+
+        console.log(Product,title,description,price,quantity)
+
+         if (Product.trim() == " " || Product.length<1) {
+             event.preventDefault();
+             document.getElementById("productName").focus
+             
+             Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Please fill the form',
+                    showConfirmButton: true
+                })
+         }
+         else if(title.trim() == " " || title.length<1){
+             event.preventDefault();
+             document.getElementById("productTitle").focus
+             Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Please fill the form',
+                    showConfirmButton: true
+                })
+         }
+         else if(description.trim() == " " || description.length<1){
+             event.preventDefault();
+             document.getElementById("description").focus
+             Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Please fill the form',
+                    showConfirmButton: true
+                })
+         }
+         else if(price.trim() == " " || price.length<1){
+             event.preventDefault();
+             document.getElementById("price").focus
+             Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Please fill the form',
+                    showConfirmButton: true
+                })
+         }
+         else if(quantity.trim() == " " || quantity.length<1){
+             event.preventDefault();
+             document.getElementById("quantity").focus
+             Swal.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Please fill the form',
+                    showConfirmButton: true
+                })
+         }
+
+      
+    });
+
+
+    function proNameValid() {
+        var text = document.getElementById("productName").value;
+        var letters = /^[a-zA-Z\s]*$/;
+        if (text.length == 0) {
+            // document.getElementById("nameLen").style.display = "block";
+            document.getElementById("nameReq").innerHTML = "required ";
+
+            // document.getElementById("nameErr").style.display = "none";
+        } else if (text.length < 3) {
+            document.getElementById("nameReq").innerHTML = "Minimum Length required";
+        } else if (!text.match(letters)) {
+            document.getElementById("nameReq").innerHTML = "Only letters are allowed";
+
+        } else {
+            document.getElementById("nameReq").innerHTML = " ";
         }
-        if(productTitle.trim() == " " || productTitle.length < 5){
-            document.getElementById("productTitle").focus
-            if(productTitle == ""){
-            document.getElementById("productNameErr").innerHTML = "Filed cannot be empty"
-            }else if(productTitle.length < 3){
-             document.getElementById("productNameErr").innerHTML = "Minimum length required"   
-            }
-            event.preventDefault()
+    }
+
+    function proTitle() {
+        var text = document.getElementById("productTitle").value;
+        var letters = /^[a-zA-Z\s]*$/;
+        if (text.length == 0) {
+            // document.getElementById("nameLen").style.display = "block";
+            document.getElementById("titleReq").innerHTML = "required ";
+
+            // document.getElementById("nameErr").style.display = "none";
+        } else if (text.length < 3) {
+            document.getElementById("titleReq").innerHTML = "Minimum Length required";
+        } else if (!text.match(letters)) {
+            document.getElementById("titleReq").innerHTML = "Only letters are allowed";
+
+        } else {
+            document.getElementById("titleReq").innerHTML = " ";
         }
-        if(description.trim() == " " || description.length < 8){
-            document.getElementById("productTitle").focus
-            if(description == ""){
-            document.getElementById("productNameErr").innerHTML = "Filed cannot be empty"
-            }else if(description.length < 3){
-             document.getElementById("productNameErr").innerHTML = "Minimum length required"   
-            }
-            event.preventDefault()
+    }
+
+
+    function proDescription() {
+        var text = document.getElementById("description").value;
+        var letters = /^[a-zA-Z\s]*$/;
+        if (text.length == 0) {
+            // document.getElementById("nameLen").style.display = "block";
+            document.getElementById("proDescriptionErr").innerHTML = "required ";
+
+            // document.getElementById("nameErr").style.display = "none";
+        } else if (text.length < 3) {
+            document.getElementById("proDescriptionErr").innerHTML = "Minimum Length required";
+        } else if (!text.match(letters)) {
+            document.getElementById("proDescriptionErr").innerHTML = "Only letters are allowed";
+
+        } else {
+            document.getElementById("proDescriptionErr").innerHTML = " ";
         }
-       
-    })
+    }
+
+    function proPrice() {
+        var text = document.getElementById("price").value;
+        var letters = /^[a-zA-Z\s]*$/;
+        if (text.length == 0) {
+            document.getElementById("priceErr").innerHTML = "required ";
+
+        } else if (text.length < 3) {
+            document.getElementById("priceErr").innerHTML = "Minimum Length required";
+        } else if (isNaN(text)) {
+            document.getElementById("priceErr").innerHTML = "Only numbers are allowed";
+
+        } else {
+            document.getElementById("priceErr").innerHTML = " ";
+        }
+    }
+
+
+    function proQuantity() {
+        var text = document.getElementById("quantity").value;
+        var letters = /^[a-zA-Z\s]*$/;
+        if (text.length == 0) {
+            document.getElementById("quantityErr").innerHTML = "required ";
+
+        } else if (text.length < 1) {
+            document.getElementById("quantityErr").innerHTML = "Minimum Length required";
+        } else if (isNaN(text)) {
+            document.getElementById("quantityErr").innerHTML = "Only numbers are allowed";
+        } else {
+            document.getElementById("quantityErr").innerHTML = " ";
+        }
+    }
+
+
+
+
+
+
+
+
+
 
     function viewimage1(event) {
         document.getElementById('img1').src = URL.createObjectURL(event.target.files[0])
@@ -349,7 +484,7 @@
         if (value == "laptop") {
             document.getElementById('mobile').innerHTML = '';
             document.getElementById('titleMobile').innerHTML = '';
-            
+
             var selectedLaptop = true;
             var thediv = document.getElementById('titleLaptop');
             var extras = document.createElement('div');
@@ -442,6 +577,4 @@
         }
 
     }
-
-
 </script>

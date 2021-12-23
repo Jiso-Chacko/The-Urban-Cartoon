@@ -338,3 +338,59 @@ function checkSave(){
             } 
         })
     }
+
+    function cancelOrder(orderId){
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete this product?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then(() => {
+            $.ajax({
+                url : '/admin/cancelProduct',
+                method : 'post',
+                data : {
+                    orderId : orderId,
+                    value : 'cancelled'
+                },
+                success : function (){
+                   
+                }
+            })
+        })
+        
+    }
+
+
+
+    function cancelProduct(orderId,proId){
+        // console.log(orderId,proId);
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to cancel this product?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then(() => {
+            $.ajax({
+                url : '/cancelProduct',
+                method : 'post',
+                data : {
+                    orderId : orderId,
+                    proId : proId
+                },
+                success : (response) => {
+                    if(response){
+
+                        alert('order cancelled!')
+                    }
+                }
+            })
+        })  
+    }

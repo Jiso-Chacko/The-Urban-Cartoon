@@ -42,8 +42,8 @@
                                 </select> 
     
                                 </td>
-                            <td><button class="btn btn-sm btn-danger">Cancel</button></td>
-                            {{!-- <a class="btn btn-success" style="width: 5.5rem;" onclick="return confirm('Are you sure to enable {{ this.userFirstName }}? ')"  href="/admin/enable-user?id={{ this._id }}">Unblock</a> --}}
+                            {{!-- <td><button class="btn btn-sm btn-danger" >Cancel</button></td> --}}
+                            <td><a class="btn btn-sm btn-danger" style="width: 5.5rem;" onclick="cancelOrder('{{this._id}}')">Cancel</a></td>
 
                         </tr>
                         {{/each}}
@@ -53,4 +53,7 @@
         </div>
     </div>
 </div>
+
+
+
 

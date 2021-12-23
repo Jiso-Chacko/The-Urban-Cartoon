@@ -186,16 +186,54 @@ module.exports = {
     changeOrderStatus : (body) => {
         console.log("This is change order status");
         return new Promise((resolve,reject) => {
-
-            db.get().collection(collection.ORDER_COLLECTION).updateOne({
-                _id : ObjectID(body.orderId)
-            },
-            {
-                $set: {
-                    status : body.value
-                }
-                
-            })
+            console.log(body.value);
+            if(body.value === 'delivered'){
+                console.log("Order delievered");   
+                db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                    _id : ObjectID(body.orderId)
+                },
+                {
+                    $set: {
+                        status : body.value,
+                        placed :  false,
+                        shipped : false,
+                        delivered : true,
+                        cancelled : false
+                    }
+                    
+                }) 
+            }
+            else if(body.value === 'shipped'){
+                console.log("order shipped");
+                db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                    _id : ObjectID(body.orderId)
+                },
+                {
+                    $set: {
+                        status : body.value,
+                        placed :  false,
+                        shipped : true,
+                        delivered : false,
+                        cancelled : false
+                    }
+                    
+                })
+            }
+            else if(body.value === 'cancelled'){
+                db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                    _id : ObjectID(body.orderId)
+                },
+                {
+                    $set: {
+                        status : body.value,
+                        placed :  false,
+                        shipped : false,
+                        delivered : false,
+                        cancelled : true
+                    }
+                    
+                })
+            }
             resolve()
         })
     }
