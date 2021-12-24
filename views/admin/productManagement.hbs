@@ -1,14 +1,12 @@
-
-<div class="container">
+<div class="container-fluid">
 
 
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <table class="table table-hover" id="myTable">
+                <table class="table table-hover mt-2" id="myTable">
                     <thead>
                         <tr>
-
                             <th>OrderId</th>
                             <th>user</th>
                             <th>Product</th>
@@ -17,36 +15,73 @@
                             <th>Status</th>
                             <th>Change Status</th>
                             <th>Cancel order</th>
-                            
+
                         </tr>
                     </thead>
                     <tbody>
                         {{#each orders}}
-                        <tr>
+                        {{#each products}}
+                        <t class="mt-5">
 
-                            <td>{{this._id}}</td>
-                            <td>{{this.deliveryDetails.firstName}}</td>
-                            <td><a href="/admin">View products</a></td>
+                            <td>{{../this._id}}</td>
+                            <td>{{../this.deliveryDetails.firstName}}</td>
+                            <td><a>{{#each this.productDetails}}{{this.productName}}{{/each}}</a></td>
 
-                            <td>{{this.paymentMethod}}</td>
-                            <td>₹{{this.totalAmount.totalSum}}</td>
-                            <td style="text-transform: uppercase;">{{this.status}}</td>
-                            
+                            <td>{{../this.paymentMethod}}</td>
+                            <td>₹{{../this.totalAmount.totalSum}}</td>
+                            {{#if this.placed}}
+                            <td style="text-transform: uppercase;" class="badge badge-primary">{{this.status}}</td>
+                            {{/if}}
+                            {{#if this.shipped}}
+                            <td style="text-transform: uppercase;" class="badge badge-info">{{this.status}}</td>
+                            {{/if}}
+                            {{#if this.delivered}}
+                            <td style="text-transform: uppercase;" class="badge badge-success">{{this.status}}</td>
+                            {{/if}}
+                            {{#if this.cancelled}}
+                            <td style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</td>
+                            {{/if}}
+
                             <td>
-                                
-                                <select  onmousedown="this.value=''" onchange="changeStatus(event,this.value,'{{this._id}}')">
+                                {{#if this.placed}}
+                                <select onmousedown="this.value=''"
+                                    onchange="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">
+                                    <option>Change Status</option>
                                     <option value="shipped" class="shipped">Shipped</option>
                                     <option value="delivered" class="delivered">Delivered</option>
                                     {{!-- <p class="text-success" style="display: none">Delivered</p> --}}
+                                </select>
+                                {{/if}}
 
-                                </select> 
-    
-                                </td>
+                                {{#if this.shipped}}
+                                <select onmousedown="this.value=''"
+                                    onchange="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">
+                                    <option value="delivered" class="delivered">Delivered</option>
+                                    {{!-- <p class="text-success" style="display: none">Delivered</p> --}}
+                                </select>
+                                {{/if}}
+                            </td>
+
                             {{!-- <td><button class="btn btn-sm btn-danger" >Cancel</button></td> --}}
-                            <td><a class="btn btn-sm btn-danger" style="width: 5.5rem;" onclick="cancelOrder('{{this._id}}')">Cancel</a></td>
+                            {{#if this.placed}}
+                            <td><a class="btn btn-sm btn-danger" style="width: 5.5rem;"
+                                    onclick="cancelOrder('{{this._id}}','{{this.product}}')">Cancel</a></td>
+                            {{/if}}
 
-                        </tr>
-                        {{/each}}
+                            {{#if this.shipped}}
+                            <td>
+                                {{!-- <a class="btn btn-sm btn-danger" style="width: 5.5rem;" value="cancelled"
+                                    onclick="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">Cancel</a> --}}
+                                {{!-- <input class="btn btn-sm btn-danger" type="button" > --}}
+                                <button class="btn btn-sm btn-danger" value="cancelled"
+                                    onclick="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">Cancel</button>
+                            </td>
+                            {{/if}}
+
+
+                            </tr>
+                            {{/each}}
+                            {{/each}}
                     </tbody>
                 </table>
             </div>
@@ -57,3 +92,9 @@
 
 
 
+{{!-- 
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script> --}}

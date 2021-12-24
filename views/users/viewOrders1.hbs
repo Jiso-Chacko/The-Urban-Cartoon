@@ -1,0 +1,136 @@
+
+
+<h2 class="text-center mt-3 mb-5">Your Orders</h2>
+
+{{#each orders}}
+<div class="container mb-3">
+
+    <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <div>
+                Order placed<br>{{this.date}}
+            </div>
+
+            <div>
+                Total<br>Rs.{{this.totalAmount.totalSum}}
+            </div>
+        </div>
+
+        
+        {{#each products}}
+            {{#if this.placed}}
+            <div class="d-flex justify-content-between">
+                <div class="ml-3">  
+                    <h5 class="card-title">{{#each this.productDetails}}{{this.productName}}{{/each}}</h5>
+                    <div>
+                        <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
+                            class="img-fluid max-width-100 p-1">
+                        <span>Rs.{{#each this.productDetails}}{{this.price}}{{/each}} </span>
+                    </div>
+                    <div>
+                        <p class="card-text text-dark">Order will be shipped in the next working day.</p>
+                        <a class="btn btn-primary ml-3 mb-2">Order again</a>
+                        <a style="cursor: pointer;" class="btn btn-danger ml-3 mb-2" onclick="cancelProduct('{{../this._id}}','{{this.product}}')">Cancel order</a>
+                    </div>
+                </div>
+                <div class="my-xl-9 mr-15">
+                    <h4>Status</h4>
+                    <h5 style="text-transform: uppercase;" class="text-info">{{this.status}}</h5>
+                </div>
+                <div class="my-xl-6">
+                    Ship to
+                    <br>{{../this.deliveryDetails.firstName}}&nbsp{{../this.deliveryDetails.lastName}}
+                    <br>{{../this.deliveryDetails.address}},
+                    <br>{{../this.deliveryDetails.city}},<span>{{../this.deliveryDetails.district}},</span>
+                    <br>{{../this.deliveryDetails.state}},<span>pin :{{../this.deliveryDetails.postcode}}</span>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if this.shipped}}
+            <div class="d-flex justify-content-between">
+                <div class="ml-3">  
+                    <h5 class="card-title">{{#each this.productDetails}}{{this.productName}}{{/each}}</h5>
+                    <div>
+                        <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
+                            class="img-fluid max-width-100 p-1">
+                        <span>Rs.{{#each this.productDetails}}{{this.price}}{{/each}}</span>
+                    </div>
+                    <div>
+                        <p class="card-text text-dark">Order will be delivered in 7 working days.</p>
+                        <a class="btn btn-primary ml-3 mb-2">Order again</a>
+                    </div>
+                </div>
+                <div class="my-xl-9 mr-15">
+                    <h4>Status</h4>
+                    <h5 style="text-transform: uppercase;" class="text-secondary">{{this.status}}</h5>
+                </div>
+                <div class="my-xl-6">
+                    Ship to
+                    <br>{{../this.deliveryDetails.firstName}}&nbsp{{../this.deliveryDetails.lastName}}
+                    <br>{{../this.deliveryDetails.address}},
+                    <br>{{../this.deliveryDetails.city}},<span>{{../this.deliveryDetails.district}},</span>
+                    <br>{{../this.deliveryDetails.state}},<span>pin :{{../this.deliveryDetails.postcode}}</span>
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if this.delivered}}
+            <div class="d-flex justify-content-between">
+                <div class="ml-3">  
+                    <h5 class="card-title">{{#each this.productDetails}}{{this.productName}}{{/each}}</h5>
+                    <div>
+                        <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
+                            class="img-fluid max-width-100 p-1">
+                        <span>{{this.price}} </span>
+                    </div>
+                    <div>
+                        <p class="card-text text-dark">Order has been successfully delivered.</p>
+                        <a class="btn btn-primary ml-3 mb-2">Order again</a>
+                    </div>
+                </div>
+                <div class="my-xl-9 mr-15">
+                    <h4>Status</h4>
+                    <h5 style="text-transform: uppercase;" class="text-success">{{this.status}}</h5>
+                </div>
+                <div class="my-xl-6">
+                    Ship to
+                    <br>{{../this.deliveryDetails.firstName}}&nbsp{{../this.deliveryDetails.lastName}}
+                    <br>{{../this.deliveryDetails.address}},
+                    <br>{{../this.deliveryDetails.city}},<span>{{../this.deliveryDetails.district}},</span>
+                    <br>{{../this.deliveryDetails.state}},<span>pin :{{../this.deliveryDetails.postcode}}</span>
+                </div>
+            </div>
+            {{/if}}
+            
+            {{#if this.cancelled}}
+            <div class="d-flex justify-content-between">
+                <div class="ml-3">  
+                    <h5 class="card-title">{{#each this.productDetails}}{{this.productName}}{{/each}}</h5>
+                    <div>
+                        <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
+                            class="img-fluid max-width-100 p-1">
+                        <span>Rs.{{#each this.productDetails}}{{this.price}}{{/each}}</span>
+                    </div>
+                    <div>
+                        <p class="card-text text-dark">Sorry for the inconvenience.</p>
+                        <a class="btn btn-primary ml-3 mb-2">Order again</a>
+                    </div>
+                </div>
+                <div class="my-xl-9 mr-15">
+                    <h4>Status</h4>
+                    <h5 style="text-transform: uppercase;" class="text-danger">{{this.status}}</h5>
+                </div>
+                <div class="my-xl-6">
+                    Ship to
+                    <br>{{../this.deliveryDetails.firstName}}&nbsp{{../this.deliveryDetails.lastName}}
+                    <br>{{../this.deliveryDetails.address}},
+                    <br>{{../this.deliveryDetails.city}},<span>{{../this.deliveryDetails.district}},</span>
+                    <br>{{../this.deliveryDetails.state}},<span>pin :{{../this.deliveryDetails.postcode}}</span>
+                </div>
+            </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+{{/each}}

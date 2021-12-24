@@ -272,3 +272,53 @@
                  document.getElementById('rzp-button1').onclick = function (e) {
             rzp1.open();
             e.preventDefault();
+
+
+
+
+///*****************  from cancel order
+             let productLen = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
+                $match: {
+                    _id: ObjectID(body.orderId)
+                }
+            },
+            {
+                $project: {
+                    products: 1,
+                    _id: 0
+                }
+            }
+        ]).toArray()
+        
+        console.log(productLen);
+
+            let copy = await db.get().collection(collection.ORDER_COLLECTION).findOne({
+                _id: ObjectID(body.orderId)
+            }, {
+                projection: {
+                    _id: 0
+                }
+            })
+            db.get().collection(collection.ORDER_COLLECTION).insertOne(copy)
+
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                _id: ObjectID(body.orderId)
+            }, {
+                $unset : 'products'
+            },
+            {
+                $set: {
+                    products : product,
+                    status: 'cancelled',
+                    placed: false,
+                    shipped: false,
+                    deliverd: false,
+                    cancelled: true,
+                }
+            })
+
+            if(productLen.length <= 1){
+                db.get().collection(collection.ORDER_COLLECTION).deleteOne({
+                    _id : ObjectID(body.orderId)
+                })
+            }

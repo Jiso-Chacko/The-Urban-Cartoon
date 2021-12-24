@@ -364,8 +364,7 @@ router.get('/addToCart/:id', (req, res, next) => {
     console.log("This is add to cart count in /addToCart");
 
     res.send(userStatus = true)
-  }
-  else {
+  } else {
     res.send(userStatus = false)
   }
 })
@@ -397,7 +396,7 @@ router.get('/addToWishlist/:id', (req, res, next) => {
       }
     })
 
-  } else { 
+  } else {
     res.send({
       userExist: false,
       status: false
@@ -454,7 +453,7 @@ router.get('/wishlist', verifyUserLogg, getCartCount, async (req, res, next) => 
   console.log(wishlistProducts);
   res.render('users/wishlist', {
     layout: 'users/layout',
-    wishlistProducts : wishlistProducts
+    wishlistProducts: wishlistProducts
   })
 })
 
@@ -522,7 +521,7 @@ router.post('/deleteProduct', (req, res, next) => {
 
 //*************** delete product in wishlist ajax call *****************
 
-router.post('/removeWishlist', (req,res,next) => {
+router.post('/removeWishlist', (req, res, next) => {
   console.log("This is /removeWishlist");
   console.log(req.session.user._id);
   console.log(req.body.proId);
@@ -530,14 +529,14 @@ router.post('/removeWishlist', (req,res,next) => {
   let userId = req.session.user._id
   let proId = req.body.proId
 
-  userProductHelper.deleteProductFromWishlist(userId,proId).then(async (result) => {
-  
-  let wishlistProducts = await userProductHelper.getProductsForWishlist(req.session.user._id)
+  userProductHelper.deleteProductFromWishlist(userId, proId).then(async (result) => {
+
+    let wishlistProducts = await userProductHelper.getProductsForWishlist(req.session.user._id)
 
 
     hb.render('views/users/wishlist.hbs', {
       layout: 'users/layout',
-      wishlistProducts : wishlistProducts
+      wishlistProducts: wishlistProducts
     }).then((renderHtml) => {
       res.send(renderHtml)
     })
@@ -555,16 +554,16 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   console.log("This is /checkout");
-  console.log("Address status : "+address.status);
+  console.log("Address status : " + address.status);
 
-  
-  
-  if(address.status == false){
+
+
+  if (address.status == false) {
     req.session.addressErr = true
     req.session.userAddress = null
-  }else{
+  } else {
     req.session.userAddress = address.address[0]
-    req.session.addressErr = false  
+    req.session.addressErr = false
   }
   console.log(req.session);
 
@@ -585,8 +584,8 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     totalAmount: price.totalSum,
     userFname: userFname,
     userLname: userLname,
-    address : req.session.userAddress,
-    "addressErr" : req.session.addressErr,
+    address: req.session.userAddress,
+    "addressErr": req.session.addressErr,
     "loggIn": userLoggedIn,
     user: user,
     userCartCount: userCartCount
@@ -595,41 +594,57 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
 
 
 // ************** checkout post router ******************************
-router.post('/checkout',async (req,res,next) => {
+router.post('/checkout', async (req, res, next) => {
   console.log("This is /checkout post");
   // console.log(req.body);
   // console.log(req.session.user._id);
-  let cartProducts = await  userProductHelper.getProductsForCart(req.session.user._id)
+  let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
-  userProductHelper.placeOrder(req.session.user._id,req.body,cartProducts,totalAmount).then((orderId) => {
-    
-    if(req.body.payment === 'cod'){
-      res.send({status : true,response : null})
-    }else{  
-      userProductHelper.generateRazorpay(orderId,totalAmount.totalSum).then((response) => {
-        res.send({status : false,response})
-      }) 
+  userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, totalAmount).then((orderId) => {
+
+    if (req.body.payment === 'cod') {
+      res.send({
+        status: true,
+        response: null
+      })
+    } else {
+      userProductHelper.generateRazorpay(orderId, totalAmount.totalSum).then((response) => {
+        res.send({
+          status: false,
+          response
+        })
+      })
     }
   })
 })
 
 // ******** order success get page *******************
-router.get('/checkout/orderSuccess',(req,res,next) => {
-  res.render('users/orderSuccess',{layout : 'users/layout'})
+router.get('/checkout/orderSuccess', (req, res, next) => {
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  res.render('users/orderSuccess', {
+    layout: 'users/layout',
+    "loggIn": userLoggedIn,
+    user: user
+  })
 })
 
 
 // ****************** razorpay verifypayment router **************
-router.post('/verifyPayment',(req,res,next) => {
+router.post('/verifyPayment', (req, res, next) => {
   console.log("This is verify payment router");
   console.log(req.body);
   userProductHelper.verifyPayment(req.body).then((result) => {
     userProductHelper.changePaymentStatus(req.body['order[receipt]']).then((response) => {
       console.log("Payment successful");
-      res.send({status : true})
+      res.send({
+        status: true
+      })
     }).catch((err) => {
       console.log(err);
-      res.send({status : false})
+      res.send({
+        status: false
+      })
     })
   })
 })
@@ -658,12 +673,11 @@ router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) =>
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn
   userCartCount = req.session.cartCount
-  
+
   let userAddress = address.address
-  if(address.status == false){
+  if (address.status == false) {
     req.session.addressErr = true
-  }
-  else{
+  } else {
     req.session.addressErr = false
   }
 
@@ -678,7 +692,7 @@ router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) =>
     layout: 'users/layout',
     userId: userId,
     "Messg": req.session.addressMssg,
-    "addressErr" : req.session.addressErr,
+    "addressErr": req.session.addressErr,
     address: userAddress,
     "loggIn": userLoggedIn,
     user: user,
@@ -719,21 +733,25 @@ router.get('/sweetAlert', (req, res, next) => {
 
 
 // ******* view all orders get *******************
-router.get('/viewProfile/:id/orders',async (req,res,next) => {
+router.get('/viewProfile/:id/orders',verifyUserLogg,async (req, res, next) => {
 
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
   console.log(req.params.id);
-  let orders = await  userProductHelper.getAllOrders(req.params.id)
-  
-    res.render('users/viewOrders',{
-      layout : 'users/layout',
-      orders : orders
-    })
-  
+  let orders = await userProductHelper.getAllOrders(req.params.id)
+
+  res.render('users/viewOrders1', {
+    layout: 'users/layout',
+    "loggIn": userLoggedIn,
+    user: user,
+    orders: orders
+  })
+
 })
 
 // ******* cancel product from orders ************
 
-router.post('/cancelProduct',(req,res,next) => {
+router.post('/cancelProduct', (req, res, next) => {
 
   console.log(req.body);
   console.log("This is cancel order router");
@@ -742,7 +760,7 @@ router.post('/cancelProduct',(req,res,next) => {
   res.send(status = true)
 })
 
-router.get('/zoom',(req,res,next) => {
+router.get('/zoom', (req, res, next) => {
   res.render('users/sweetAlertSample')
 })
 

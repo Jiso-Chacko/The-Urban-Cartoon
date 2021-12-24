@@ -194,13 +194,15 @@ module.exports = {
                 },
                 {
                     $set: {
-                        status : body.value,
-                        placed :  false,
-                        shipped : false,
-                        delivered : true,
-                        cancelled : false
-                    }
-                    
+                         "products.$[element].status" : "delivered" ,
+                         "products.$[element].placed" : false ,
+                         "products.$[element].shipped" : false ,
+                         "products.$[element].delivered" : true ,
+                         "products.$[element].cancelled" : false
+                        }
+                },
+                { 
+                    arrayFilters: [ { "element.product": { $eq: ObjectID(body.proId) } } ] 
                 }) 
             }
             else if(body.value === 'shipped'){
@@ -210,13 +212,15 @@ module.exports = {
                 },
                 {
                     $set: {
-                        status : body.value,
-                        placed :  false,
-                        shipped : true,
-                        delivered : false,
-                        cancelled : false
-                    }
-                    
+                         "products.$[element].status" : "Shipped" ,
+                         "products.$[element].placed" : false ,
+                         "products.$[element].shipped" : true ,
+                         "products.$[element].delivered" : false,
+                         "products.$[element].cancelled" : false
+                        }
+                },
+                { 
+                    arrayFilters: [ { "element.product": { $eq: ObjectID(body.proId) } } ] 
                 })
             }
             else if(body.value === 'cancelled'){
@@ -225,13 +229,15 @@ module.exports = {
                 },
                 {
                     $set: {
-                        status : body.value,
-                        placed :  false,
-                        shipped : false,
-                        delivered : false,
-                        cancelled : true
-                    }
-                    
+                         "products.$[element].status" : "cancelled" ,
+                         "products.$[element].placed" : false ,
+                         "products.$[element].shipped" : false ,
+                         "products.$[element].delivered" : false ,
+                         "products.$[element].cancelled" : true
+                        }
+                },
+                { 
+                    arrayFilters: [ { "element.product": { $eq: ObjectID(body.proId) } } ] 
                 })
             }
             resolve()

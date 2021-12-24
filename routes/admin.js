@@ -381,4 +381,29 @@ router.post('/cancelProduct',(req,res,next) => {
   res.send('Cancelled product')
 })
 
+router.get('/imageCrop',(req,res,next) => {
+
+
+  res.render('admin/imageCropSample',{layout : 'admin/layout' })
+})
+
+const imageUploadSample = upload.fields([{
+  name: 'fileinputimage4',
+  maxCount: 1
+}]) // product image upload
+
+
+router.post('/imageCrop',(req,res,next) => {
+
+  imageUploadSample(req,res,(err) => {
+    if(err){
+      console.log(err);
+    }
+    else{
+      console.log("success");
+    }
+    res.send("Image uploaded successfully")
+  })
+})
+
 module.exports = router;

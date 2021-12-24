@@ -300,28 +300,19 @@ function checkSave(){
 
 
 
-    function changeStatus(event,value,orderId) {
-        console.log(value,orderId);
+    function changeStatus(proId,value,orderId) {
+        console.log(value,orderId,proId);
         
         $.ajax({
             url : '/admin/changeStatus',
             method : 'post',
             data : {
                 value,
-                orderId
+                orderId,
+                proId
             },
             success : (renderHtml) => {
-                // console.log(status);
-                // if(status.status === 'shipped'){
-                //    var placed = document.getElementsByClassName('placed')  
-                //    console.log(event.target.querySelector('.placed')) 
-                //    event.target.querySelector('.placed').style.display = 'none'           
-                // }
-                // else if(status.status === 'delivered'){
-                //    document.getElementById('shipped').style.display = 'none'                         
-                //    document.getElementById('delivered').style.display = 'block'
-                // }
-
+                
                 var elements = $(renderHtml);
                 var found = $('#myTable', elements);
                 $('#myTable').html(found)  
@@ -394,3 +385,5 @@ function checkSave(){
             })
         })  
     }
+
+    

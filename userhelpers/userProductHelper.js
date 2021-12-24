@@ -397,6 +397,21 @@ module.exports = {
             // console.log(totalAmount);
             // console.log(order);
             let status = order.payment === 'cod' ? 'placed' : 'pending'
+
+            console.log("--------------------------------------------------------------");
+            console.log(products);
+            products = products.map((product)=>{
+                product.status = status;
+                product.placed = true;
+                product.shipped = false;
+                product.deliverd = false;
+                product.cancelled = false;
+                
+                return product;
+            })
+            console.log(products);
+            console.log("--------------------------------------------------------------");
+
             let orderObj = {
                 userId: ObjectID(userId),
                 deliveryDetails: {
@@ -414,11 +429,10 @@ module.exports = {
                 paymentMethod: order.payment,
                 products: products,
                 totalAmount: totalAmount,
-                status: status,
-                placed: true,
-                shipped: false,
-                deliverd: false,
-                cancelled: false,
+                allPlaced: true,
+                allShipped: false,
+                allDeliverd: false,
+                allCancelled: false,
                 date: dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT")
             }
 
@@ -469,13 +483,17 @@ module.exports = {
     changePaymentStatus: (orerId) => {
         console.log("This is change payment status");
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.ORDER_COLLECTION).updateOne({
-                _id: ObjectID(orerId)
-            }, {
-                $set: {
-                    status: 'placed'
+            db.get().collection(collection.ORDER_COLLECTION).updateOne(
+                {
+                    _id: ObjectID(orerId)
+                },
+                {
+                    $set: { "products.$[element].status" : "placed" }
+                },
+                { 
+                    arrayFilters: [ { "element.status": { $eq: "pending" } } ] 
                 }
-            })
+            )
             resolve()
         })
     },
@@ -497,84 +515,50 @@ module.exports = {
         // console.log(body.orderId,body.proId);
         return new Promise(async (resolve, reject) => {
                    
-            let product = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
-                    $match: {
-                        _id: ObjectID(body.orderId)
-                    },
-                },
-                {
-                    $project: {
-                        products: 1,
-                        _id: 0
-                    }
-                },
-                {
-                    $unwind: '$products'
-                },
-                {
-                    $match: {
-                        'products.product': ObjectID(body.proId)
-                    }
-                }
-            ]).toArray()
+            // let product = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
+            //         $match: {
+            //             _id: ObjectID(body.orderId)
+            //         },
+            //     },
+            //     {
+            //         $project: {
+            //             products: 1,
+            //             _id: 0
+            //         }
+            //     },
+            //     {
+            //         $unwind: '$products'
+            //     },
+            //     {
+            //         $match: {
+            //             'products.product': ObjectID(body.proId)
+            //         }
+            //     }
+            // ]).toArray()
             
-            console.log([product[0].products]);
-            console.log(product.length);
-            db.get().collection(collection.ORDER_COLLECTION).updateOne({
-                _id: ObjectID(body.orderId)
-            }, {
-                $pull: {
-                    products: {
-                        product: ObjectID(body.proId)
-                    }
-                }
-            })
+            // console.log([product[0].products]);
+            // console.log(product.length);
 
-            let productLen = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
-                $match: {
+
+            db.get().collection(collection.ORDER_COLLECTION).updateOne(
+                {
                     _id: ObjectID(body.orderId)
+                },    
+                {
+                    $set: {
+                         "products.$[element].status" : "cancelled" ,
+                         "products.$[element].placed" : false ,
+                         "products.$[element].shipped" : false ,
+                         "products.$[element].delivered" : false ,
+                         "products.$[element].cancelled" : true
+                        }
+                },
+                { 
+                    arrayFilters: [ { "element.product": { $eq: ObjectID(body.proId) } } ] 
                 }
-            },
-            {
-                $project: {
-                    products: 1,
-                    _id: 0
-                }
-            }
-        ]).toArray()
-        console.log(productLen);
+            )
 
-            let copy = await db.get().collection(collection.ORDER_COLLECTION).findOne({
-                _id: ObjectID(body.orderId)
-            }, {
-                projection: {
-                    _id: 0
-                }
-            })
-            db.get().collection(collection.ORDER_COLLECTION).insertOne(copy)
-
-            db.get().collection(collection.ORDER_COLLECTION).updateOne({
-                _id: ObjectID(body.orderId)
-            }, {
-                $unset : 'products'
-            },
-            {
-                $set: {
-                    products : product,
-                    status: 'cancelled',
-                    placed: false,
-                    shipped: false,
-                    deliverd: false,
-                    cancelled: true,
-                }
-            })
-
-            if(productLen.length <= 1){
-                db.get().collection(collection.ORDER_COLLECTION).deleteOne({
-                    _id : ObjectID(body.orderId)
-                })
-            }
-
+           
             resolve()
         })
     }
