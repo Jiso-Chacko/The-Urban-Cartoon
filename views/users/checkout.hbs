@@ -45,7 +45,7 @@
         <div class="container">
 
 
-            <form>
+            <form id="newForm">
                 <div class="row">
                     <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
                         <div class="pl-lg-3 ">
@@ -476,7 +476,7 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" class="form-control" name="lastName" placeholder=""
-                                            aria-label="Wayley" required="" data-msg="Please enter your last name."
+                                            aria-label="Wayley" ` data-msg="Please enter your last name."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
                                     </div>
                                     <!-- End Input -->
@@ -743,7 +743,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="firstName"
-                                                placeholder="{{userFname}}" aria-label="Jack" required=""
+                                                placeholder="{{userFname}}" value="{{userFname}}" aria-label="Jack" 
                                                 data-msg="Please enter your frist name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success" autocomplete="off">
                                         </div>
@@ -758,7 +758,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="lastName"
-                                                placeholder="{{userLname}}" aria-label="Wayley" required=""
+                                                placeholder="{{userLname}}" value="{{userLname}}" aria-label="Wayley" 
                                                 data-msg="Please enter your last name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -775,7 +775,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="address"
-                                                placeholder="{{address.address.address}}" aria-label="Company Name"
+                                                placeholder="{{address.address.address}}" value="{{address.address.address}}" aria-label="Company Name"
                                                 data-msg="Please enter a company name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -790,7 +790,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="state"
-                                                placeholder="{{address.address.state}}" aria-label="Company Name"
+                                                placeholder="{{address.address.state}}" value="{{address.address.state}}" aria-label="Company Name"
                                                 data-msg="Please enter a company name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -807,8 +807,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="district"
-                                                placeholder="{{address.address.district}}" aria-label="470 Lucy Forks"
-                                                required="" data-msg="Please enter a valid address."
+                                                placeholder="{{address.address.district}}" value="{{address.address.district}}" aria-label="470 Lucy Forks"
+                                                data-msg="Please enter a valid address."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
                                         </div>
                                         <!-- End Input -->
@@ -824,7 +824,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="city"
-                                                placeholder="{{address.address.city}}" aria-label="London" required=""
+                                                placeholder="{{address.address.city}}" value="{{address.address.city}}" aria-label="London" 
                                                 data-msg="Please enter a valid address." data-error-class="u-has-error"
                                                 data-success-class="u-has-success" autocomplete="off">
                                         </div>
@@ -839,8 +839,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="postcode"
-                                                placeholder="{{address.address.postcode}}" aria-label="99999"
-                                                required="" data-msg="Please enter a postcode or zip code."
+                                                placeholder="{{address.address.postcode}}" value="{{address.address.postcode}}" aria-label="99999"
+                                             data-msg="Please enter a postcode or zip code."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
                                         </div>
                                         <!-- End Input -->
@@ -858,8 +858,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="email" class="form-control" name="emailAddress"
-                                                placeholder="{{address.address.email}}"
-                                                aria-label="jackwayley@gmail.com" required=""
+                                                placeholder="{{address.address.email}}" value="{{address.address.email}}"
+                                                aria-label="jackwayley@gmail.com" 
                                                 data-msg="Please enter a valid email address."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
                                         </div>
@@ -874,7 +874,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control"
-                                                placeholder="{{address.address.phone}}" aria-label="+1 (062) 109-9222"
+                                                placeholder="{{address.address.phone}}" value="{{address.address.phone}}" aria-label="+1 (062) 109-9222"
                                                 name="phone" data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -967,6 +967,64 @@
             }
         })
     })
+
+
+    // ********** myForm Post **************
+    $('#MyForm').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/checkout',
+            method: 'post',
+            data: $('#MyForm').serialize(),
+            success: (response) => {
+                console.log(response)
+                if (response.status == true) {
+                    console.log("This is status true")
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Order placed successfully',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(() => {
+                        location.href = '/checkout/orderSuccess'
+                    })
+                } else {
+                    razorpayPayment(response.response)
+                }
+            }
+        })
+    })
+
+    // ********** newForm Post **************
+    $('#newForm').submit((e) => {
+        e.preventDefault()
+        $.ajax({
+            url: '/checkout',
+            method: 'post',
+            data: $('#newForm').serialize(),
+            success: (response) => {
+                console.log(response)
+                if (response.status == true) {
+                    console.log("This is status true")
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Order placed successfully',
+                        showConfirmButton: false,
+                        timer: 1000
+                    }).then(() => {
+                        location.href = '/checkout/orderSuccess'
+                    })
+                } else {
+                    razorpayPayment(response.response)
+                }
+            }
+        })
+    })
+
+
+
 
     function razorpayPayment(order) {
         var options = {

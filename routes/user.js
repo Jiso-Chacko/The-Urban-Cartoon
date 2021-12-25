@@ -77,17 +77,21 @@ router.post('/otplogin', (req, res, next) => {
 
   loginPhonenumber = req.body
   userHelper.getUserPhone(req.body).then(async (result) => {
+    console.log("************");
     console.log(result);
+    console.log(req.body.phone);
+    console.log(result.phone.userPhone);
+    phoneNumber = parseInt(result.phone.userPhone)
     req.session.loginData = result
     req.session.user = result
     req.session.userLoggedIn = true
     let cartCount = await userProductHelper.getCartCount(result.phone._id)
     req.session.cartCount = cartCount
 
-    if (result.status) {
+    if (result.status == true) {
       req.session.logInPhnErr = false
       client.verify.services(serviceId).verifications.create({
-        to: `+91${req.body.phone}`,
+        to: `+91${result.phone.userPhone}`,
         channel: "sms"
       }).then((result) => {
         res.redirect('/otp4Login')
@@ -596,7 +600,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
 // ************** checkout post router ******************************
 router.post('/checkout', async (req, res, next) => {
   console.log("This is /checkout post");
-  // console.log(req.body);
+  console.log(req.body);
   // console.log(req.session.user._id);
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
@@ -619,13 +623,20 @@ router.post('/checkout', async (req, res, next) => {
 })
 
 // ******** order success get page *******************
-router.get('/checkout/orderSuccess', (req, res, next) => {
+router.get('/checkout/orderSuccess',verifyUserLogg, async(req, res, next) => {
+  console.log(req.session.user);
+  userDetails = req.session.user;
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn
+  let order = await userProductHelper.getOneOrder(req.session.user._id)
+  console.log(order.date);
   res.render('users/orderSuccess', {
     layout: 'users/layout',
     "loggIn": userLoggedIn,
-    user: user
+    user: user,
+    userDetails : userDetails,
+    order : order.result,
+    deliveryDate : order.date
   })
 })
 

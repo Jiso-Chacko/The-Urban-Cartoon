@@ -400,13 +400,13 @@ module.exports = {
 
             console.log("--------------------------------------------------------------");
             console.log(products);
-            products = products.map((product)=>{
+            products = products.map((product) => {
                 product.status = status;
                 product.placed = true;
                 product.shipped = false;
                 product.deliverd = false;
                 product.cancelled = false;
-                
+
                 return product;
             })
             console.log(products);
@@ -483,17 +483,19 @@ module.exports = {
     changePaymentStatus: (orerId) => {
         console.log("This is change payment status");
         return new Promise((resolve, reject) => {
-            db.get().collection(collection.ORDER_COLLECTION).updateOne(
-                {
-                    _id: ObjectID(orerId)
-                },
-                {
-                    $set: { "products.$[element].status" : "placed" }
-                },
-                { 
-                    arrayFilters: [ { "element.status": { $eq: "pending" } } ] 
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                _id: ObjectID(orerId)
+            }, {
+                $set: {
+                    "products.$[element].status": "placed"
                 }
-            )
+            }, {
+                arrayFilters: [{
+                    "element.status": {
+                        $eq: "pending"
+                    }
+                }]
+            })
             resolve()
         })
     },
@@ -514,7 +516,7 @@ module.exports = {
         console.log("This is cancel order from database");
         // console.log(body.orderId,body.proId);
         return new Promise(async (resolve, reject) => {
-                   
+
             // let product = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
             //         $match: {
             //             _id: ObjectID(body.orderId)
@@ -535,31 +537,47 @@ module.exports = {
             //         }
             //     }
             // ]).toArray()
-            
+
             // console.log([product[0].products]);
             // console.log(product.length);
 
 
-            db.get().collection(collection.ORDER_COLLECTION).updateOne(
-                {
-                    _id: ObjectID(body.orderId)
-                },    
-                {
-                    $set: {
-                         "products.$[element].status" : "cancelled" ,
-                         "products.$[element].placed" : false ,
-                         "products.$[element].shipped" : false ,
-                         "products.$[element].delivered" : false ,
-                         "products.$[element].cancelled" : true
-                        }
-                },
-                { 
-                    arrayFilters: [ { "element.product": { $eq: ObjectID(body.proId) } } ] 
+            db.get().collection(collection.ORDER_COLLECTION).updateOne({
+                _id: ObjectID(body.orderId)
+            }, {
+                $set: {
+                    "products.$[element].status": "cancelled",
+                    "products.$[element].placed": false,
+                    "products.$[element].shipped": false,
+                    "products.$[element].delivered": false,
+                    "products.$[element].cancelled": true
                 }
-            )
+            }, {
+                arrayFilters: [{
+                    "element.product": {
+                        $eq: ObjectID(body.proId)
+                    }
+                }]
+            })
 
-           
+
             resolve()
+        })
+    },
+
+    getOneOrder: (userId) => {
+
+        return new Promise((resolve, reject) => {
+            var now = new Date();
+            delivery = now.setDate(now.getDate() + 7);
+
+            date = dateFormat(delivery, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+            db.get().collection(collection.ORDER_COLLECTION).findOne({
+                userId: ObjectID(userId)
+            }).then((result) => {
+                console.log(result);
+                resolve({result,date})
+            })
         })
     }
 

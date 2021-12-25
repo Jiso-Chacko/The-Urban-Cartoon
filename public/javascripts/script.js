@@ -378,8 +378,7 @@ function checkSave(){
                 },
                 success : (response) => {
                     if(response){
-
-                        alert('order cancelled!')
+                        location.reload()
                     }
                 }
             })
