@@ -1,17 +1,75 @@
+// function addToCart(proId) {
+
+//     console.log("This is addtoacart");
+//     $.ajax({
+//         url: '/addToCart/' + proId,
+//         method: 'get',
+//         success: function (response) {
+//             console.log(response);
+//             if (response.userStatus == true) {
+//                 console.log(response);
+//                 console.log('User exist')
+//                 Swal.fire({
+//                     position: 'center',
+//                     icon: 'success',
+//                     title: 'Produt added to cart',
+//                     showConfirmButton: false,
+//                     timer: 1000
+//                 }).then(() => {
+//                     var element = $(response.renderHtml)
+//                     var fount = $('#cartCount', element)
+//                     // var fount2 = $('#cartCountList', element)
+//                     $('#cartCount').html(fount)
+//                     console.log("Element fount");
+//                     // console.log(response.renderHtml);
+//                 })
+//             } else {
+//                 Swal.fire({
+//                     title: 'Please login to continue!',
+//                     icon: 'warning',
+//                     showCancelButton: true,
+//                     confirmButtonColor: '#42ba96',
+//                     cancelButtonColor: '#d33',
+//                     confirmButtonText: 'Login'
+//                 }).then((result) => {
+//                     if (result.isConfirmed) {
+//                         location.href = '/login'
+//                     }
+//                 })
+
+//             }
+//         }
+//     })
+// }
+
+
 function addToCart(proId) {
 
     console.log("This is addtoacart");
     $.ajax({
-        url: '/addToCart/' + proId,
-        method: 'get',
+        url: '/addToCart/',
+        method: 'post',
+        data : {
+            proId : proId
+        },
         success: function (response) {
-            if (response == true) {
+            console.log(response);
+            if (response.userStatus == true) {
+                console.log(response);
+                console.log('User exist')
                 Swal.fire({
                     position: 'center',
                     icon: 'success',
                     title: 'Produt added to cart',
                     showConfirmButton: false,
                     timer: 1000
+                }).then(() => {
+                    var element = $(response.renderHtml)
+                    var fount = $('#cartCount', element)
+                    // var fount2 = $('#cartCountList', element)
+                    $('#cartCount').html(fount)
+                    console.log("Element fount");
+                    // console.log(response.renderHtml);
                 })
             } else {
                 Swal.fire({
@@ -31,6 +89,9 @@ function addToCart(proId) {
         }
     })
 }
+
+
+
 
 function addToWishlist(proId) {
 
@@ -287,7 +348,7 @@ function removeFromWishlist(proId) {
     })
 }
 
-function checkSave(){
+function checkSave() {
 
     Swal.fire({
         title: 'Do you want to save the changes?',
@@ -300,89 +361,101 @@ function checkSave(){
 
 
 
-    function changeStatus(proId,value,orderId) {
-        console.log(value,orderId,proId);
-        
+function changeStatus(proId, value, orderId) {
+    console.log(value, orderId, proId);
+
+    $.ajax({
+        url: '/admin/changeStatus',
+        method: 'post',
+        data: {
+            value,
+            orderId,
+            proId
+        },
+        success: (renderHtml) => {
+
+            var elements = $(renderHtml);
+            var found = $('#myTable', elements);
+            $('#myTable').html(found)
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: 'Status changed!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+        },
+        error: (err) => {
+            console.log(err);
+        }
+    })
+}
+
+function cancelOrder(orderId) {
+
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to delete this product?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, cancel it!'
+    }).then(() => {
         $.ajax({
-            url : '/admin/changeStatus',
-            method : 'post',
-            data : {
-                value,
-                orderId,
-                proId
+            url: '/admin/cancelProduct',
+            method: 'post',
+            data: {
+                orderId: orderId,
+                value: 'cancelled'
             },
-            success : (renderHtml) => {
-                
-                var elements = $(renderHtml);
-                var found = $('#myTable', elements);
-                $('#myTable').html(found)  
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Status changed!',
-                    showConfirmButton: false,
-                    timer: 1500
-                })         
+            success: function () {
+
+            }
+        })
+    })
+
+}
+
+
+
+function cancelProduct(orderId, proId) {
+    // console.log(orderId,proId);
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Do you want to cancel this product?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, cancel it!'
+    }).then(() => {
+        $.ajax({
+            url: '/cancelProduct',
+            method: 'post',
+            data: {
+                orderId: orderId,
+                proId: proId
             },
-            error : (err) => {
-                console.log(err);
-            } 
-        })
-    }
-
-    function cancelOrder(orderId){
-
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to delete this product?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, cancel it!'
-        }).then(() => {
-            $.ajax({
-                url : '/admin/cancelProduct',
-                method : 'post',
-                data : {
-                    orderId : orderId,
-                    value : 'cancelled'
-                },
-                success : function (){
-                   
+            success: (response) => {
+                if (response) {
+                    location.reload()
                 }
-            })
+            }
         })
-        
+    })
+}
+
+
+function selectAddress(value){
+    if(value === 'home'){
+        console.log("This is home");
     }
-
-
-
-    function cancelProduct(orderId,proId){
-        // console.log(orderId,proId);
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "Do you want to cancel this product?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, cancel it!'
-        }).then(() => {
-            $.ajax({
-                url : '/cancelProduct',
-                method : 'post',
-                data : {
-                    orderId : orderId,
-                    proId : proId
-                },
-                success : (response) => {
-                    if(response){
-                        location.reload()
-                    }
-                }
-            })
-        })  
+    else if(value === "office") {
+        console.log("This is office");
     }
-
-    
+    else if(value === "other"){
+        console.log("This is other");
+    }
+    console.log('Select address'+""+value)
+}

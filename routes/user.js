@@ -353,26 +353,48 @@ router.get('/viewProduct', getCartCount, async (req, res, next) => {
   })
 })
 
-// add to cart get method
-router.get('/addToCart/:id', (req, res, next) => {
+// add to cart ajax call
+router.post('/addToCart', async (req, res, next) => {
 
-  console.log(req.params.id);
   if (req.session.user) {
     console.log("User exists");
-    let userId = req.session.user._id;
-    let proId = req.params.id;
-
-    userProductHelper.addToCart(userId, proId).then((result) => {
-      console.log(result.ops);
+    proId = req.body.proId
+    userId = req.session.user._id
+    await userProductHelper.addToCart(userId, proId).then((cartCount) => {
+      console.log(cartCount);
+      req.session.cartCount = cartCount
     })
-    console.log("This is add to cart count in /addToCart");
 
-    res.send(userStatus = true)
+    user = req.session.user.userFirstName
+    userLoggedIn = req.session.userLoggedIn
+
+    console.log("This is add to cart count in /addToCart");
+    console.log(userId);
+    console.log(req.session.cartCount);
+    // res.send(userStatus = true)
+    hb.render('views/users/layout.hbs', {
+      "loggIn": userLoggedIn,
+      user: user,
+      userCartCount: req.session.cartCount,
+      userId: userId
+
+    }).then((renderHtml) => {
+      res.send({
+        userStatus: true,
+        renderHtml
+      })
+    })
+
   } else {
-    res.send(userStatus = false)
+    userLoggedIn = false
+    user = null
+    userCartCount = null,
+      userId = null
+    res.send({
+      userStatus: false
+    })
   }
 })
-
 
 // ******* add to wishlist get ajax call************
 
@@ -598,7 +620,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
 
 
 // ************** checkout post router ******************************
-router.post('/checkout', async (req, res, next) => {
+router.post('/checkout',verifyUserLogg, async (req, res, next) => {
   console.log("This is /checkout post");
   console.log(req.body);
   // console.log(req.session.user._id);
@@ -623,7 +645,7 @@ router.post('/checkout', async (req, res, next) => {
 })
 
 // ******** order success get page *******************
-router.get('/checkout/orderSuccess',verifyUserLogg, async(req, res, next) => {
+router.get('/checkout/orderSuccess', verifyUserLogg, async (req, res, next) => {
   console.log(req.session.user);
   userDetails = req.session.user;
   user = req.session.user.userFirstName
@@ -634,19 +656,20 @@ router.get('/checkout/orderSuccess',verifyUserLogg, async(req, res, next) => {
     layout: 'users/layout',
     "loggIn": userLoggedIn,
     user: user,
-    userDetails : userDetails,
-    order : order.result,
-    deliveryDate : order.date
+    userDetails: userDetails,
+    order: order.result,
+    deliveryDate: order.date
   })
 })
 
 
 // ****************** razorpay verifypayment router **************
-router.post('/verifyPayment', (req, res, next) => {
+router.post('/verifyPayment',verifyUserLogg, (req, res, next) => {
   console.log("This is verify payment router");
+  console.log(req.session.user._id);
   console.log(req.body);
   userProductHelper.verifyPayment(req.body).then((result) => {
-    userProductHelper.changePaymentStatus(req.body['order[receipt]']).then((response) => {
+    userProductHelper.changePaymentStatus(req.body['order[receipt]'],req.session.user._id).then((response) => {
       console.log("Payment successful");
       res.send({
         status: true
@@ -744,7 +767,7 @@ router.get('/sweetAlert', (req, res, next) => {
 
 
 // ******* view all orders get *******************
-router.get('/viewProfile/:id/orders',verifyUserLogg,async (req, res, next) => {
+router.get('/viewProfile/:id/orders', verifyUserLogg, async (req, res, next) => {
 
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn

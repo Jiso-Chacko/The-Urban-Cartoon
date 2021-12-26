@@ -7,7 +7,7 @@
 
 
 <!-- ========== MAIN CONTENT ========== -->
-<main id="content" role="main" class="checkout-page">
+<main id="content" role="main" class="checkout-page" onload="onloadFunc()">
     <!-- breadcrumb -->
     <div class="bg-gray-13 bg-md-transparent">
         <div class="container">
@@ -671,15 +671,15 @@
                                             <div id="basicsAccordion1">
 
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="payment"
-                                                        id="flexRadioDefault1" value="cod">
+                                                    <input type="radio" name="payment" id="flexRadioDefault1"
+                                                        value="cod">
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Cash on delivery
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="payment"
-                                                        id="flexRadioDefault2" value="razorpay">
+                                                    <input type="radio" name="payment" id="flexRadioDefault2"
+                                                        value="razorpay">
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Razorpay
                                                     </label>
@@ -727,7 +727,10 @@
                                             Address type
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <select class="form-control" name="addressType" id="addressType">
+                                        <select class="form-control" name="addressType" id="addressType"
+                                            onchange="selectAddress(this.value)"
+                                            data-swal-toast-template="#my-template">
+                                            <option value="">Enter the address type</option>
                                             <option value="home">Home</option>
                                             <option value="office">Office</option>
                                             <option value="other">Other</option>
@@ -743,7 +746,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="firstName"
-                                                placeholder="{{userFname}}" value="{{userFname}}" aria-label="Jack" 
+                                                placeholder="" value="" aria-label="Jack"
                                                 data-msg="Please enter your frist name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success" autocomplete="off">
                                         </div>
@@ -758,7 +761,7 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="lastName"
-                                                placeholder="{{userLname}}" value="{{userLname}}" aria-label="Wayley" 
+                                                placeholder=""  value="" aria-label="Wayley"
                                                 data-msg="Please enter your last name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -775,7 +778,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="address"
-                                                placeholder="{{address.address.address}}" value="{{address.address.address}}" aria-label="Company Name"
+                                                placeholder=""
+                                                value="" aria-label="Company Name"
                                                 data-msg="Please enter a company name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -790,7 +794,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="state"
-                                                placeholder="{{address.address.state}}" value="{{address.address.state}}" aria-label="Company Name"
+                                                placeholder=""
+                                                value="" aria-label="Company Name"
                                                 data-msg="Please enter a company name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -807,9 +812,10 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="district"
-                                                placeholder="{{address.address.district}}" value="{{address.address.district}}" aria-label="470 Lucy Forks"
-                                                data-msg="Please enter a valid address."
-                                                data-error-class="u-has-error" data-success-class="u-has-success">
+                                                placeholder=""
+                                                value="" aria-label="470 Lucy Forks"
+                                                data-msg="Please enter a valid address." data-error-class="u-has-error"
+                                                data-success-class="u-has-success">
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -824,9 +830,10 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="city"
-                                                placeholder="{{address.address.city}}" value="{{address.address.city}}" aria-label="London" 
-                                                data-msg="Please enter a valid address." data-error-class="u-has-error"
-                                                data-success-class="u-has-success" autocomplete="off">
+                                                placeholder="" value=""
+                                                aria-label="London" data-msg="Please enter a valid address."
+                                                data-error-class="u-has-error" data-success-class="u-has-success"
+                                                autocomplete="off">
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -839,8 +846,9 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control" name="postcode"
-                                                placeholder="{{address.address.postcode}}" value="{{address.address.postcode}}" aria-label="99999"
-                                             data-msg="Please enter a postcode or zip code."
+                                                placeholder=""
+                                                value="" aria-label="99999"
+                                                data-msg="Please enter a postcode or zip code."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
                                         </div>
                                         <!-- End Input -->
@@ -858,8 +866,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="email" class="form-control" name="emailAddress"
-                                                placeholder="{{address.address.email}}" value="{{address.address.email}}"
-                                                aria-label="jackwayley@gmail.com" 
+                                                placeholder=""
+                                                value="" aria-label="jackwayley@gmail.com"
                                                 data-msg="Please enter a valid email address."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
                                         </div>
@@ -874,7 +882,8 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="text" class="form-control"
-                                                placeholder="{{address.address.phone}}" value="{{address.address.phone}}" aria-label="+1 (062) 109-9222"
+                                                placeholder=""
+                                                value="" aria-label="+1 (062) 109-9222"
                                                 name="phone" data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
                                         </div>
@@ -930,6 +939,25 @@
         allowOutsideClick: false,
     })
 </script>
+{{else}}
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+
+    Toast.fire({
+        icon: 'info',
+        title: 'Please select a address type!'
+    })
+</script>
 {{/if}}
 
 <script>
@@ -944,28 +972,44 @@
 
     $('#billingDetails').submit((e) => {
         e.preventDefault()
-        $.ajax({
-            url: '/checkout',
-            method: 'post',
-            data: $('#billingDetails').serialize(),
-            success: (response) => {
-                console.log(response)
-                if (response.status == true) {
-                    console.log("This is status true")
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Order placed successfully',
-                        showConfirmButton: false,
-                        timer: 1000
-                    }).then(() => {
-                        location.href = '/checkout/orderSuccess'
-                    })
-                } else {
-                    razorpayPayment(response.response)
+        console.log(document.querySelector('input[name = payment]:checked'))
+        if (!document.querySelector('input[name = payment]:checked')) {
+            console.log('This is if case')
+            console.log(document.querySelector('input[name = payment]:checked'))
+            Swal.fire({
+                title: 'Please enter a payment method!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+        } else {
+            console.log('This is else case')
+            $.ajax({
+                url: '/checkout',
+                method: 'post',
+                data: $('#billingDetails').serialize(),
+                success: (response) => {
+                    console.log(response)
+                    if (response.status == true) {
+                        console.log("This is status true")
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Order placed successfully',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }).then(() => {
+                            location.href = '/checkout/orderSuccess'
+                        })
+                    } else {
+                        razorpayPayment(response.response)
+                    }
                 }
-            }
-        })
+            })
+        }
     })
 
 
@@ -1030,13 +1074,13 @@
         var options = {
             "key": "rzp_test_SDgCuI5x7u6nU2", // Enter the Key ID generated from the Dashboard
             "amount": order
-            .amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+                .amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
             "currency": "INR",
             "name": "Acme Corp",
             "description": "Test Transaction",
             "image": "https://example.com/your_logo",
             "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response) {               
+            "handler": function (response) {
                 verifyPayment(response, order)
             },
             "prefill": {
@@ -1051,9 +1095,9 @@
                 "color": "#3399cc"
             }
         };
-        var rzp1 = new Razorpay(options);    
+        var rzp1 = new Razorpay(options);
         rzp1.open();
-    
+
     }
 
     function verifyPayment(payment, order) {
@@ -1065,11 +1109,11 @@
                 payment,
                 order
             },
-            success : (response) => {
+            success: (response) => {
                 console.log(response)
-                if(response.status == true){
+                if (response.status == true) {
                     console.log("success")
-                     Swal.fire({
+                    Swal.fire({
                         position: 'center',
                         icon: 'success',
                         title: 'Order placed successfully',
@@ -1078,15 +1122,14 @@
                     }).then(() => {
                         location.href = '/checkout/orderSuccess'
                     })
-                }
-                else{
+                } else {
                     Swal.fire({
                         position: 'center',
                         icon: 'error',
                         title: 'Order failed',
                         showConfirmButton: true,
                     })
-                }           
+                }
             }
         })
     }

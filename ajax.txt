@@ -322,3 +322,58 @@
                     _id : ObjectID(body.orderId)
                 })
             }
+
+
+ //******* add to cart get method ***********
+                        router.get('/addToCart/:id', (req, res, next) => {
+
+                        console.log(req.params.id);
+                        if (req.session.user) { 
+                            console.log("User exists");
+                            let userId = req.session.user._id;
+                            let proId = req.params.id;
+
+                            userProductHelper.addToCart(userId, proId).then((result) => {
+                            console.log(result.ops);
+                            })
+                            console.log("This is add to cart count in /addToCart");
+
+                            res.send(userStatus = true)
+                        } else {
+                            res.send(userStatus = false)
+                        }
+                        })
+// ********** add to cart ajax call ******************
+                        function addToCart(proId) {
+
+                        console.log("This is addtoacart");
+                        $.ajax({
+                            url: '/addToCart/' + proId,
+                            method: 'get',
+                            success: function (response) {
+                                if (response == true) {
+                                    Swal.fire({
+                                        position: 'center',
+                                        icon: 'success',
+                                        title: 'Produt added to cart',
+                                        showConfirmButton: false,
+                                        timer: 1000
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        title: 'Please login to continue!',
+                                        icon: 'warning',
+                                        showCancelButton: true,
+                                        confirmButtonColor: '#42ba96',
+                                        cancelButtonColor: '#d33',
+                                        confirmButtonText: 'Login'
+                                    }).then((result) => {
+                                        if (result.isConfirmed) {
+                                            location.href = '/login'
+                                        }
+                                    })
+
+                                }
+                            }
+                        })
+                    }

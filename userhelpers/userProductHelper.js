@@ -114,16 +114,29 @@ module.exports = {
                     $inc: {
                         quantity: 1
                     }
-                }).then((result) => {
-                    resolve(result)
+                }).then(async () => {
+                    cartCount = await db.get().collection(collection.CART_COLLECTION).find({
+                        user: ObjectID(userId)
+                    }).toArray()
+                    console.log("******");
+                    console.log(cartCount.length);
+                    resolve(cartCount.length)
                 })
             } else {
                 console.log("This is else case");
-                let userProducts = await db.get().collection(collection.CART_COLLECTION).insertOne({
+                db.get().collection(collection.CART_COLLECTION).insertOne({
                     user: ObjectID(userId),
                     product: ObjectID(proId),
                     date: new Date(),
                     quantity: 1
+
+                }).then(async() => {
+                    cartCount = await db.get().collection(collection.CART_COLLECTION).find({
+                        user: ObjectID(userId)
+                    }).toArray()
+                    console.log("******");
+                    console.log(cartCount.length);
+                resolve(cartCount.length)
                 })
                 //    console.log(userProducts)
             }
@@ -135,7 +148,7 @@ module.exports = {
 
         return new Promise(async (resolve, reject) => {
             let count = 0;
-            let userproducts = await db.get().collection(collection.CART_COLLECTION).find({
+            userproducts = await db.get().collection(collection.CART_COLLECTION).find({
                 user: ObjectID(userId)
             }).toArray()
             console.log(userproducts);
@@ -399,16 +412,26 @@ module.exports = {
             let status = order.payment === 'cod' ? 'placed' : 'pending'
 
             console.log("--------------------------------------------------------------");
-            console.log(products);
-            products = products.map((product) => {
-                product.status = status;
-                product.placed = true;
-                product.shipped = false;
-                product.deliverd = false;
-                product.cancelled = false;
-
-                return product;
-            })
+            if(order.payment === 'cod'){
+                products = products.map((product) => {
+                    product.status = status;
+                    product.placed = true;
+                    product.shipped = false;
+                    product.deliverd = false;
+                    product.cancelled = false;  
+                    return product;
+                })
+            }else{
+                products = products.map((product) => {
+                    product.status = status;
+                    product.placed = false;
+                    product.shipped = false;
+                    product.deliverd = false;
+                    product.cancelled = false;   
+                    return product;
+                })
+            }
+            
             console.log(products);
             console.log("--------------------------------------------------------------");
 
@@ -437,9 +460,11 @@ module.exports = {
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((result) => {
-                db.get().collection(collection.CART_COLLECTION).deleteMany({
-                    user: ObjectID(userId)
-                })
+                if(order.payment === 'cod'){
+                    db.get().collection(collection.CART_COLLECTION).deleteMany({
+                        user: ObjectID(userId)
+                    })
+                }
                 console.log(result.ops[0]);
                 resolve(result.ops[0]._id)
             })
@@ -480,14 +505,15 @@ module.exports = {
         })
     },
 
-    changePaymentStatus: (orerId) => {
+    changePaymentStatus: (orerId,userId) => {
         console.log("This is change payment status");
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).updateOne({
                 _id: ObjectID(orerId)
             }, {
                 $set: {
-                    "products.$[element].status": "placed"
+                    "products.$[element].status": "placed",
+                    "products.$[element].placed": true
                 }
             }, {
                 arrayFilters: [{
@@ -495,6 +521,10 @@ module.exports = {
                         $eq: "pending"
                     }
                 }]
+            }).then(() => {
+                db.get().collection(collection.CART_COLLECTION).deleteMany({
+                    user: ObjectID(userId)
+                })
             })
             resolve()
         })
@@ -576,7 +606,10 @@ module.exports = {
                 userId: ObjectID(userId)
             }).then((result) => {
                 console.log(result);
-                resolve({result,date})
+                resolve({
+                    result,
+                    date
+                })
             })
         })
     }
