@@ -579,6 +579,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
+  let addressType = await userHelper.getAllAddressType(req.session.user._id)
   console.log("This is /checkout");
   console.log("Address status : " + address.status);
 
@@ -588,7 +589,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     req.session.addressErr = true
     req.session.userAddress = null
   } else {
-    req.session.userAddress = address.address[0]
+    // req.session.userAddress = address.address[0]
     req.session.addressErr = false
   }
   console.log(req.session);
@@ -598,6 +599,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn
   userCartCount = req.session.cartCount
+  userId = req.session.user
 
   for (var i = 0; i < cartProducts.length; i++) {
     cartProducts[i].individualSum = price.individualSum[i];
@@ -610,14 +612,59 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     totalAmount: price.totalSum,
     userFname: userFname,
     userLname: userLname,
-    address: req.session.userAddress,
     "addressErr": req.session.addressErr,
     "loggIn": userLoggedIn,
     user: user,
-    userCartCount: userCartCount
+    userId : userId,
+    userCartCount: userCartCount,
+    addressType: addressType
   })
 })
 
+// ******** get home address post ************
+router.post('/getHomeAddress',verifyUserLogg,async (req,res,next) => {
+  console.log(req.body);  
+  let response = {}
+  let userFname = req.session.user.userFirstName
+  let userLname = req.session.user.userLastName
+  let getHomeAddress = await userHelper.getHomeAddress(req.body.value,req.body.userId)
+  console.log(userFname,userLname,getHomeAddress.address);
+  response.userFname = userFname
+  response.userLname = userLname
+  response.homeAddress = getHomeAddress.address
+  res.send(response)
+})
+
+// ********************** get office address post ********************
+router.post('/getOfficeAddress',verifyUserLogg,async (req,res,next) => {
+  console.log(req.body);  
+  let response = {}
+  let userFname = req.session.user.userFirstName
+  let userLname = req.session.user.userLastName
+  console.log("&&&&");
+  let getOfficeAddress = await userHelper.getOfficeAddress(req.body.value,req.body.userId)
+  console.log(userFname,userLname,getOfficeAddress.address);
+  response.userFname = userFname
+  response.userLname = userLname
+  response.homeAddress = getOfficeAddress.address
+  res.send(response)
+})
+
+// ********************* get other address post **********************
+router.post('/getOtherAddress',verifyUserLogg,async (req,res,next) => {
+  console.log(req.body);  
+  let response = {}
+  let userFname = req.session.user.userFirstName
+  let userLname = req.session.user.userLastName
+  console.log("&&&&");
+  let getOtherAddress = await userHelper.getOtherAddress(req.body.value,req.body.userId)
+  console.log(userFname,userLname,getOtherAddress);
+  response.userFname = userFname
+  response.userLname = userLname
+  response.otherAddress = getOtherAddress
+  console.log(response);
+  res.json(response)
+})
 
 // ************** checkout post router ******************************
 router.post('/checkout',verifyUserLogg, async (req, res, next) => {
@@ -754,6 +801,35 @@ router.post('/viewProfile/:id/address', verifyUserLogg, (req, res, next) => {
     res.redirect('/viewProfile/:id/address')
   }).catch((err) => {
     console.log(err);
+  })
+})
+
+
+// *********** view profile details page ***********
+router.get('/viewProfile/:id/profile', verifyUserLogg,  (req, res, next) => {
+
+  console.log(req.params.id);
+  // console.log(req.session.user);
+  let userId = req.session.user._id
+  let user = req.session.user
+  res.render('users/viewProfileDetails',{
+    layout : 'users/layout',
+    userId : userId,
+    user : user
+  })
+})
+
+// ***************** edit profile page get ******************
+router.get('/editProfile', verifyUserLogg, (req, res, next) => {
+
+
+  console.log("This is edit profile page");
+  console.log(req.session.user);
+  console.log(req.params.id);
+  let userId = req.session.user._id
+  let user = req.session.user
+  res.render('users/editProfile',{
+    layout : 'users/layout'
   })
 })
 

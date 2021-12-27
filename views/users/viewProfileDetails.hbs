@@ -1,0 +1,109 @@
+<style>
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        padding: 14px 80px 18px 36px;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
+</style>
+
+
+
+
+
+
+<!-- breadcrumb -->
+<div class="bg-gray-13 bg-md-transparent">
+    <div class="container">
+        <!-- breadcrumb -->
+        <div class="my-md-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 " aria-current="page">
+                        <a href="/viewProfile/:{{userId}}">My Account</a>
+                    </li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Proflie
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <!-- End breadcrumb -->
+    </div>
+</div>
+<!-- End breadcrumb -->
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class=" mb-3">
+        <h1 class="text-center">Profile</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 ">
+
+        </div>
+        <div class="col-md-5 d-flex justify-content-center ml-10">
+            <div class="p-3 py-5">
+
+                <div class="card" style="width: 50rem;">
+                    <div class="card-body">
+
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
+                                class="rounded-circle mt-5" width="150px"
+                                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                                <span class="font-weight-bold">Edogaru</span>                             
+                        </div>
+
+                        <div class="row mt-2 ml-10">
+                            <div class="col-md-6"><label class="labels">
+                                    <h4>First name</h4>
+                                </label></div>
+                            <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
+                                    <h4>{{user.userFirstName}}</h4>
+                                </label></div>
+                        </div>
+                        <div class="row mt-2 ml-10">
+                            <div class="col-md-6"><label class="labels">
+                                    <h4>Last name</h4>
+                                </label></div>
+                            <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
+                                    <h4>{{user.userLastName}}</h4>
+                                </label></div>
+                        </div>
+
+                        <div class="row mt-2 ml-10">
+                            <div class="col-md-6"><label class="labels">
+                                    <h4>Email</h4>
+                                </label></div>
+                            <div class="col-md-6"><label class="labels" >
+                                    <h4>{{user.userEmail}}</h4>
+                                </label></div>
+                        </div>
+
+                        <div class="row mt-2 ml-10">
+                            <div class="col-md-6"><label class="labels">
+                                    <h4>Phone</h4>
+                                </label></div>
+                            <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
+                                    <h4>+91{{user.userPhone}}</h4>
+                                </label></div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>                       
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>

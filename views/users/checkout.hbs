@@ -728,12 +728,12 @@
                                             <span class="text-danger">*</span>
                                         </label>
                                         <select class="form-control" name="addressType" id="addressType"
-                                            onchange="selectAddress(this.value)"
+                                            onchange="selectAddress(this.value,'{{userId._id}}')"
                                             data-swal-toast-template="#my-template">
                                             <option value="">Enter the address type</option>
-                                            <option value="home">Home</option>
-                                            <option value="office">Office</option>
-                                            <option value="other">Other</option>
+                                            {{#each addressType}}
+                                            <option value={{this.addressType}}>{{this.addressType}}</option>
+                                            {{/each}}
                                         </select>
                                     </div>
 
@@ -745,10 +745,12 @@
                                                 First name
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="firstName"
-                                                placeholder="" value="" aria-label="Jack"
+                                            <input type="text" class="form-control" name="firstName" id="firstName"
+                                                placeholder="" aria-label="Jack"
                                                 data-msg="Please enter your frist name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success" autocomplete="off">
+                                            <span style="color: brown;" id="firstNameErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -760,10 +762,12 @@
                                                 Last name
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="lastName"
-                                                placeholder=""  value="" aria-label="Wayley"
+                                            <input type="text" class="form-control" name="lastName" id="lastName"
+                                                placeholder="" aria-label="Wayley"
                                                 data-msg="Please enter your last name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
+                                            <span style="color: brown;" id="lastNameErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -777,11 +781,12 @@
                                                 Address
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="address"
-                                                placeholder=""
-                                                value="" aria-label="Company Name"
+                                            <input type="text" class="form-control" name="address" id="address"
+                                                placeholder="" aria-label="Company Name"
                                                 data-msg="Please enter a company name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
+                                            <span style="color: brown;" id="addressErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -793,11 +798,12 @@
                                                 State
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="state"
-                                                placeholder=""
-                                                value="" aria-label="Company Name"
+                                            <input type="text" class="form-control" name="state" placeholder=""
+                                                id="state" aria-label="Company Name"
                                                 data-msg="Please enter a company name." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
+                                            <span style="color: brown;" id="stateErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -811,11 +817,12 @@
                                                 District
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="district"
-                                                placeholder=""
-                                                value="" aria-label="470 Lucy Forks"
+                                            <input type="text" class="form-control" name="district" placeholder=""
+                                                id="district" aria-label="470 Lucy Forks"
                                                 data-msg="Please enter a valid address." data-error-class="u-has-error"
                                                 data-success-class="u-has-success">
+                                            <span style="color: brown;" id="districtErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -829,11 +836,12 @@
                                                 City
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="city"
-                                                placeholder="" value=""
+                                            <input type="text" class="form-control" name="city" id="city" placeholder=""
                                                 aria-label="London" data-msg="Please enter a valid address."
                                                 data-error-class="u-has-error" data-success-class="u-has-success"
                                                 autocomplete="off">
+                                            <span style="color: brown;" id="cityErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -845,11 +853,12 @@
                                                 Postcode/Zip
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control" name="postcode"
-                                                placeholder=""
-                                                value="" aria-label="99999"
+                                            <input type="text" class="form-control" name="postcode" id="postcode"
+                                                placeholder="" aria-label="99999"
                                                 data-msg="Please enter a postcode or zip code."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <span style="color: brown;" id="postcodeErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -866,10 +875,11 @@
                                                 <span class="text-danger">*</span>
                                             </label>
                                             <input type="email" class="form-control" name="emailAddress"
-                                                placeholder=""
-                                                value="" aria-label="jackwayley@gmail.com"
+                                                id="emailAddress" placeholder="" aria-label="jackwayley@gmail.com"
                                                 data-msg="Please enter a valid email address."
                                                 data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <span style="color: brown;" id="emailAddressErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -881,11 +891,11 @@
                                                 Phone
                                                 <span class="text-danger">*</span>
                                             </label>
-                                            <input type="text" class="form-control"
-                                                placeholder=""
-                                                value="" aria-label="+1 (062) 109-9222"
-                                                name="phone" data-error-class="u-has-error"
-                                                data-success-class="u-has-success">
+                                            <input type="text" class="form-control" placeholder="" id="phone"
+                                                aria-label="+1 (062) 109-9222" name="phone"
+                                                data-error-class="u-has-error" data-success-class="u-has-success">
+                                            <span style="color: brown;" id="phoneErr"></span>
+
                                         </div>
                                         <!-- End Input -->
                                     </div>
@@ -972,6 +982,18 @@
 
     $('#billingDetails').submit((e) => {
         e.preventDefault()
+
+        var firstName = document.getElementById('firstName').value
+        var lastName = document.getElementById('lastName').value
+        var address = document.getElementById('address').value
+        var state = document.getElementById('state').value
+        var district = document.getElementById('district').value
+        var city = document.getElementById('city').value
+        var postcode = document.getElementById('postcode').value
+        var emailAddress = document.getElementById('emailAddress').value
+        var phone = document.getElementById('phone').value
+        var letters = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
         console.log(document.querySelector('input[name = payment]:checked'))
         if (!document.querySelector('input[name = payment]:checked')) {
             console.log('This is if case')
@@ -985,7 +1007,8 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-        } else {
+        } 
+        else {
             console.log('This is else case')
             $.ajax({
                 url: '/checkout',

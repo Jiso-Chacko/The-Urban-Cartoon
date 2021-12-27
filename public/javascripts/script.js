@@ -446,16 +446,99 @@ function cancelProduct(orderId, proId) {
     })
 }
 
+// select address of billing details
 
-function selectAddress(value){
-    if(value === 'home'){
-        console.log("This is home");
-    }
-    else if(value === "office") {
-        console.log("This is office");
-    }
-    else if(value === "other"){
+async function selectAddress(value,userId){
+    if(value == "other"){
         console.log("This is other");
+        // document.getElementById('firstName').value = "jen"
+
+        // const response = await fetch('/getOtherAddress',{
+        //     method : 'post',
+        //     body : JSON.stringify({
+        //         value : value,
+        //         userId : userId
+        //     })
+        // })
+        // const data = await response.json()
+        // console.log(data);
+        $.ajax({
+            url : '/getOtherAddress',
+            method : 'post',
+            data : {
+                value : value,
+                userId : userId
+            },
+            succcess : (response) => {
+                
+                console.log(JSON.parse(response))
+                document.getElementById('firstName').value = response.userFname
+                document.getElementById('lastName').value = response.userLname
+                document.getElementById('address').value = response.homeAddress.address
+                document.getElementById('state').value = response.homeAddress.state
+                document.getElementById('district').value = response.homeAddress.district
+                document.getElementById('city').value = response.homeAddress.city
+                document.getElementById('postcode').value = response.homeAddress.postcode
+                document.getElementById('emailAddress').value = response.homeAddress.email
+                document.getElementById('phone').value = response.homeAddress.phone
+            },
+            error : () => {
+                alert("Failed")
+            }
+        })
+
     }
+    if(value == 'home'){
+        console.log("This is home");
+        $.ajax({
+            url : '/getHomeAddress',
+            method : 'post',
+            data : {
+                value : value,
+                userId : userId
+            },
+            success : (response) => {
+            console.log(response);
+            document.getElementById('firstName').value = response.userFname
+            document.getElementById('lastName').value = response.userLname
+            document.getElementById('address').value = response.homeAddress.address
+            document.getElementById('state').value = response.homeAddress.state
+            document.getElementById('district').value = response.homeAddress.district
+            document.getElementById('city').value = response.homeAddress.city
+            document.getElementById('postcode').value = response.homeAddress.postcode
+            document.getElementById('emailAddress').value = response.homeAddress.email
+            document.getElementById('phone').value = response.homeAddress.phone
+            }
+        })
+
+        
+
+    }
+     if(value === "office") {
+        console.log("This is office");
+        $.ajax({
+            url : '/getOfficeAddress',
+            method : 'post',
+            data : {
+                value : value,
+                userId : userId
+            },
+            succcess : (response) => {
+                alert('office route success')
+                document.getElementById('firstName').value = response.userFname
+                document.getElementById('lastName').value = response.userLname
+                document.getElementById('address').value = response.homeAddress.address
+                document.getElementById('state').value = response.homeAddress.state
+                document.getElementById('district').value = response.homeAddress.district
+                document.getElementById('city').value = response.homeAddress.city
+                document.getElementById('postcode').value = response.homeAddress.postcode
+                document.getElementById('emailAddress').value = response.homeAddress.email
+                document.getElementById('phone').value = response.homeAddress.phone
+            }
+        })
+        // document.getElementById('firstName').value = "bale"
+
+    }
+     
     console.log('Select address'+""+value)
 }

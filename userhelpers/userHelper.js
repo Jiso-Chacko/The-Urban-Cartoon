@@ -19,7 +19,7 @@ module.exports = {
             })
             let phoneExists = await db.get().collection(collection.USER_COLLECTION).findOne({
                 userPhone: newUser.phone
-            })        
+            })
 
             if (emailExists == null && phoneExists == null) {
                 let hashPass = await bcrypt.hash(password, 10)
@@ -31,169 +31,215 @@ module.exports = {
                     userPass: hashPass,
                     isEnabled: true
                 }).then((result) => {
-                    resolve(result.ops[0])  
+                    resolve(result.ops[0])
                 }).catch((err) => {
                     console.log(err);
                 })
-            }
-            else if(emailExists && phoneExists){
+            } else if (emailExists && phoneExists) {
                 response.phoneExists = true,
-                response.userExist = true,
-                response.userEmailExist = true 
+                    response.userExist = true,
+                    response.userEmailExist = true
                 resolve(response)
-            }
-            else if(emailExists){
+            } else if (emailExists) {
                 response.userExist = true,
-                response.userEmailExist = true, 
-                resolve(response)
-            }
-            else if(phoneExists){
+                    response.userEmailExist = true,
+                    resolve(response)
+            } else if (phoneExists) {
                 response.userExist = true,
-                response.userPhoneExist = true
+                    response.userPhoneExist = true
                 resolve(response)
             }
 
         })
     },
-    
+
     doLogin: (existUser) => {
-    
+
         return new Promise(async (resolve, reject) => {
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({
-                userEmail : existUser.email
+                userEmail: existUser.email
             })
-            
-            
-           
-            if(user == null){
+
+
+
+            if (user == null) {
                 response.userExist = false,
-                resolve(response)
-            }
-            else{
+                    resolve(response)
+            } else {
                 console.log("Bcrypt response");
-                  bcrypt.compare(existUser.password,user.userPass).then((result) => {
-                    if(result){
+                bcrypt.compare(existUser.password, user.userPass).then((result) => {
+                    if (result) {
                         console.log("This is dologin response");
                         console.log(user);
                         response.userExist = true,
-                        response.user =  user
+                            response.user = user
                         resolve(response)
-                    }
-                    else{
+                    } else {
                         response.invalidPass = true,
-                        response.userExist = false
+                            response.userExist = false
                         resolve(response)
                     }
-                    }).catch((err) => {
-                        console.log(err);
-                    })
-               
+                }).catch((err) => {
+                    console.log(err);
+                })
+
             }
         })
     },
 
-    getAllUsers : (checkUser) => {
-        return new Promise(async (resolve,reject) => {
-            let response ={}
+    getAllUsers: (checkUser) => {
+        return new Promise(async (resolve, reject) => {
+            let response = {}
             let emailExists = await db.get().collection(collection.USER_COLLECTION).findOne({
                 userEmail: checkUser.email
             })
             let phoneExists = await db.get().collection(collection.USER_COLLECTION).findOne({
                 userPhone: checkUser.phone
             })
-            if(emailExists || phoneExists){
-            user = await db.get().collection(collection.USER_COLLECTION).findOne({
-                userPhone: checkUser.phone
-            })
-        }
+            if (emailExists || phoneExists) {
+                user = await db.get().collection(collection.USER_COLLECTION).findOne({
+                    userPhone: checkUser.phone
+                })
+            }
 
             if (emailExists == null && phoneExists == null) {
-                response.userExist = false               
+                response.userExist = false
                 resolve(response)
-            }
-            else if(emailExists && phoneExists){
+            } else if (emailExists && phoneExists) {
                 response.userExist = true,
-                response.user = user,
+                    response.user = user,
+                    resolve(response)
+            } else if (emailExists) {
+                response.userExist = true,
+                    response.user = user
                 resolve(response)
-            }
-            else if(emailExists){
+            } else if (phoneExists) {
                 response.userExist = true,
-                response.user = user
-                resolve(response)
-            }
-            else if(phoneExists){
-                response.userExist = true,
-                response.user = user
+                    response.user = user
                 resolve(response)
             }
         })
     },
 
-    getUserPhone :(body) => {
+    getUserPhone: (body) => {
         return new Promise(async (resolve, reject) => {
             let response = {}
             let phone = await db.get().collection(collection.USER_COLLECTION).findOne({
-                userPhone : body.phone
+                userPhone: body.phone
             })
 
-            if(phone == null ){
+            if (phone == null) {
                 response.status = false
                 resolve(response)
-            }
-            else{
+            } else {
                 response.status = true
                 response.phone = phone
                 resolve(response)
             }
-            
+
         })
     },
 
-    addAddress : (address,userId,addressType) => {
+    addAddress: (address, userId, addressType) => {
 
-        return new Promise(async (resolve,reject) => {
+        return new Promise(async (resolve, reject) => {
             let response = {}
             let addressCount = await db.get().collection(collection.ADDRESS_COLLECTION).find().toArray()
             console.log(addressCount.length);
-            if(addressCount.length <= 3){
+            if (addressCount.length <= 3) {
                 db.get().collection(collection.ADDRESS_COLLECTION).insertOne({
-                    userId : ObjectID(userId),
-                    addressType : addressType,
-                    address : address
+                    userId: ObjectID(userId),
+                    addressType: addressType,
+                    address: address
                 })
                 response.status = true
                 resolve(response)
-            }
-            else{
+            } else {
                 response.status = false
                 resolve(response)
-            }            
+            }
         })
     },
 
-    getAllAddress : (userId) => {
+    getAllAddress: (userId) => {
         return new Promise(async (resolve, reject) => {
             let address = await db.get().collection(collection.ADDRESS_COLLECTION).find({
-                userId : ObjectID(userId)
+                userId: ObjectID(userId)
             }).toArray()
-            
-            console.log("This is addess array :"+address.length);
-            if(address.length == 0){
-                resolve({status : false, address : null})
-            }
-            else{
-                resolve({status : true , address : address})
+
+            console.log("This is addess array :" + address.length);
+            if (address.length == 0) {
+                resolve({
+                    status: false,
+                    address: null
+                })
+            } else {
+                resolve({
+                    status: true,
+                    address: address
+                })
             }
         })
     },
 
-    getUsersForAdmin : () => {
-        return new Promise(async (resolve,reject) => {
+    getUsersForAdmin: () => {
+        return new Promise(async (resolve, reject) => {
 
-           let users = await db.get().collection(collection.USER_COLLECTION).find({}).toArray()
-           console.log(users);
-           resolve(users)   
+            let users = await db.get().collection(collection.USER_COLLECTION).find({}).toArray()
+            console.log(users);
+            resolve(users)
+        })
+    },
+
+    getHomeAddress: (value, userId) => {
+
+        return new Promise(async (resolve, reject) => {
+            let homeAddress = await db.get().collection(collection.ADDRESS_COLLECTION).findOne({
+                userId: ObjectID(userId),
+                addressType: value
+            })
+            resolve(homeAddress)
+        })
+    },
+
+    getOfficeAddress: (value, userId) => {
+
+        return new Promise(async (resolve, reject) => {
+            let officeAddress = await db.get().collection(collection.ADDRESS_COLLECTION).findOne({
+                userId: ObjectID(userId),
+                addressType: value
+            })
+            resolve(officeAddress)
+        })
+    },
+
+    getAllAddressType: (userId) => {
+        return new Promise(async (resolve, reject) => {
+
+            let addressType = await db.get().collection(collection.ADDRESS_COLLECTION).aggregate([{
+                $match: {
+                    userId: ObjectID(userId)
+                }
+            }, {
+                $project: {
+                    addressType: 1,
+                    _id: 0
+                }
+            }]).toArray()
+            console.log("***********");
+            console.log(addressType);
+            resolve(addressType)
+        })
+    },
+
+    getOtherAddress: (value, userId) => {
+        return new Promise(async (resolve, reject) => {
+            let otherAddress = await db.get().collection(collection.ADDRESS_COLLECTION).findOne({
+                userId: ObjectID(userId),
+                addressType: value
+            })
+            resolve(otherAddress)
         })
     }
 

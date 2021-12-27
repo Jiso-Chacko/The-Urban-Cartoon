@@ -377,3 +377,28 @@
                             }
                         })
                     }
+
+
+                    /// address validation
+
+                     else if (firstName.trim() == "" && firstName < 3 && !firstName.match(letters)) {
+                document.getElementById('firstNameErr').innerHTML = 'Valid first name reqired'
+            }
+            else if(lastName.trim() == "" && lastName < 3 && !lastName.match(letters)){
+                document.getElementById('lastNameErr').innerHTML = 'Valid last name reqired'
+            }   
+            else if(address.trim() == "" && address < 3 && !address.match(letters)) {
+                document.getElementById('addressErr').innerHTML = 'Valid address reqired'
+            }
+            else if(state.trim() == "" && state < 3 && !state.match(letters)){
+                document.getElementById('stateErr').innerHTML = 'Valid state reqired'               
+            }
+            else if(district.trim() == "" && district < 3 && !district.match(letters)){
+                document.getElementById('districtErr').innerHTML = 'Valid district reqired'               
+            }
+            else if(city.trim() == "" && city < 3 && !city.match(letters)){
+                document.getElementById('cityErr').innerHTML = 'Valid city reqired'               
+            }
+            else if(postcode.trim() == "" && postcode < 3 && isNaN(postcode)){
+                document.getElementById('postcodeErr').innerHTML = 'Valid postcode reqired'               
+            }
