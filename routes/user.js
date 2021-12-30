@@ -4,6 +4,9 @@ var db = require('../config/connections')
 var collection = require('../config/collections')
 var userProductHelper = require('../userhelpers/userProductHelper')
 var userHelper = require('../userhelpers/userHelper')
+const multer = require('multer')
+const path = require('path');
+
 var serviceId = "VA6a2e7c39a684110d315bb5f33dbaa6ea";
 var accountSid = "AC32945c998d7d8a3d3f6e401b8947654b";
 var authToken = "e751e3bec1f169a08d5ca694846b93d8";
@@ -152,7 +155,7 @@ router.post('/verifyOtpLogin', getCartCount, (req, res, next) => {
 //get cart count
 async function getCartCount(req, res, next) {
   if (req.session.userLoggedIn || req.session.user) {
-    console.log("Enterd");
+    console.log("This is get cart count");
     console.log(req.session.user);
     let cartCount = await userProductHelper.getCartCount(req.session.user._id)
     req.session.cartCount = cartCount
@@ -580,10 +583,8 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   let addressType = await userHelper.getAllAddressType(req.session.user._id)
-  console.log("This is /checkout");
-  console.log("Address status : " + address.status);
-
-
+  console.log("This is /checkout get");
+  console.log("Address  : " + address.address);
 
   if (address.status == false) {
     req.session.addressErr = true
@@ -615,65 +616,29 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     "addressErr": req.session.addressErr,
     "loggIn": userLoggedIn,
     user: user,
-    userId : userId,
+    userId: userId,
     userCartCount: userCartCount,
-    addressType: addressType
+    addressType: addressType,
+    address: address.address
   })
 })
 
-// ******** get home address post ************
-router.post('/getHomeAddress',verifyUserLogg,async (req,res,next) => {
-  console.log(req.body);  
-  let response = {}
-  let userFname = req.session.user.userFirstName
-  let userLname = req.session.user.userLastName
-  let getHomeAddress = await userHelper.getHomeAddress(req.body.value,req.body.userId)
-  console.log(userFname,userLname,getHomeAddress.address);
-  response.userFname = userFname
-  response.userLname = userLname
-  response.homeAddress = getHomeAddress.address
-  res.send(response)
-})
 
-// ********************** get office address post ********************
-router.post('/getOfficeAddress',verifyUserLogg,async (req,res,next) => {
-  console.log(req.body);  
-  let response = {}
-  let userFname = req.session.user.userFirstName
-  let userLname = req.session.user.userLastName
-  console.log("&&&&");
-  let getOfficeAddress = await userHelper.getOfficeAddress(req.body.value,req.body.userId)
-  console.log(userFname,userLname,getOfficeAddress.address);
-  response.userFname = userFname
-  response.userLname = userLname
-  response.homeAddress = getOfficeAddress.address
-  res.send(response)
-})
-
-// ********************* get other address post **********************
-router.post('/getOtherAddress',verifyUserLogg,async (req,res,next) => {
-  console.log(req.body);  
-  let response = {}
-  let userFname = req.session.user.userFirstName
-  let userLname = req.session.user.userLastName
-  console.log("&&&&");
-  let getOtherAddress = await userHelper.getOtherAddress(req.body.value,req.body.userId)
-  console.log(userFname,userLname,getOtherAddress);
-  response.userFname = userFname
-  response.userLname = userLname
-  response.otherAddress = getOtherAddress
-  console.log(response);
-  res.json(response)
-})
 
 // ************** checkout post router ******************************
-router.post('/checkout',verifyUserLogg, async (req, res, next) => {
+router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   console.log("This is /checkout post");
   console.log(req.body);
   // console.log(req.session.user._id);
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
-  userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, totalAmount).then((orderId) => {
+  let address = await userHelper.getAddress(req.session.user._id, req.body.address)
+  console.log("///////");
+  address.address.firstName = req.session.user.userFirstName
+  address.address.lastName = req.session.user.userLastName
+  address.address.payment = req.body.payment
+  console.log(address.address);
+  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, totalAmount).then((orderId) => {
 
     if (req.body.payment === 'cod') {
       res.send({
@@ -691,8 +656,78 @@ router.post('/checkout',verifyUserLogg, async (req, res, next) => {
   })
 })
 
-// ******** order success get page *******************
-router.get('/checkout/orderSuccess', verifyUserLogg, async (req, res, next) => {
+// ************* checkout with new address save post route ******
+router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) => {
+
+  console.log("/checkoutNewAddressSave");
+  let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+  let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
+  console.log(req.body);
+  let address = {}
+  address.addressType = req.body.addressType
+  address.address = req.body.address
+  address.city = req.body.city
+  address.district = req.body.district
+  address.postcode = req.body.postcode
+  address.state = req.body.state
+  address.email = req.body.email
+  address.phone = req.body.phone
+  await userHelper.addAddress(address, req.session.user._id, req.body.addressType)
+  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, totalAmount).then((orderId) => {
+    if (req.body.payment === 'cod') {
+      res.send({
+        status: true,
+        response: null
+      })
+    } else {
+      userProductHelper.generateRazorpay(orderId, totalAmount.totalSum).then((response) => {
+        res.send({
+          status: false,
+          response
+        })
+      })
+    }
+  })
+})
+
+
+// ************* checkout with new address dont save post route ******
+router.post('/checkoutNewAddress', verifyUserLogg, async (req, res, next) => {
+
+  console.log("/checkoutNewAddress");
+  let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+  let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
+  console.log(req.body);
+  let address = {}
+  address.addressType = req.body.addressType
+  address.address = req.body.address
+  address.city = req.body.city
+  address.district = req.body.district
+  address.postcode = req.body.postcode
+  address.state = req.body.state
+  address.email = req.body.email
+  address.phone = req.body.phone
+
+  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, totalAmount).then((orderId) => {
+    if (req.body.payment === 'cod') {
+      res.send({
+        status: true,
+        response: null
+      })
+    } else {
+      userProductHelper.generateRazorpay(orderId, totalAmount.totalSum).then((response) => {
+        res.send({
+          status: false,
+          response
+        })
+      })
+    }
+  })
+  
+})
+
+// ********************* order success get page ***********************
+router.get('/orderSuccess', async (req, res, next) => {
   console.log(req.session.user);
   userDetails = req.session.user;
   user = req.session.user.userFirstName
@@ -711,12 +746,12 @@ router.get('/checkout/orderSuccess', verifyUserLogg, async (req, res, next) => {
 
 
 // ****************** razorpay verifypayment router **************
-router.post('/verifyPayment',verifyUserLogg, (req, res, next) => {
+router.post('/verifyPayment', verifyUserLogg, (req, res, next) => {
   console.log("This is verify payment router");
   console.log(req.session.user._id);
   console.log(req.body);
   userProductHelper.verifyPayment(req.body).then((result) => {
-    userProductHelper.changePaymentStatus(req.body['order[receipt]'],req.session.user._id).then((response) => {
+    userProductHelper.changePaymentStatus(req.body['order[receipt]'], req.session.user._id).then((response) => {
       console.log("Payment successful");
       res.send({
         status: true
@@ -733,6 +768,7 @@ router.post('/verifyPayment',verifyUserLogg, (req, res, next) => {
 // user profile get route
 router.get('/viewProfile/:id', verifyUserLogg, getCartCount, (req, res, next) => {
   console.log(req.params.id);
+  console.log(`---------------------------------testing---------------------------------------`)
   let userId = req.session.user._id
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn
@@ -746,7 +782,7 @@ router.get('/viewProfile/:id', verifyUserLogg, getCartCount, (req, res, next) =>
   })
 })
 
-// address page get
+// ************** address page get ****************
 router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) => {
   console.log("This is get address");
   let userId = req.session.user._id
@@ -777,7 +813,8 @@ router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) =>
     address: userAddress,
     "loggIn": userLoggedIn,
     user: user,
-    userCartCount: userCartCount
+    userCartCount: userCartCount,
+
   })
   req.session.addressMssg = false
 })
@@ -804,35 +841,212 @@ router.post('/viewProfile/:id/address', verifyUserLogg, (req, res, next) => {
   })
 })
 
+// ****************** edit address get ************
+router.get('/editAddress/:id/:type', verifyUserLogg, async (req, res, next) => {
+
+  console.log("Enterd edit address");
+  console.log(req.params.type);
+  console.log(req.session.user._id);
+  let address = await userHelper.getAddress(req.session.user._id, req.params.type)
+  res.render('users/editAddress', {
+    layout: 'users/layout',
+    userId: req.session.user._id,
+    address: address
+  })
+})
+
+// ****************** edit address post ******************
+router.post('/editAddress/:id/:type', verifyUserLogg, async (req, res, next) => {
+
+  console.log(req.body);
+  userHelper.editAddress(req.session.user._id, req.body).then(() => {
+    // res.redirect('/viewProfile/:id/address')
+    res.redirect(`/viewProfile/:${req.session.user._id}/address`)
+
+  })
+})
+
+// ****************** delete address post ajax ************
+router.post('/deleteAddress', async (req, res, next) => {
+
+  console.log(req.body);
+  let userId = req.session.user._id
+
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  userCartCount = req.session.cartCount
+
+
+
+  if (req.session.user.addressAdded) {
+    req.session.addressMssg = true
+  } else {
+
+    req.session.addressMssg = false
+  }
+  await userHelper.deleteAddress(req.body.userId, req.body.type).then(async () => {
+
+    let address = await userHelper.getAllAddress(userId)
+
+    let userAddress = address.address
+    if (address.status == false) {
+      req.session.addressErr = true
+    } else {
+      req.session.addressErr = false
+    }
+
+    hb.render('views/users/address.hbs', {
+      layout: 'users/layout',
+      userId: userId,
+      "Messg": req.session.addressMssg,
+      "addressErr": req.session.addressErr,
+      address: userAddress,
+      "loggIn": userLoggedIn,
+      user: user,
+      userCartCount: userCartCount
+    }).then((renderHtml) => {
+      res.send(renderHtml)
+    })
+  })
+})
+
+// ************** add new address get *****************
+router.get('/addNewAddress', verifyUserLogg, (req, res, next) => {
+
+  console.log("/addNewAddress");
+  res.render('users/addNewAddress', {
+    layout: 'users/layout',
+  })
+})
+
+// ******************* add new address post ****************
+router.post('/addNewAddress', verifyUserLogg, (req, res, next) => {
+
+  console.log("/addNewAddress");
+  console.log(req.body);
+  userHelper.addAddress(req.body, req.session.user._id, req.body.addressType).then((response) => {
+    if (response.status == true) {
+      req.session.addressAdded = true
+      res.redirect(`/viewProfile/:${req.session.user._id}/address`)
+    } else {
+      req.session.addressAdded = false
+      res.redirect(`/viewProfile/:${req.session.user._id}/address`)
+    }
+  })
+
+})
 
 // *********** view profile details page ***********
-router.get('/viewProfile/:id/profile', verifyUserLogg,  (req, res, next) => {
+router.get('/viewProfile/:id/profile', verifyUserLogg, async (req, res, next) => {
 
   console.log(req.params.id);
   // console.log(req.session.user);
   let userId = req.session.user._id
-  let user = req.session.user
-  res.render('users/viewProfileDetails',{
-    layout : 'users/layout',
-    userId : userId,
-    user : user
+  let user = await userHelper.getUser(userId)
+  console.log("*******");
+  console.log(user);
+  res.render('users/viewProfileDetails', {
+    layout: 'users/layout',
+    userId: userId,
+    user: user
   })
 })
 
+
 // ***************** edit profile page get ******************
-router.get('/editProfile', verifyUserLogg, (req, res, next) => {
+router.get('/viewProfile/:id/editProfile', verifyUserLogg, async (req, res, next) => {
 
 
   console.log("This is edit profile page");
   console.log(req.session.user);
   console.log(req.params.id);
   let userId = req.session.user._id
-  let user = req.session.user
-  res.render('users/editProfile',{
-    layout : 'users/layout'
+  let user = await userHelper.getUser(userId)
+  res.render('users/editProfile', {
+    layout: 'users/layout',
+    user: user,
+    userId: userId
   })
 })
 
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/profileImages")
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+  }
+})
+
+var upload = multer({
+  storage: storage
+})
+
+const imageUpload = upload.fields([{
+  name: 'profile_photo',
+  maxCount: 1
+}]) // product image upload
+
+//**************** edit profile post page ********************
+router.post('/viewProfile/:id/editProfile', verifyUserLogg, (req, res, next) => {
+
+  console.log("This is edit profile page");
+  console.log();
+  imageUpload(req, res, async (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(res.req.body);
+      console.log(Object.keys(req.files).length === 0);
+      console.log(Object.keys(res.req.files).length === 0);
+
+      if (Object.keys(res.req.files).length === 0) {
+        var body = res.req.body
+        var image = await userHelper.getImage(req.session.user._id)
+        userHelper.editProfile(body, image, req.session.user._id).then(() => {
+          res.redirect(`/viewProfile/:${req.session.user._id}/profile`)
+        })
+      } else {
+        var body = res.req.body
+        var image = req.files.profile_photo[0].filename
+        console.log(image);
+        userHelper.editProfile(body, image, req.session.user._id).then(() => {
+          res.redirect(`/viewProfile/:${req.session.user._id}/profile`)
+        })
+      }
+    }
+  })
+})
+
+// ************* change password get page ************
+router.get('/viewProfile/:id/changePassword', verifyUserLogg, (req, res, next) => {
+
+  if (req.session.passChange == false) {
+    passErr = true
+  } else {
+    passErr = false
+  }
+  res.render('users/changePassword', {
+    layout: 'users/layout',
+    passErr: passErr
+  })
+  req.session.passChange = true
+})
+
+//************** change password post ******************
+router.post('/viewProfile/:id/changePassword', verifyUserLogg, (req, res, next) => {
+
+  console.log(req.body);
+  userHelper.changePass(req.session.user._id, req.body).then((response) => {
+    if (response.status == true) {
+      req.session.passChange = true
+      res.redirect(`/viewProfile/:${req.session.user._id}/profile`)
+    } else {
+      req.session.passChange = false
+      res.redirect(`/viewProfile/:${req.session.user._id}/changePassword`)
+    }
+  })
+})
 
 // ******** sweet alert sample *************
 router.get('/sweetAlert', (req, res, next) => {

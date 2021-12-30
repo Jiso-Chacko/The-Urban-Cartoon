@@ -1,0 +1,203 @@
+<style>
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        padding: 14px 80px 18px 36px;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
+
+    #imageUpload {
+        display: none;
+    }
+
+    #profileImage {
+        cursor: pointer;
+    }
+</style>
+
+
+
+<!-- breadcrumb -->
+<div class="bg-gray-13 bg-md-transparent">
+    <div class="container">
+        <!-- breadcrumb -->
+        <div class="my-md-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 " aria-current="page">
+                        <a href="/viewProfile/:{{userId}}">My Account</a>
+                    </li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page"><a
+                            href="/viewProfile/:{{userId}}/address">View address</a>
+                    </li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Edit address
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <!-- End breadcrumb -->
+    </div>
+</div>
+<!-- End breadcrumb -->
+
+<div class="container rounded bg-white mt-5 mb-5">
+    <div class=" mb-3">
+        <h1 class="text-center">Edit Address</h1>
+    </div>
+    <div class="row">
+        <div class="col-md-3 ">
+
+        </div>
+        <div class="col-md-5 d-flex justify-content-center ml-10">
+            <div class="p-3 py-5">
+                    <div class="card" style="width: 50rem;">
+                        <div class="card-body">
+
+                            <form id="MyForm" action="/editAddress/:{{userId}}/{{address.address.addressType}}" method="POST">
+
+                                <div class="col-md-8 mt-5">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            Address type
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <select class="form-control" name="addressType" id="addressType">
+                                            <option value="{{address.address.addressType}}" >{{address.address.addressType}}</option>
+                                        </select>
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+                                <div class="col-md-8 mt-5">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            Address
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="address" placeholder="{{address.address.address}}"
+                                            aria-label="470 Lucy Forks" value="{{address.address.address}}"
+                                            data-msg="Please enter a valid address." data-error-class="u-has-error"
+                                            data-success-class="u-has-success">
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+
+
+                                <div class="col-md-6">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            City
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="city" aria-label="London"
+                                             data-error-class="u-has-error" placeholder="{{address.address.city}}" value="{{address.address.city}}"
+                                            data-success-class="u-has-success" autocomplete="off">
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            District
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="district" value="{{address.address.district}}" placeholder="{{address.address.district}}"
+                                            data-error-class="u-has-error" data-success-class="u-has-success"
+                                            autocomplete="off">
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            Postcode/Zip
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" name="postcode" placeholder="{{address.address.postcode}}" value="{{address.address.postcode}}"
+                                            aria-label="99999" required=""
+                                            data-msg="Please enter a postcode or zip code."
+                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+                                <div class="w-100"></div>
+
+                                <div class="col-md-6">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            State
+                                            <span class="text-danger">*</span>
+                                        </label>
+
+                                        <input type="text" class="form-control" name="state" placeholder="{{address.address.state}}" value="{{address.address.state}}"
+                                            aria-label="99999" required=""
+                                            data-msg="Please enter a postcode or zip code."
+                                            data-error-class="u-has-error" data-success-class="u-has-success">
+
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+                                        <label class="form-label">
+                                            Email address
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="email" class="form-control" name="email" placeholder="{{address.address.email}}" value="{{address.address.email}}"
+                                            aria-label="jackwayley@gmail.com" required=""
+                                            data-msg="Please enter a valid email address."
+                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+
+                                <div class="col-md-6">
+                                    <!-- Input -->
+                                    <div class="js-form-message mb-6">
+
+                                        <label class="form-label">
+                                            Phone
+                                        </label>
+
+                                        <input type="text" class="form-control" placeholder="{{address.address.phone}}" name="phone" value="{{address.address.phone}}"
+                                            aria-label="+1 (062) 109-9222" data-msg="Please enter your last name."
+                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                    </div>
+                                    <!-- End Input -->
+                                </div>
+                            
+                        </div>
+
+                        {{!-- <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>  --}}
+                        <div>
+                            <div class="mt-5 text-center"><button type="submit" class="btn btn-primary profile-button">Save Changes</button></div>
+                                                              
+               </div>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+</div>

@@ -9,13 +9,17 @@
     }
 
     .card:hover {
-        transform: scale(1.05);
         box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
     }
+
+    #imageUpload {
+        display: none;
+    }
+
+    #profileImage {
+        cursor: pointer;
+    }
 </style>
-
-
-
 
 
 
@@ -29,6 +33,9 @@
                     <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
                     <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 " aria-current="page">
                         <a href="/viewProfile/:{{userId}}">My Account</a>
+                    </li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page"><a
+                            href="/viewProfile/:{{userId}}/profile">Proflie</a>
                     </li>
                     <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Edit Proflie
                     </li>
@@ -50,56 +57,78 @@
         </div>
         <div class="col-md-5 d-flex justify-content-center ml-10">
             <div class="p-3 py-5">
+                <form action="/viewProfile/:{{userId}}/editProfile" method="POST" enctype="multipart/form-data"
+                    id="editProfile" name="editProfile">
+                    <div class="card" style="width: 50rem;">
+                        <div class="card-body">
 
-                <div class="card" style="width: 50rem;">
-                    <div class="card-body">
+                            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                                <img id="profileImage" class="rounded-circle mt-5" width="150px"
+                                    src="/profileImages/{{user.image}}" alt="Upload image">
+                                <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" capture>
+                            </div>
 
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
-                                class="rounded-circle mt-5" width="150px"
-                                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                                <span class="font-weight-bold">Edogaru</span>                             
+                            <div class="row mt-2 ml-10">
+                                <div class="col-md-6"><label class="labels">
+                                        <h4>First name</h4>
+                                    </label></div>
+                                <div class="col-md-6"><label class="labels">
+                                        <input type="text" id="firstName" name="firstName"
+                                            placeholder="{{user.userFirstName}}" value="{{user.userFirstName}}"
+                                            class="form-control">
+                                        <span style="color: brown;" id="fNameErr"></span>
+
+                                        {{!-- <h4>{{user.userFirstName}}</h4> --}}
+                                    </label></div>
+                            </div>
+                            <div class="row mt-2 ml-10">
+                                <div class="col-md-6"><label class="labels">
+                                        <h4>Last name</h4>
+                                    </label></div>
+                                <div class="col-md-6"><label class="labels">
+                                        {{!-- <h4>{{user.userLastName}}</h4> --}}
+                                        <input type="text" id="lastName" name="lastName"
+                                            placeholder="{{user.userLastName}}" value="{{user.userLastName}}"
+                                            class="form-control">
+                                        <span style="color: brown;" id="lNameErr"></span>
+
+                                    </label></div>
+                            </div>
+
+                            <div class="row mt-2 ml-10">
+                                <div class="col-md-6"><label class="labels">
+                                        <h4>Email</h4>
+                                    </label></div>
+                                <div class="col-md-6"><label class="labels">
+                                        {{!-- <h4>{{user.userEmail}}</h4> --}}
+                                        <input type="text" id="email" name="email" placeholder="{{user.userEmail}}"
+                                            value="{{user.userEmail}}" class="form-control">
+                                        <span style="color: brown;" id="emailErr"></span>
+
+                                    </label></div>
+                            </div>
+
+                            <div class="row mt-2 ml-10">
+                                <div class="col-md-6"><label class="labels">
+                                        <h4>Phone</h4>
+                                    </label></div>
+                                <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
+                                        <h4>+91{{user.userPhone}}</h4>
+                                    </label></div>
+                            </div>
+
                         </div>
-
-                        <div class="row mt-2 ml-10">
-                            <div class="col-md-6"><label class="labels">
-                                    <h4>First name</h4>
-                                </label></div>
-                            <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
-                                    <h4>{{user.userFirstName}}</h4>
-                                </label></div>
-                        </div>
-                        <div class="row mt-2 ml-10">
-                            <div class="col-md-6"><label class="labels">
-                                    <h4>Last name</h4>
-                                </label></div>
-                            <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
-                                    <h4>{{user.userLastName}}</h4>
-                                </label></div>
-                        </div>
-
-                        <div class="row mt-2 ml-10">
-                            <div class="col-md-6"><label class="labels">
-                                    <h4>Email</h4>
-                                </label></div>
-                            <div class="col-md-6"><label class="labels" >
-                                    <h4>{{user.userEmail}}</h4>
-                                </label></div>
-                        </div>
-
-                        <div class="row mt-2 ml-10">
-                            <div class="col-md-6"><label class="labels">
-                                    <h4>Phone</h4>
-                                </label></div>
-                            <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
-                                    <h4>+91{{user.userPhone}}</h4>
-                                </label></div>
-                        </div>
-
                     </div>
-                </div>
 
-                <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>                       
-                </div>
+                    {{!-- <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>  --}}
+                    <div>
+                        <div class="mt-5 text-center"><button type="submit" class="btn btn-primary profile-button">Save
+                            Changes</button>
+                    </div>
+                    <div><a  class="btn profile-button " style="cursor: pointer; text-decoration: underline;" href="/viewProfile/:{{userId}}/changePassword">Change password</a></div>
+                    </div>
+                    
+                </form>
             </div>
         </div>
 
@@ -107,3 +136,66 @@
 </div>
 </div>
 </div>
+
+<script>
+    $("#profileImage").click(function (e) {
+        $("#imageUpload").click();
+    });
+
+    function fasterPreview(uploader) {
+        if (uploader.files && uploader.files[0]) {
+            $('#profileImage').attr('src',
+                window.URL.createObjectURL(uploader.files[0]));
+        }
+    }
+
+    $("#imageUpload").change(function () {
+        fasterPreview(this);
+    });
+
+
+
+    editProfile.addEventListener('submit', function (e) {
+        // prevent the form from submitting
+        console.log("Form validation")
+        var fname = this.querySelector("input[id=firstName]").value;
+        var lname = this.querySelector("input[id=lastName]").value;
+        var email = this.querySelector("input[id=email]").value;
+
+        var fileName = this.querySelector("input[id=imageUpload]").value;
+        var idxDot = fileName.lastIndexOf(".") + 1;
+        var extFile = fileName.substr(idxDot, fileName.length).toLowerCase();
+
+        if (fname.trim() == "" || fname < 2) {
+            document.getElementById('firstName').focus();
+            document.getElementById('fNameErr').innerHTML = "Enter valid first name"
+            e.preventDefault()
+        } else {
+            document.getElementById('fNameErr').innerHTML = ""
+        }
+        if (lname.trim() == "" || lname < 2) {
+            document.getElementById('lastName').focus();
+            document.getElementById('lNameErr').innerHTML = "Enter valid last name"
+            e.preventDefault()
+        } else {
+            document.getElementById('lNameErr').innerHTML = ""
+        }
+        if (email.trim() == "" || !email.match(regx)) {
+            document.getElementById('email').focus()
+            document.getElementById('emailErr').innerHTML = "Enter valid email"
+            e.preventDefault()
+        } else {
+            document.getElementById('emailErr').innerHTML = ""
+        }
+        if (extFile != "jpg" || extFile != "jpeg" || extFile != "png") {
+            console.log('image format')
+            Swal.fire({
+                title: 'Please enter a valid image!',
+                icon: 'warning',
+                showCancelButton: false,
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok'
+            })
+        }        
+    });
+</script>

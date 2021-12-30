@@ -32,8 +32,9 @@
                             <td>{{this.quantity}}</td>
                             <td>{{this.price}}</td>
 
-                            <td><a class="btn btn-success btn-sm" onclick="verifyEdit('{{this.productName}}')"
-                                    href="/admin/editProduct?id={{this._id}}">Edit</a></td>
+                            <td><a class="btn btn-success btn-sm"
+                                    onclick="verifyEdit('{{this._id}}','{{this.productName}}','{{this.productTitle}}','{{this.category}}','{{this.brand}}','{{this.quantity}}','{{this.price}}','{{this.imageName.[0]}}','{{this.imageName.[1]}}','{{this.imageName.[3]}}')">Edit</a>
+                            </td>
                             {{!-- <td><button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure you want to delete {{this.productName}}?');" >Delete</button>
                             </td> --}}
@@ -57,14 +58,25 @@
 
 
 <script>
-   
     $(document).ready(function () {
         $('#myTable').DataTable();
     });
 
-    function verifyEdit(proName) {
-        let response = confirm('Are you sure you want to edit' + " " + proName + '?')
-        console.log(response)
-        console.log(proName)
+    function verifyEdit(proId,proName, proTitle, proCategory, proBrand, quantity, price, img1, img2, img3) {
+        Swal.fire({
+            title: `Do you want to edit ${proName}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#42ba96',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Edit'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = `/admin/editProduct?id=${proId}`
+            }
+        })
+
     }
+
+   
 </script>

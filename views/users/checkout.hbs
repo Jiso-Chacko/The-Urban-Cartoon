@@ -2,6 +2,20 @@
     #MyForm {
         display: none;
     }
+
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        padding: 14px 80px 18px 36px;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
 </style>
 
 
@@ -15,8 +29,7 @@
             <div class="my-md-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
-                                href="https://transvelo.github.io/electro-html/2.0/html/home/index.html">Home</a></li>
+                        <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Checkout
                         </li>
                     </ol>
@@ -120,9 +133,8 @@
                                     <div class="form-group d-flex align-items-center justify-content-between px-3 mb-5">
 
                                     </div>
-                                    <button type="submit"
-                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
-                                        order</button>
+                                    <button type="button" id="newForm_btn" class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place order</button>
+                                                                                
                                 </div>
                                 <!-- End Order Summary -->
                             </div>
@@ -138,11 +150,8 @@
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <h3 class="section-title mb-0 pb-2 font-size-25">Add new address</h3>
-
                                     </div>
-
                                 </div>
-
                             </div>
                             <!-- End Title -->
 
@@ -170,10 +179,11 @@
                                             First name
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="firstName" placeholder=""
+                                        <input type="text" class="form-control" name="firstName" placeholder="First name" id="firstName"
                                             aria-label="Jack" required="" data-msg="Please enter your frist name."
                                             data-error-class="u-has-error" data-success-class="u-has-success"
                                             autocomplete="off">
+                                        <span style="color: brown;" id="fnameErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -185,9 +195,10 @@
                                             Last name
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="lastName" placeholder=""
+                                        <input type="text" class="form-control" name="lastName" placeholder="Last name" id="lastName"
                                             aria-label="Wayley" required="" data-msg="Please enter your last name."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="lnameErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -201,9 +212,10 @@
                                             Address
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="address" placeholder=""
+                                        <input type="text" class="form-control" name="address" placeholder="Address" id="address"
                                             aria-label="Company Name" data-msg="Please enter a company name."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="addressErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -215,9 +227,10 @@
                                             State
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="state" placeholder=""
+                                        <input type="text" class="form-control" name="state" placeholder="State" id="state"
                                             aria-label="Company Name" data-msg="Please enter a company name."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="stateErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -231,10 +244,11 @@
                                             District
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="district" placeholder=""
-                                            aria-label="470 Lucy Forks" required=""
+                                        <input type="text" class="form-control" name="district" placeholder="District" id="district"
+                                            aria-label="470 Lucy Forks" 
                                             data-msg="Please enter a valid address." data-error-class="u-has-error"
                                             data-success-class="u-has-success">
+                                        <span style="color: brown;" id="districtErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -248,10 +262,11 @@
                                             City
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="city" placeholder=""
+                                        <input type="text" class="form-control" name="city" placeholder="City" id="city"
                                             aria-label="London" required="" data-msg="Please enter a valid address."
                                             data-error-class="u-has-error" data-success-class="u-has-success"
                                             autocomplete="off">
+                                        <span style="color: brown;" id="cityErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -263,10 +278,11 @@
                                             Postcode/Zip
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="postcode" placeholder=""
-                                            aria-label="99999" required=""
+                                        <input type="text" class="form-control" name="postcode" placeholder="Postcode"
+                                            id="postcode" aria-label="99999" required=""
                                             data-msg="Please enter a postcode or zip code."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="postcodeErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -282,10 +298,11 @@
                                             Email address
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="email" class="form-control" name="emailAddress" placeholder=""
-                                            aria-label="jackwayley@gmail.com" required=""
+                                        <input type="email" class="form-control" name="email" placeholder="Email address" id="email"
+                                            aria-label="jackwayley@gmail.com" 
                                             data-msg="Please enter a valid email address."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="emailAddressErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -297,9 +314,10 @@
                                             Phone
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder=""
+                                        <input type="text" class="form-control" placeholder="Phone" id="phone" name="phone"
                                             aria-label="+1 (062) 109-9222" name="phone" data-error-class="u-has-error"
-                                            data-success-class="u-has-success" onblur="checkSave()">
+                                            data-success-class="u-has-success" >
+                                        <span style="color: brown;" id="phoneErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -410,9 +428,11 @@
                                     <div class="form-group d-flex align-items-center justify-content-between px-3 mb-5">
 
                                     </div>
-                                    <button type="submit"
+                                    <button type="button" id="MyForm_btn"
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                         order</button>
+
+
                                 </div>
                                 <!-- End Order Summary -->
                             </div>
@@ -460,10 +480,11 @@
                                             First name
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="firstName" placeholder=""
-                                            aria-label="Jack" required="" data-msg="Please enter your frist name."
-                                            data-error-class="u-has-error" data-success-class="u-has-success"
-                                            autocomplete="off">
+                                        <input type="text" class="form-control" name="firstName"
+                                            placeholder="First name" id="firstName" aria-label="Jack" required=""
+                                            data-msg="Please enter your frist name." data-error-class="u-has-error"
+                                            data-success-class="u-has-success" autocomplete="off">
+                                        <span style="color: brown;" id="fnameErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -475,9 +496,10 @@
                                             Last name
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="lastName" placeholder=""
-                                            aria-label="Wayley" ` data-msg="Please enter your last name."
+                                        <input type="text" class="form-control" name="lastName" placeholder="Last name"
+                                            id="lastName" aria-label="Wayley" ` data-msg="Please enter your last name."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="lnameErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -491,9 +513,11 @@
                                             Address
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="address" placeholder=""
-                                            aria-label="Company Name" data-msg="Please enter a company name."
-                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <input type="text" class="form-control" name="address" placeholder="Address"
+                                            id="address" aria-label="Company Name"
+                                            data-msg="Please enter a company name." data-error-class="u-has-error"
+                                            data-success-class="u-has-success">
+                                        <span style="color: brown;" id="addressErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -505,9 +529,10 @@
                                             State
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="state" placeholder=""
-                                            aria-label="Company Name" data-msg="Please enter a company name."
+                                        <input type="text" class="form-control" name="state" placeholder="State"
+                                            id="state" aria-label="Company Name" data-msg="Please enter a company name."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="stateErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -521,10 +546,11 @@
                                             District
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="district" placeholder=""
-                                            aria-label="470 Lucy Forks" required=""
+                                        <input type="text" class="form-control" name="district" placeholder="District"
+                                            id="district" aria-label="470 Lucy Forks" required=""
                                             data-msg="Please enter a valid address." data-error-class="u-has-error"
                                             data-success-class="u-has-success">
+                                        <span style="color: brown;" id="districtErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -538,10 +564,11 @@
                                             City
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="city" placeholder=""
+                                        <input type="text" class="form-control" name="city" placeholder="City" id="city"
                                             aria-label="London" required="" data-msg="Please enter a valid address."
                                             data-error-class="u-has-error" data-success-class="u-has-success"
                                             autocomplete="off">
+                                        <span style="color: brown;" id="cityErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -553,10 +580,11 @@
                                             Postcode/Zip
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" name="postcode" placeholder=""
-                                            aria-label="99999" required=""
+                                        <input type="text" class="form-control" name="postcode" placeholder="Postcode"
+                                            id="postcode" aria-label="99999" required=""
                                             data-msg="Please enter a postcode or zip code."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="postcodeErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -572,10 +600,12 @@
                                             Email address
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="email" class="form-control" name="emailAddress" placeholder=""
+                                        <input type="email" class="form-control" name="email"
+                                            placeholder="Email address" id="email"
                                             aria-label="jackwayley@gmail.com" required=""
                                             data-msg="Please enter a valid email address."
                                             data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="emailAddressErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -587,9 +617,10 @@
                                             Phone
                                             <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" class="form-control" placeholder=""
-                                            aria-label="+1 (062) 109-9222" name="phone" data-error-class="u-has-error"
-                                            data-success-class="u-has-success" onblur="checkSave()">
+                                        <input type="text" class="form-control" placeholder="Phone" id="phone"
+                                            name="Phone" aria-label="+1 (062) 109-9222" name="phone"
+                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                        <span style="color: brown;" id="phoneErr"></span>
                                     </div>
                                     <!-- End Input -->
                                 </div>
@@ -665,6 +696,8 @@
                                                 </tr>
                                             </tfoot>
                                         </table>
+
+
                                         <!-- End Product Content -->
                                         <div class="border-top border-width-3 border-color-1 pt-3 mb-3">
                                             <!-- Basics Accordion -->
@@ -688,11 +721,12 @@
                                             </div>
                                             <!-- End Basics Accordion -->
                                         </div>
+
                                         <div
                                             class="form-group d-flex align-items-center justify-content-between px-3 mb-5">
 
                                         </div>
-                                        <button type="submit"
+                                        <button id="billingDetails_btn" type="button"
                                             class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                             order</button>
                                     </div>
@@ -718,187 +752,28 @@
                                 <!-- End Title -->
 
                                 <!-- Billing Form -->
+                                <div>
 
-                                <div class="row">
+                                    {{#each address}}
+                                    <div class="form-check">
 
+                                        <div class="card mt-5" style="width: 36rem; height:10rem">
+                                            <div class="card-body">
 
-                                    <div class="js-form-message mb-6 col-md-12">
-                                        <label class="form-label">
-                                            Address type
-                                            <span class="text-danger">*</span>
-                                        </label>
-                                        <select class="form-control" name="addressType" id="addressType"
-                                            onchange="selectAddress(this.value,'{{userId._id}}')"
-                                            data-swal-toast-template="#my-template">
-                                            <option value="">Enter the address type</option>
-                                            {{#each addressType}}
-                                            <option value={{this.addressType}}>{{this.addressType}}</option>
-                                            {{/each}}
-                                        </select>
-                                    </div>
+                                                <h5 class="card-title" style="text-transform: uppercase;">
+                                                    <input type="radio" name="address" id="address"
+                                                        value="{{this.addressType}}">
+                                                    {{this.addressType}}</h5>
 
-                                    <div class="col-md-6">
-                                        <!-- Input -->
-
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                First name
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="firstName" id="firstName"
-                                                placeholder="" aria-label="Jack"
-                                                data-msg="Please enter your frist name." data-error-class="u-has-error"
-                                                data-success-class="u-has-success" autocomplete="off">
-                                            <span style="color: brown;" id="firstNameErr"></span>
-
+                                                <h6 class="card-subtitle mb-2 text-muted"></h6>
+                                                <p class="card-text">
+                                                    <span>{{this.address.address}},</span><span>{{this.address.city}},</span><span>{{this.address.district}},</span><span>{{this.address.state}},</span><span>{{this.address.postcode}},</span><span>+91{{this.address.phone}}</span>
+                                                </p>
+                                            </div>
                                         </div>
-                                        <!-- End Input -->
                                     </div>
+                                    {{/each}}
 
-                                    <div class="col-md-6">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                Last name
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="lastName" id="lastName"
-                                                placeholder="" aria-label="Wayley"
-                                                data-msg="Please enter your last name." data-error-class="u-has-error"
-                                                data-success-class="u-has-success">
-                                            <span style="color: brown;" id="lastNameErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-                                    <div class="w-100"></div>
-
-                                    <div class="col-md-12">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                Address
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="address" id="address"
-                                                placeholder="" aria-label="Company Name"
-                                                data-msg="Please enter a company name." data-error-class="u-has-error"
-                                                data-success-class="u-has-success">
-                                            <span style="color: brown;" id="addressErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-                                    <div class="col-md-12">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                State
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="state" placeholder=""
-                                                id="state" aria-label="Company Name"
-                                                data-msg="Please enter a company name." data-error-class="u-has-error"
-                                                data-success-class="u-has-success">
-                                            <span style="color: brown;" id="stateErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-
-
-                                    <div class="col-md-8">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                District
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="district" placeholder=""
-                                                id="district" aria-label="470 Lucy Forks"
-                                                data-msg="Please enter a valid address." data-error-class="u-has-error"
-                                                data-success-class="u-has-success">
-                                            <span style="color: brown;" id="districtErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-
-
-                                    <div class="col-md-6">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                City
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="city" id="city" placeholder=""
-                                                aria-label="London" data-msg="Please enter a valid address."
-                                                data-error-class="u-has-error" data-success-class="u-has-success"
-                                                autocomplete="off">
-                                            <span style="color: brown;" id="cityErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                Postcode/Zip
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" name="postcode" id="postcode"
-                                                placeholder="" aria-label="99999"
-                                                data-msg="Please enter a postcode or zip code."
-                                                data-error-class="u-has-error" data-success-class="u-has-success">
-                                            <span style="color: brown;" id="postcodeErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-                                    <div class="w-100"></div>
-
-
-
-                                    <div class="col-md-6">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                Email address
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="email" class="form-control" name="emailAddress"
-                                                id="emailAddress" placeholder="" aria-label="jackwayley@gmail.com"
-                                                data-msg="Please enter a valid email address."
-                                                data-error-class="u-has-error" data-success-class="u-has-success">
-                                            <span style="color: brown;" id="emailAddressErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
-
-                                    <div class="col-md-6">
-                                        <!-- Input -->
-                                        <div class="js-form-message mb-6">
-                                            <label class="form-label">
-                                                Phone
-                                                <span class="text-danger">*</span>
-                                            </label>
-                                            <input type="text" class="form-control" placeholder="" id="phone"
-                                                aria-label="+1 (062) 109-9222" name="phone"
-                                                data-error-class="u-has-error" data-success-class="u-has-success">
-                                            <span style="color: brown;" id="phoneErr"></span>
-
-                                        </div>
-                                        <!-- End Input -->
-                                    </div>
 
                                 </div>
                                 <!-- End Billing Form -->
@@ -907,6 +782,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </form>
 
@@ -979,25 +855,14 @@
         });
     });
 
+    // ********** billing details form sumbit ************
 
-    $('#billingDetails').submit((e) => {
-        e.preventDefault()
+    $('#billingDetails_btn').click((e) => {
 
-        var firstName = document.getElementById('firstName').value
-        var lastName = document.getElementById('lastName').value
-        var address = document.getElementById('address').value
-        var state = document.getElementById('state').value
-        var district = document.getElementById('district').value
-        var city = document.getElementById('city').value
-        var postcode = document.getElementById('postcode').value
-        var emailAddress = document.getElementById('emailAddress').value
-        var phone = document.getElementById('phone').value
-        var letters = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-
-        console.log(document.querySelector('input[name = payment]:checked'))
         if (!document.querySelector('input[name = payment]:checked')) {
             console.log('This is if case')
-            console.log(document.querySelector('input[name = payment]:checked'))
+            e.preventDefault()
+
             Swal.fire({
                 title: 'Please enter a payment method!',
                 icon: 'error',
@@ -1007,26 +872,37 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-        } 
-        else {
+        } else if (!document.querySelector('input[name = address]:checked')) {
+            e.preventDefault()
+            Swal.fire({
+                title: 'Please select an address!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+        } else {
+            let type = document.querySelector('input[name=address]:checked').value
+            let payment = document.querySelector('input[name=payment]:checked').value
+            console.log(type, payment)
             console.log('This is else case')
             $.ajax({
                 url: '/checkout',
                 method: 'post',
-                data: $('#billingDetails').serialize(),
+                data: {
+                    address: type,
+                    payment: payment
+                },
                 success: (response) => {
                     console.log(response)
                     if (response.status == true) {
                         console.log("This is status true")
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Order placed successfully',
-                            showConfirmButton: false,
-                            timer: 1000
-                        }).then(() => {
-                            location.href = '/checkout/orderSuccess'
-                        })
+                        console.log(response)
+                        alert('success')
+                        location.href = '/orderSuccess'
+
                     } else {
                         razorpayPayment(response.response)
                     }
@@ -1035,62 +911,255 @@
         }
     })
 
+    // *************** billing details form ends **********************
 
-    // ********** myForm Post **************
-    $('#MyForm').submit((e) => {
-        e.preventDefault()
-        $.ajax({
-            url: '/checkout',
-            method: 'post',
-            data: $('#MyForm').serialize(),
-            success: (response) => {
-                console.log(response)
-                if (response.status == true) {
-                    console.log("This is status true")
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Order placed successfully',
-                        showConfirmButton: false,
-                        timer: 1000
-                    }).then(() => {
-                        location.href = '/checkout/orderSuccess'
+
+    // ************************** existing user with new address form *********************
+
+    $('#MyForm_btn').click((e) => {
+
+        let fname = document.getElementById('firstName').value
+        let lname = document.getElementById('lastName').value
+        let address = document.getElementById('address').value
+        let state = document.getElementById('state').value
+        let district = document.getElementById('district').value
+        let city = document.getElementById('city').value
+        let postcode = document.getElementById('postcode').value
+        let email = document.getElementById('email').value
+        let phone = document.getElementById('phone').value
+        var regx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!document.querySelector('input[name = payment]:checked')) {
+            console.log('This is if case')
+            e.preventDefault()
+
+            Swal.fire({
+                title: 'Please enter a payment method!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+        } else if (fname.trim() == "" || fname < 2) {
+            e.preventDefault()
+            document.getElementById('firstName').focus();
+            document.getElementById('fNameErr').innerHTML = "Enter valid first name"
+        } else if (lname.trim() == "" || lname < 2) {
+            e.preventDefault()
+            document.getElementById('lastName').focus();
+            document.getElementById('lNameErr').innerHTML = "Enter valid last name"
+        } else if (address.trim() == "" || address < 2) {
+            e.preventDefault()
+            document.getElementById('address').focus();
+            document.getElementById('addressErr').innerHTML = "Enter valid address"
+        } else if (state.trim() == "" || state < 2) {
+            e.preventDefault()
+            document.getElementById('state').focus();
+            document.getElementById('stateErr').innerHTML = "Enter valid state"
+        } else if (district.trim() == "" || district < 2) {
+            e.preventDefault()
+            document.getElementById('district').focus();
+            document.getElementById('districtErr').innerHTML = "Enter valid district"
+        } else if (city.trim() == "" || city < 2) {
+            e.preventDefault()
+            document.getElementById('city').focus();
+            document.getElementById('cityErr').innerHTML = "Enter valid city"
+        } else if (postcode.trim() == "" || postcode < 2 || isNaN(postcode)) {
+            e.preventDefault()
+            document.getElementById('postcode').focus();
+            document.getElementById('postcodeErr').innerHTML = "Enter valid postcode"
+        } else if (email.trim() == "" || email < 2 || !email.match(regx)) {
+            e.preventDefault()
+            document.getElementById('email').focus();
+            document.getElementById('emailErr').innerHTML = "Enter valid Email"
+        } else if (phone.trim() == "" || phone < 2 || isNaN(phone)) {
+            e.preventDefault()
+            document.getElementById('phone').focus();
+            document.getElementById('phoneErr').innerHTML = "Enter valid phone number"
+        } else {
+
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    let payment = document.querySelector('input[name=payment]:checked').value
+                    console.log(payment)
+                    console.log('This is confirmed')
+                    $.ajax({
+                        url: '/checkoutNewAddressSave',
+                        method: 'post',
+                        data: $("#MyForm").serialize(),
+                        success: (response) => {
+                            console.log(response)
+                            if (response.status == true)     {
+                                console.log("This is status true")
+                                console.log(response)
+                                alert('success')
+                                location.href = '/orderSuccess'
+
+                            } else {
+                                razorpayPayment(response.response)
+                            }
+                        }
                     })
-                } else {
-                    razorpayPayment(response.response)
+                } else if (result.isDenied) {
+                    console.log('This is is denied')
+                    $.ajax({
+                        url: '/checkoutNewAddress',
+                        method: 'post',
+                        data: $("#MyForm").serialize(),
+                        success: (response) => {
+                            console.log(response)
+                            if (response.status == true) {
+                                console.log("This is status true")
+                                console.log(response)
+                                alert('success')
+                                location.href = '/orderSuccess'
+
+                            } else {
+                                razorpayPayment(response.response)
+                            }
+                        }
+                    })
                 }
-            }
-        })
+            })
+        }
     })
 
-    // ********** newForm Post **************
-    $('#newForm').submit((e) => {
-        e.preventDefault()
-        $.ajax({
-            url: '/checkout',
-            method: 'post',
-            data: $('#newForm').serialize(),
-            success: (response) => {
-                console.log(response)
-                if (response.status == true) {
-                    console.log("This is status true")
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'success',
-                        title: 'Order placed successfully',
-                        showConfirmButton: false,
-                        timer: 1000
-                    }).then(() => {
-                        location.href = '/checkout/orderSuccess'
+    // ************************* existing user with new address form ends ******************
+
+
+    // ************************ new user with new address form starts **********************
+    $('#newForm_btn').click((e) => {
+
+        console.log("clicked")
+        let fname = document.getElementById('firstName').value
+        let lname = document.getElementById('lastName').value
+        let address = document.getElementById('address').value
+        let state = document.getElementById('state').value
+        let district = document.getElementById('district').value
+        let city = document.getElementById('city').value
+        let postcode = document.getElementById('postcode').value
+        let email = document.getElementById('email').value
+        let phone = document.getElementById('phone').value
+        var regx = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!document.querySelector('input[name = payment]:checked')) {
+            console.log('This is if case')
+            e.preventDefault()
+
+            Swal.fire({
+                title: 'Please enter a payment method!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+        } else if (fname.trim() == "" || fname < 2) {
+            e.preventDefault()
+            document.getElementById('firstName').focus();
+            document.getElementById('fNameErr').innerHTML = "Enter valid first name"
+        } else if (lname.trim() == "" || lname < 2) {
+            e.preventDefault()
+            document.getElementById('lastName').focus();
+            document.getElementById('lNameErr').innerHTML = "Enter valid last name"
+        } else if (address.trim() == "" || address < 2) {
+            e.preventDefault()
+            document.getElementById('address').focus();
+            document.getElementById('addressErr').innerHTML = "Enter valid address"
+        } else if (state.trim() == "" || state < 2) {
+            e.preventDefault()
+            document.getElementById('state').focus();
+            document.getElementById('stateErr').innerHTML = "Enter valid state"
+        } else if (district.trim() == "" || district < 2) {
+            e.preventDefault()
+            document.getElementById('district').focus();
+            document.getElementById('districtErr').innerHTML = "Enter valid district"
+        } else if (city.trim() == "" || city < 2) {
+            e.preventDefault()
+            document.getElementById('city').focus();
+            document.getElementById('cityErr').innerHTML = "Enter valid city"
+        } else if (postcode.trim() == "" || postcode < 2 || isNaN(postcode)) {
+            e.preventDefault()
+            document.getElementById('postcode').focus();
+            document.getElementById('postcodeErr').innerHTML = "Enter valid postcode"
+        } else if (email.trim() == "" || email < 2 || !email.match(regx)) {
+            e.preventDefault()
+            document.getElementById('email').focus();
+            document.getElementById('emailErr').innerHTML = "Enter valid Email"
+        } else if (phone.trim() == "" || phone < 2 || isNaN(phone)) {
+            e.preventDefault()
+            document.getElementById('phone').focus();
+            document.getElementById('phoneErr').innerHTML = "Enter valid phone number"
+        }
+         else {
+             console.log(document.querySelector('input[name = payment]:checked').value)
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    let payment = document.querySelector('input[name=payment]:checked').value
+                    console.log(payment)
+                    console.log('This is confirmed')
+                    $.ajax({
+                        url: '/checkoutNewAddressSave',
+                        method: 'post',
+                        data: $("#newForm").serialize(),
+                        success: (response) => {
+                            console.log(response)
+                            if (response.status == true) {
+                                console.log("This is status true")
+                                console.log(response)
+                                alert('success')
+                                location.href = '/orderSuccess'
+
+                            } else {
+                                razorpayPayment(response.response)
+                            }
+                        }
                     })
-                } else {
-                    razorpayPayment(response.response)
+                } 
+                else if (result.isDenied) {
+                    console.log('This is is denied')
+                    $.ajax({
+                        url: '/checkoutNewAddress',
+                        method: 'post',
+                        data: $("#MyForm").serialize(),
+                        success: (response) => {
+                            console.log(response)
+                            if (response.status == true) {
+                                console.log("This is status true")
+                                console.log(response)
+                                alert('success')
+                                location.href = '/orderSuccess'
+
+                            } else {
+                                razorpayPayment(response.response)
+                            }
+                        }
+                    })
                 }
-            }
-        })
+            })
+        }
     })
 
-
+    // ************************ new user with new address form ends  ************************
 
 
     function razorpayPayment(order) {
@@ -1143,7 +1212,7 @@
                         showConfirmButton: false,
                         timer: 1700
                     }).then(() => {
-                        location.href = '/checkout/orderSuccess'
+                        location.href = '/orderSuccess'
                     })
                 } else {
                     Swal.fire({

@@ -242,5 +242,112 @@ module.exports = {
             }
             resolve()
         })
+    },
+    
+    getProduct : (proId) => {
+        return new Promise(async (resolve,reject) => {
+            let product = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({
+                _id : ObjectID(proId) 
+            })
+            console.log("This is getproduct")
+            // console.log(product);
+            resolve(product)
+        })
+    },
+
+    getImages : (proId) => {
+        return new Promise(async (resolve,reject) => {
+            let images = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({
+                _id : ObjectID(proId)
+            })
+            console.log("*****");
+            console.log(images.imageName);
+            resolve(images.imageName)
+        })
+    },
+
+    updateProduct : (proId,body,images) => {
+        console.log("This is update product")
+        console.log(proId,body,images);
+
+        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+            _id : ObjectID(proId)
+        },{
+            $set : {
+                productName : body.productName,
+                description : body.description,
+                price : body.price,
+                quantity : body.quantity,
+                brand : body.brand,
+                category : body.category,
+                imageName : images
+            }
+        })
+    },
+
+    updateProductimg2 : (proId,body,image) => {
+
+        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+            _id : ObjectID(proId)
+        },{
+            $set : {
+                productName : body.productName,
+                description : body.description,
+                price : body.price,
+                quantity : body.quantity,
+                brand : body.brand,
+                category : body.category,
+                "imageName.1" : image
+            }
+        })
+
+    },
+
+    updateProductimg1 : (proId,body,image) => {
+        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+            _id : ObjectID(proId)
+        },{
+            $set : {
+                productName : body.productName,
+                description : body.description,
+                price : body.price,
+                quantity : body.quantity,
+                brand : body.brand,
+                category : body.category,
+                "imageName.0" : image
+            }
+        })
+    },
+
+    updateProductimg3 : (proId,body,image) => {
+        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+            _id : ObjectID(proId)
+        },{
+            $set : {
+                productName : body.productName,
+                description : body.description,
+                price : body.price,
+                quantity : body.quantity,
+                brand : body.brand,
+                category : body.category,
+                "imageName.2" : image
+            }
+        })
+    },
+
+    updateProductimg4 : (proId,body,image) => {
+        db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+            _id : ObjectID(proId)
+        },{
+            $set : {
+                productName : body.productName,
+                description : body.description,
+                price : body.price,
+                quantity : body.quantity,
+                brand : body.brand,
+                category : body.category,
+                "imageName.3" : image
+            }
+        })
     }
 }

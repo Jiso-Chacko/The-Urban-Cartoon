@@ -144,10 +144,10 @@ module.exports = {
     addAddress: (address, userId, addressType) => {
 
         return new Promise(async (resolve, reject) => {
+            console.log("Address added");
             let response = {}
-            let addressCount = await db.get().collection(collection.ADDRESS_COLLECTION).find().toArray()
-            console.log(addressCount.length);
-            if (addressCount.length <= 3) {
+            // let addressCount = await db.get().collection(collection.ADDRESS_COLLECTION).find().toArray()
+         
                 db.get().collection(collection.ADDRESS_COLLECTION).insertOne({
                     userId: ObjectID(userId),
                     addressType: addressType,
@@ -155,10 +155,7 @@ module.exports = {
                 })
                 response.status = true
                 resolve(response)
-            } else {
-                response.status = false
-                resolve(response)
-            }
+            
         })
     },
 
@@ -169,6 +166,7 @@ module.exports = {
             }).toArray()
 
             console.log("This is addess array :" + address.length);
+            console.log(address);
             if (address.length == 0) {
                 resolve({
                     status: false,
@@ -240,6 +238,125 @@ module.exports = {
                 addressType: value
             })
             resolve(otherAddress)
+        })
+    },
+
+    editProfile : (body,image,userId) => {
+
+        return new Promise((resolve,reject)  => {
+            db.get().collection(collection.USER_COLLECTION).updateOne({
+                _id : ObjectID(userId)
+            },
+            {
+               $set : {
+                userFirstName : body.firstName,
+                userLastName : body.lastName,
+                userEmail : body.email,
+                image : image
+               }
+            })
+            resolve()
+        })
+    },
+
+    getUser : (userId) => {
+       return new Promise(async (resolve,reject) => {
+
+           let user = await db.get().collection(collection.USER_COLLECTION).findOne({
+               _id : ObjectID(userId)
+           })
+         resolve(user)
+       }) 
+    },
+
+    getImage : (userId) => {
+
+        return new Promise(async (resolve,reject) => {
+         let image =await db.get().collection(collection.USER_COLLECTION).aggregate([
+                {
+                    $match : {
+                       _id : ObjectID(userId)
+                    }
+                },
+                {
+                    $project : {
+                        image : 1,
+                        _id : 0
+                    }
+                }
+            ]).toArray()
+            console.log("//////");
+            console.log(image[0].image);
+            resolve(image[0].image)
+        })
+    },
+
+    changePass : (userId,body) => {
+
+        return new Promise(async (resolve,reject) => {
+
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({
+                _id : ObjectID(userId)
+            }) 
+            console.log(user.userPass);
+            bcrypt.compare(body.pass1,user.userPass).then(async (result) => {
+                console.log("pass cmpr");
+                console.log(result);
+                if(result == true){
+                    let hashPass =  await bcrypt.hash(body.newPass,10)
+                    db.get().collection(collection.USER_COLLECTION).updateOne({
+                        _id : ObjectID(userId)
+                    },{
+                        $set : {
+                            userPass : hashPass
+                        }
+                    })
+                    resolve({status : true})
+                }
+                else{
+                    resolve({status : false})
+                }
+            })          
+        })
+    },
+
+    getAddress : (userId,type) => {
+
+        return new Promise(async(resolve,reject) => {
+
+            let address = await db.get().collection(collection.ADDRESS_COLLECTION).findOne({
+                userId : ObjectID(userId),
+                addressType : type
+            })
+            // console.log("++++++");
+            // console.log(address);
+            resolve(address)
+        })
+    },
+
+    editAddress : (userId,address) => {
+
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.ADDRESS_COLLECTION).updateOne({
+                userId : ObjectID(userId)
+            },
+            {
+                $set : {
+                    address : address
+                }
+            })
+            resolve()
+        })
+    },
+
+    deleteAddress : (userId,type) => {
+
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.ADDRESS_COLLECTION).deleteOne({
+                userId : ObjectID(userId),
+                addressType : type
+            })
+            resolve()
         })
     }
 

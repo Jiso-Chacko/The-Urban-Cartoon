@@ -1,0 +1,16 @@
+<div>
+    <button onclick="form()"> swal form</button>
+</div>
+
+<script>
+    function form() {
+        Swal.fire({
+            title: 'Please login to continue!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#42ba96',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Login'
+        })
+    }
+</script>

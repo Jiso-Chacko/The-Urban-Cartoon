@@ -151,7 +151,6 @@ module.exports = {
             userproducts = await db.get().collection(collection.CART_COLLECTION).find({
                 user: ObjectID(userId)
             }).toArray()
-            console.log(userproducts);
             console.log(userproducts.length);
             if (userproducts) {
                 count = userproducts.length
@@ -421,7 +420,8 @@ module.exports = {
                     product.cancelled = false;  
                     return product;
                 })
-            }else{
+            }
+            else{
                 products = products.map((product) => {
                     product.status = status;
                     product.placed = false;
@@ -446,7 +446,7 @@ module.exports = {
                     district: order.district,
                     state: order.state,
                     postcode: order.postcode,
-                    email: order.emailAddress,
+                    email: order.email,
                     phone: order.phone
                 },
                 paymentMethod: order.payment,

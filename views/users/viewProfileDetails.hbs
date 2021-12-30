@@ -54,10 +54,9 @@
                 <div class="card" style="width: 50rem;">
                     <div class="card-body">
 
-                        <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img
-                                class="rounded-circle mt-5" width="150px"
-                                src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                                <span class="font-weight-bold">Edogaru</span>                             
+                        <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                         <img class="rounded-circle mt-5" width="150px" src="/profileImages/{{user.image}}">
+                                                       
                         </div>
 
                         <div class="row mt-2 ml-10">
@@ -98,7 +97,9 @@
                     </div>
                 </div>
 
-                <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>                       
+                {{!-- <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>   --}}
+                <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/viewProfile/:{{userId}}/editProfile">Edit Profile </a>                       
+
                 </div>
             </div>
         </div>
