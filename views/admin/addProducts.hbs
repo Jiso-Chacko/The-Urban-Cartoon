@@ -118,7 +118,7 @@
                             <img style="width: 10rem; margin: 10px" src="" id="img1">
                             <input type="file" id="fileinputimage1" name="fileinputimage1" class="form-control-file"
                                 onchange="viewimage1(event)">
-                            <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea>
+                            {{!-- <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea> --}}
                         </div>
                     </div>
 
@@ -130,7 +130,7 @@
                             <img style="width: 10rem; margin: 10px" src="" id="img2">
                             <input type="file" id="fileinputimage2" name="fileinputimage2" class="form-control-file"
                                 onchange="viewimage2(event)">
-                            <textarea name="pro_img2" id="pro_img2" style="display: none;"></textarea>
+                            {{!-- <textarea name="pro_img2" id="pro_img2" style="display: none;"></textarea> --}}
                         </div>
                     </div>
 
@@ -142,7 +142,7 @@
                             <img style="width: 10rem; margin: 10px" src="" id="img3">
                             <input type="file" id="fileinputimage3" name="fileinputimage3" class="form-control-file"
                                 onchange="viewimage3(event)">
-                            <textarea name="pro_img3" id="pro_img3" style="display: none;"></textarea>
+                            {{!-- <textarea name="pro_img3" id="pro_img3" style="display: none;"></textarea> --}}
                         </div>
                     </div>
 
@@ -154,7 +154,7 @@
                             <img style="width: 10rem; margin: 10px" src="" id="img4">
                             <input type="file" id="fileinputimage4" name="fileinputimage4" class="form-control-file"
                                 onchange="viewimage4(event)">
-                            <textarea name="pro_img4" id="pro_img4" style="display: none;"></textarea>
+                            {{!-- <textarea name="pro_img4" id="pro_img4" style="display: none;"></textarea> --}}
 
                         </div>
                     </div>
@@ -320,7 +320,7 @@
                         result1.appendChild(img1);
                         // init cropper
                         cropper1 = new Cropper(img1, {
-                            aspectRatio: 3 / 4,
+                            aspectRatio: 16 / 15,
                             viewMode: 0,
                         });
                     }
@@ -349,7 +349,7 @@
         e.preventDefault();
         // get result to data uri
         let imgSrc1 = cropper1.getCroppedCanvas({
-            width: 300,
+            width: 6000,
             height: 500 // img disp value
         }).toDataURL();
         $("#exampleModalCenter1").modal("hide");
@@ -387,7 +387,7 @@
                         result2.appendChild(img2);
                         // init cropper
                         cropper2 = new Cropper(img2, {
-                            aspectRatio: 3 / 4,
+                            aspectRatio: 16 / 15,
                             viewMode: 0,
                         });
                     }
@@ -416,7 +416,7 @@
         e.preventDefault();
         // get result to data uri
         let imgSrc2 = cropper2.getCroppedCanvas({
-            width: 300,
+            width: 6000,
             height: 500 // img disp value
         }).toDataURL();
         $("#exampleModalCenter2").modal("hide");
@@ -455,7 +455,7 @@
                         result3.appendChild(img3);
                         // init cropper
                         cropper3 = new Cropper(img3, {
-                            aspectRatio: 3 / 4,
+                            aspectRatio: 16 / 15,
                             viewMode: 0,
                         });
                     }
@@ -484,7 +484,7 @@
         e.preventDefault();
         // get result to data uri
         let imgSrc3 = cropper3.getCroppedCanvas({
-            width: 300,
+            width: 6000,
             height: 500 // img disp value
         }).toDataURL();
         $("#exampleModalCenter3").modal("hide");
@@ -523,7 +523,7 @@
                         result4.appendChild(img4);
                         // init cropper
                         cropper4 = new Cropper(img4, {
-                            aspectRatio: 3 / 4,
+                            aspectRatio: 16 / 15,
                             viewMode: 0,
                         });
                     }
@@ -552,7 +552,7 @@
         e.preventDefault();
         // get result to data uri
         let imgSrc4 = cropper4.getCroppedCanvas({
-            width: 300,
+            width: 6000,
             height: 500 // img disp value
         }).toDataURL();
         $("#exampleModalCenter4").modal("hide");
@@ -647,7 +647,7 @@
 
     function proNameValid() {
         var text = document.getElementById("productName").value;
-        var letters = /^[a-zA-Z\s]*$/;
+       
         if (text.length == 0) {
             // document.getElementById("nameLen").style.display = "block";
             document.getElementById("nameReq").innerHTML = "required ";
@@ -655,9 +655,6 @@
             // document.getElementById("nameErr").style.display = "none";
         } else if (text.length < 3) {
             document.getElementById("nameReq").innerHTML = "Minimum Length required";
-        } else if (!text.match(letters)) {
-            document.getElementById("nameReq").innerHTML = "Only letters are allowed";
-
         } else {
             document.getElementById("nameReq").innerHTML = " ";
         }
@@ -684,7 +681,7 @@
 
     function proDescription() {
         var text = document.getElementById("description").value;
-        var letters = /^[a-zA-Z\s]*$/;
+     
         if (text.length == 0) {
             // document.getElementById("nameLen").style.display = "block";
             document.getElementById("proDescriptionErr").innerHTML = "required ";
@@ -692,10 +689,8 @@
             // document.getElementById("nameErr").style.display = "none";
         } else if (text.length < 3) {
             document.getElementById("proDescriptionErr").innerHTML = "Minimum Length required";
-        } else if (!text.match(letters)) {
-            document.getElementById("proDescriptionErr").innerHTML = "Only letters are allowed";
-
-        } else {
+        }
+         else {
             document.getElementById("proDescriptionErr").innerHTML = " ";
         }
     }

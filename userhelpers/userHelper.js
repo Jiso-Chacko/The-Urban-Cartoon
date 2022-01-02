@@ -358,6 +358,36 @@ module.exports = {
             })
             resolve()
         })
+    },
+
+    blockUser : (userId) => {
+
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.USER_COLLECTION).updateOne({
+                _id : ObjectID(userId)
+            },
+            {
+                $set : {
+                    isEnabled : false
+                }
+            })
+            resolve(block =  true)
+        })
+    },
+
+    unblockUser : (userId) => {
+
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.USER_COLLECTION).updateOne({
+                _id : ObjectID(userId)
+            },
+            {
+                $set : {
+                    isEnabled : true
+                }
+            })
+            resolve(unblock =  true)
+        })
     }
 
 }

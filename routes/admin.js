@@ -189,9 +189,10 @@ router.post('/addProduct', function (req, res, next) {
       console.log("Success");
       adminProductHelper.addProduct(body, images, (id) => {
         console.log(id);
+        res.redirect('/admin/viewProducts')
       })
+      
     }
-    res.redirect('/admin/addProduct')
   })
 })
 
@@ -482,7 +483,6 @@ router.post('/editProduct', verifyAdminLogin, (req, res, next) => {
 })
 
 
-
 // get addSlider
 router.get('/addSlider', verifyAdminLogin, function (req, res, next) {
 
@@ -600,7 +600,7 @@ router.get('/deleteProduct', verifyAdminLogin, (req, res, next) => {
 })
 
 // ********* user Mangement **********
-router.get('/userManagement', async (req, res, next) => {
+router.get('/userManagement',verifyAdminLogin, async (req, res, next) => {
 
   let users = await userHelper.getUsersForAdmin()
   res.render('admin/userManagement', {
@@ -610,7 +610,7 @@ router.get('/userManagement', async (req, res, next) => {
 })
 
 // ********** product management ************
-router.get('/productMangement', async (req, res, next) => {
+router.get('/productMangement',verifyAdminLogin, async (req, res, next) => {
 
   let orders = await adminProductHelper.getAllOrders()
   console.log("this is product management route");
@@ -678,6 +678,26 @@ router.get('/swalForm', (req, res, next) => {
 
   res.render('admin/swalFormSample', {
     layout: 'admin/layout'
+  })
+})
+
+// ********* block user ******************
+router.get('/disable_user',verifyAdminLogin,(req,res,next) => {
+
+  console.log(req.query.id);
+  console.log("/disable_user");
+  userHelper.blockUser(req.query.id).then((response)  => {
+    res.send(response)
+  })
+})
+
+// ********* unblock user ******************
+router.get('/enable_user',verifyAdminLogin,(req,res,next) => {
+
+  console.log(req.query.id);
+  console.log("/enable_user");
+  userHelper.unblockUser(req.query.id).then((response)  => {
+    res.send(response)
   })
 })
 

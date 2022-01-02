@@ -302,12 +302,7 @@ function deleteProduct(userId, proId) {
             })
         }
     })
-
-
-
 }
-
-
 
 
 function sweetAlert() {
@@ -325,7 +320,6 @@ function sweetAlert() {
             Swal.fire('Changes are not saved', '', 'info')
         }
     })
-
 }
 
 function removeFromWishlist(proId) {
@@ -383,6 +377,8 @@ function changeStatus(proId, value, orderId) {
                 title: 'Status changed!',
                 showConfirmButton: false,
                 timer: 1500
+            }).then(() => {
+                location.reload()
             })
         },
         error: (err) => {

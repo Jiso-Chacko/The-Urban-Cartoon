@@ -1084,6 +1084,13 @@ router.post('/cancelProduct', (req, res, next) => {
   res.send(status = true)
 })
 
+// *************** view products *************
+router.get('/viewProducts',(req,res,next) => {
+  res.render('users/productsView',{
+    layout : 'users/layout'
+  })
+})
+
 router.get('/zoom', (req, res, next) => {
   res.render('users/sweetAlertSample')
 })

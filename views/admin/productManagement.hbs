@@ -1,10 +1,20 @@
-<div class="container-fluid">
 
+<style>
+    .table {
+    border-collapse: separate;
+    border-spacing:0 20px;
+    }
+  
+
+</style>
+
+
+<div class="container-fluid">
 
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <table class="table table-hover mt-2" id="myTable">
+                <table class="table table-hover mt-2 mb-2 borderless" id="myTablePro">
                     <thead>
                         <tr>
                             <th>OrderId</th>
@@ -21,7 +31,7 @@
                     <tbody>
                         {{#each orders}}
                         {{#each products}}
-                        <t class="mt-5">
+                        <tr class="mt-5">
 
                             <td>{{../this._id}}</td>
                             <td>{{../this.deliveryDetails.firstName}}</td>
@@ -30,7 +40,7 @@
                             <td>{{../this.paymentMethod}}</td>
                             <td>₹{{../this.totalAmount.totalSum}}</td>
                             {{#if this.placed}}
-                            <td style="text-transform: uppercase;" class="badge badge-primary">{{this.status}}</td>
+                            <td style="text-transform: uppercase;" class="badge badge-primary ">{{this.status}}</td>
                             {{/if}}
                             {{#if this.shipped}}
                             <td style="text-transform: uppercase;" class="badge badge-info">{{this.status}}</td>
@@ -40,13 +50,11 @@
                             {{/if}}
                             {{#if this.cancelled}}
                             <td style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</td>
-                            {{else}}
-                            <td style="text-transform: uppercase;" class="badge badge-primary">Pending</td>
                             {{/if}}
 
                             <td>
                                 {{#if this.placed}}
-                                <select onmousedown="this.value=''"
+                                <select onmousedown="" 
                                     onchange="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">
                                     <option>Change Status</option>
                                     <option value="shipped" class="shipped">Shipped</option>
@@ -65,21 +73,20 @@
                             </td>
 
                             {{!-- <td><button class="btn btn-sm btn-danger" >Cancel</button></td> --}}
+                            <td>
                             {{#if this.placed}}
-                            <td><a class="btn btn-sm btn-danger" style="width: 5.5rem;"
-                                    onclick="cancelOrder('{{this._id}}','{{this.product}}')">Cancel</a></td>
+                                <a class="btn btn-sm btn-danger" style="width: 5.5rem;"
+                                    onclick="cancelOrder('{{this._id}}','{{this.product}}')">Cancel</a>
                             {{/if}}
 
                             {{#if this.shipped}}
-                            <td>
                                 {{!-- <a class="btn btn-sm btn-danger" style="width: 5.5rem;" value="cancelled"
                                     onclick="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">Cancel</a> --}}
                                 {{!-- <input class="btn btn-sm btn-danger" type="button" > --}}
                                 <button class="btn btn-sm btn-danger" value="cancelled"
                                     onclick="changeStatus('{{this.product}}',this.value,'{{../this._id}}')">Cancel</button>
-                            </td>
                             {{/if}}
-
+                            </td>
 
                             </tr>
                             {{/each}}
@@ -92,11 +99,10 @@
 </div>
 
 
+<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
 
-
-{{!-- 
-<script>
-    $(document).ready(function () {
-        $('#myTable').DataTable();
+<script> 
+   $(document).ready(function () {
+        $('#myTablePro').DataTable();
     });
-</script> --}}
+</script>

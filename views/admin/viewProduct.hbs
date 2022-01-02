@@ -38,10 +38,8 @@
                             {{!-- <td><button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure you want to delete {{this.productName}}?');" >Delete</button>
                             </td> --}}
-                            <td><a class="btn btn-danger btn-sm" onclick="verifyEdit('{{this.productName}}')"
-                                    href="/admin/deleteProduct?id={{this._id}}">Delete</a></td>
-
-
+                            <td><a class="btn btn-danger btn-sm" onclick="verifyDelete('{{this.productName}}','{{this._id}}')">Delete</a></td>
+                                    
                         </tr>
                         {{/each}}
 
@@ -75,7 +73,27 @@
                 location.href = `/admin/editProduct?id=${proId}`
             }
         })
+    }
 
+    function verifyDelete(proName,proId) {
+        Swal.fire({
+            title: `Do you want to delete ${proName}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#42ba96',
+            confirmButtonText: 'Delete'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : `/admin/deleteProduct?id=${proId}`,
+                    method : 'get',
+                    success : ()  => {
+                        location.reload()
+                    }
+                })
+            }
+        })
     }
 
    
