@@ -349,5 +349,43 @@ module.exports = {
                 "imageName.3" : image
             }
         })
+    },
+
+    createCoupon : (coupon) => {
+        return new Promise(async (resolve,reject) => {
+            
+            let getCoupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({
+                name : coupon.couponName
+            })
+            console.log(getCoupon)
+            if(getCoupon == null){
+                db.get().collection(collection.COUPON_COLLECTION).insertOne({
+                    name : coupon.couponName,
+                    code : coupon.couponCode,
+                    offer : parseInt(coupon.offerPercentage),
+                    validity : coupon.couponValidity
+                })
+                resolve(created = true)
+            }
+            else{
+                resolve(created = false)
+            }
+        })
+    },
+
+    getAllCoupen : () => {
+        return new Promise(async (resolve,reject)  => {
+            let coupon = await db.get().collection(collection.COUPON_COLLECTION).find().toArray()
+            resolve(coupon)
+        })
+    },
+
+    deleteCoupon : (couponId) => {
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.COUPON_COLLECTION).deleteOne({
+                _id : ObjectID(couponId)
+            })
+            resolve()
+        })
     }
 }

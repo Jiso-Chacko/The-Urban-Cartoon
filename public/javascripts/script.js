@@ -538,3 +538,10 @@ async function selectAddress(value,userId){
      
     console.log('Select address'+""+value)
 }
+
+function searchProduct(){
+
+    onclick="searchProduct()"
+    let search = document.getElementById('search').value
+    console.log(search)
+}

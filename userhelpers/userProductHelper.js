@@ -44,6 +44,25 @@ module.exports = {
             resolve(featured)
         })
     },
+    getAllFeaturedSmartPhone : () => {
+        return new Promise(async (resolve, reject) => {
+            let featured = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                "proDetails.0.featured": "featured",
+                category : 'smartphone'
+            }).toArray()
+            resolve(featured)
+        })
+    },
+
+    getAllFeaturedLaptop : () => {
+        return new Promise(async (resolve, reject) => {
+            let featured = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                "proDetails.0.featured": "featured",
+                category : 'laptop'
+            }).toArray()
+            resolve(featured)
+        })
+    },
 
     getAllTopRated: () => {
         return new Promise(async (resolve, reject) => {
@@ -54,10 +73,50 @@ module.exports = {
         })
     },
 
+    getAllTopRatedSmartPhone : () => {
+        return new Promise(async (resolve, reject) => {
+            let topRated = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                "proDetails.0.topRated": "topRated",
+                category : 'smartphone'
+            }).toArray()
+            resolve(topRated)
+        })
+    },
+
+    getAllTopRatedLaptop : () => {
+        return new Promise(async (resolve, reject) => {
+            let topRated = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                "proDetails.0.topRated": "topRated",
+                category : 'laptop'
+            }).toArray()
+            resolve(topRated)
+        })
+    },
+
     getAllOnsale: () => {
         return new Promise(async (resolve, reject) => {
             let onSale = await db.get().collection(collection.PRODUCT_COLLECTION).find({
                 "proDetails.0.onSale": "onSale"
+            }).toArray()
+            resolve(onSale)
+        })
+    },
+
+    getAllOnsaleSmartPhone : () => {
+        return new Promise(async (resolve, reject) => {
+            let onSale = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                "proDetails.0.onSale": "onSale",
+                category : 'smartphone'
+            }).toArray()
+            resolve(onSale)
+        })
+    },
+
+    getAllOnsaleLaptop : () => {
+        return new Promise(async (resolve, reject) => {
+            let onSale = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                "proDetails.0.onSale": "onSale",
+                category : 'laptop'
             }).toArray()
             resolve(onSale)
         })
@@ -78,6 +137,15 @@ module.exports = {
                 category: "smartphone"
             }).toArray()
             resolve(smartPhone)
+        })
+    },
+
+    getBrandProduct : (brand) => {
+        return new Promise(async (resolve,reject) => {
+            let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                brand : brand
+            }).toArray()
+            resolve(products)
         })
     },
 
@@ -473,8 +541,10 @@ module.exports = {
     },
 
     generateRazorpay: (orderId, total) => {
+        console.log("This is generate razoropay");
+        console.log(total);
         return new Promise((resolve, reject) => {
-            let price = parseInt(total / 100)
+            let price = parseInt(total)
             var options = {
                 amount: price,
                 currency: "INR",
@@ -611,6 +681,49 @@ module.exports = {
                     date
                 })
             })
+        })
+    },
+
+    applyCoupon: (code) => {
+
+        return new Promise(async (resolve,reject) => {
+            let response = {}
+            let couponCode = await db.get().collection(collection.COUPON_COLLECTION).findOne({
+                code : code.code
+            })
+            console.log("/////");
+            console.log(couponCode);
+            if(couponCode == null){
+                response.invalidCode = true
+                resolve(response)
+            }
+            else{
+                response.invalidCode = false
+                response.coupon = couponCode
+                resolve(response)
+            }
+        })
+    },
+
+    searchProduct : (search) => {
+
+        return new Promise(async (resolve,reject) => {
+            let productsExists = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                $or : [
+                    {productName : search},
+                    {category : search},
+                    {brand : search}
+                ]
+            }).toArray()
+
+            console.log("productsExists ///////");
+            console.log(productsExists.length);
+            if(productsExists.length!= 0){  
+                resolve(productsExists)
+            }
+            else{
+                resolve(products = null)
+            }
         })
     }
 

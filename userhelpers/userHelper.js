@@ -328,19 +328,18 @@ module.exports = {
                 userId : ObjectID(userId),
                 addressType : type
             })
-            // console.log("++++++");
-            // console.log(address);
             resolve(address)
         })
     },
 
-    editAddress : (userId,address) => {
+    editAddress : (userId,type,address) => {
 
         return new Promise((resolve,reject) => {
             db.get().collection(collection.ADDRESS_COLLECTION).updateOne({
-                userId : ObjectID(userId)
+                userId : ObjectID(userId),
+                addressType : type
             },
-            {
+            {   
                 $set : {
                     address : address
                 }

@@ -701,4 +701,41 @@ router.get('/enable_user',verifyAdminLogin,(req,res,next) => {
   })
 })
 
+// ************* coupon management get page************
+router.get('/couponManagement',async (req,res,next) => {
+
+  let coupon = await adminProductHelper.getAllCoupen()
+  console.log(coupon);
+  res.render('admin/couponManagement',{
+    layout : 'admin/layout',
+    coupon : coupon,
+    "couponErr": req.session.couponErr
+  })
+  req.session.couponErr = false
+})
+
+router.post('/addCoupen',(req,res,next) => {
+  console.log(req.body);
+
+  adminProductHelper.createCoupon(req.body).then((created) => {
+    if(created ==true) {
+      res.redirect('/admin/couponManagement')
+    }
+    else{
+      req.session.couponErr = true
+      res.redirect('/admin/couponManagement')
+    }
+  })
+})
+
+// ******** delete coupon **********
+router.get('/deleteCoupon/:id',(req,res,next) => {
+
+  console.log(req.params.id);
+  adminProductHelper.deleteCoupon(req.params.id).then(() => {
+
+    res.send("success")
+  })
+})
+
 module.exports = router;

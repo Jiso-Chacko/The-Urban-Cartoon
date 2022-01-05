@@ -846,36 +846,25 @@
                                                 <!-- End Logo-offcanvas-menu -->
                                                 <!-- Search Bar -->
                                                 <div class="col d-none d-xl-block">
-                                                        <form class="js-focus-state">
+                                                        <form class="js-focus-state" method="POST" action="/productSearch">
+
                                                                 <label class="sr-only"
                                                                         for="searchproduct">Search</label>
                                                                 <div class="input-group">
-                                                                        <input type="email"
+                                                                        <input type="text"
                                                                                 class="form-control py-2 pl-5 font-size-15 border-right-0 height-40 border-width-2 rounded-left-pill border-primary"
-                                                                                name="email" id="searchproduct-item"
+                                                                                name="search" id="search" 
                                                                                 placeholder="Search for Products"
                                                                                 aria-label="Search for Products"
                                                                                 aria-describedby="searchProduct1"
                                                                                 required>
                                                                         <div class="input-group-append">
                                                                                 <!-- Select -->
-                                                                                <select class="js-select selectpicker dropdown-select custom-search-categories-select"
-                                                                                        data-style="btn height-40 text-gray-60 font-weight-normal border-top border-bottom border-left-0 rounded-0 border-primary border-width-2 pl-0 pr-5 py-2">
-                                                                                        <option value="one" selected>All
-                                                                                                Categories</option>
-                                                                                        <option value="two">Two</option>
-                                                                                        <option value="three">Three
-                                                                                        </option>
-                                                                                        <option value="four">Four
-                                                                                        </option>
-                                                                                </select>
+
                                                                                 <!-- End Select -->
-                                                                                <button class="btn btn-primary height-40 py-2 px-3 rounded-right-pill"
-                                                                                        type="button"
-                                                                                        id="searchProduct1">
-                                                                                        <span
-                                                                                                class="ec ec-search font-size-24"></span>
-                                                                                </button>
+                                                                                <button class="btn btn-primary height-40 py-2 px-3 rounded-right-pill" type="submit" id="searchBtn" >
+                                                                                   <span class="ec ec-search font-size-24"></span>     
+                                                                                </button>             
                                                                         </div>
                                                                 </div>
                                                         </form>
@@ -1375,57 +1364,51 @@
                                                                                    
                                                                                                                 <div
                                                                                                                         class="col-md-3">
-                                                                                                                        <span
-                                                                                                                                class="u-header__sub-menu-title">Tablets</span>
+                                                                                                                        <span class="u-header__sub-menu-title">Shop by </span>
                                                                                                                         <ul
                                                                                                                                 class="u-header__sub-menu-nav-group mb-3">
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">iPads</a>
+                                                                                                                                <li><a href="/viewProducts?value=featured"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Featured</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Samsung</a>
+                                                                                                                                <li><a href="/viewProducts?value=topRated"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Top rated</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Microsoft
-                                                                                                                                                Surface</a>
+                                                                                                                                <li><a href="/viewProducts?value=onSale"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">On Sale
+                                                                                                                                                </a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Lenovo</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Innjoo</a>
-                                                                                                                                </li>
+                                                                                                                                
                                                                                                                         </ul>
+
                                                                                                                         <ul
                                                                                                                                 class="u-header__sub-menu-nav-group">
                                                                                                                                 <span
                                                                                                                                         class="u-header__sub-menu-title">Shop
                                                                                                                                         By
                                                                                                                                         Price</span>
-                                                                                                                                <li><a href="#"
+                                                                                                                                <li><a href="/viewProducts?value=Apple&category=brand"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">For
-                                                                                                                                                iPhone
-                                                                                                                                                X<br>
+                                                                                                                                                Apple
+                                                                                                                                                <br>
                                                                                                                                         </a>
                                                                                                                                 </li>
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">For
                                                                                                                                                 Samsung
-                                                                                                                                                S9</a>
+                                                                                                                                                </a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Below
-                                                                                                                                                AED
-                                                                                                                                                59</a>
+                                                                                                                                <li><a href="/viewProducts?value=Oneplus&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">For OnePlus
+                                                                                                                                                
+                                                                                                                                                </a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
+                                                                                                                                <li><a href="/viewProducts?value=oppo&category=brand"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">For
-                                                                                                                                                Xiaomi</a>
+                                                                                                                                                Oppo</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">For
-                                                                                                                                                iPhone
-                                                                                                                                                7</a>
+                                                                                                                                <li><a href="/viewProducts?value=Redmi&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">For Redmi                                                                                        
+                                                                                                                                                </a>
                                                                                                                                 </li>
                                                                                                                         </ul>
                                                                                                                 </div>
@@ -1438,39 +1421,22 @@
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Samsung</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Lenovo</a>
-                                                                                                                                </li>
+                                                                                                                                
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Mi</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Motorola</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
+                                                                                                                                
+                                                                                                                                <li><a href="/viewProducts?value=oppo&category=brand"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Oppo</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Panasonic<br>
-                                                                                                                                        </a>
+
+
+                                                                                                                                <li><a href="/viewProducts?value=Oneplus&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">OnePlus</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">HTC</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Blackberry</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">LG</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Micromax</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Nokia</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Huawei</a>
+
+                                                                                                                                <li><a href="/viewProducts?value=Apple&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Apple</a>
                                                                                                                                 </li>
                                                                                                                         </ul>
                                                                                                                 </div>
@@ -1480,42 +1446,27 @@
                                                                                                                                 class="u-header__sub-menu-title">#Trending</span>
                                                                                                                         <ul
                                                                                                                                 class="u-header__sub-menu-nav-group">
-                                                                                                                                <li><a href="#"
+                                                                                                                                <li><a href="/viewProducts?value=oppo&category=brand"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Oppo</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Panasonic</a>
+                                                                                                                               
+                                                                                                                                <li><a href="/viewProducts?value=Oneplus&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">OnePlus</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Samsung</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Lenovo</a>
-                                                                                                                                </li>
+
+
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Mi</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Motorola</a>
+                                                                                                                                
+                                                                                                                                <li><a href="/viewProducts?value=Redmi&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Redmi</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Nokia</a>
+                                                                                                                                
+                                                                                                                                <li><a href="/viewProducts?value=Apple&category=brand"
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Apple</a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Huawei</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">HTC</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Blackberry</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">LG</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Micromax</a>
-                                                                                                                                </li>
+   
                                                                                                                         </ul>
                                                                                                                 </div>
                                                                                                         </div>
@@ -1543,8 +1494,8 @@
                                                                                         class="nav-link u-header__nav-link u-header__nav-link-toggle"
                                                                                         href="javascript:;"
                                                                                         aria-haspopup="true"
-                                                                                        aria-expanded="false">Laptops &
-                                                                                        Desktops</a>
+                                                                                        aria-expanded="false">Laptops </a>
+                                                                                
 
                                                                                 <!-- Laptops & Desktops - Mega Menu -->
                                                                                 <div class="hs-mega-menu w-100 u-header__sub-menu"
@@ -1557,45 +1508,32 @@
                                                                                                                 <div
                                                                                                                         class="col-md-3">
                                                                                                                         <span
-                                                                                                                                class="u-header__sub-menu-title">Laptops</span>
+                                                                                                                                class="u-header__sub-menu-title">Shop by</span>
                                                                                                                         <ul
                                                                                                                                 class="u-header__sub-menu-nav-group mb-3">
                                                                                                                                 <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Thin
-                                                                                                                                                and
-                                                                                                                                                Light
-                                                                                                                                                Laptops</a>
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Featured</a>
                                                                                                                                 </li>
                                                                                                                                 <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">2-in-1
-                                                                                                                                                Laptops</a>
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">On Sale
+                                                                                                                                                </a>
                                                                                                                                 </li>
                                                                                                                                 <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Gaming
-                                                                                                                                                Laptops</a>
+                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Top rated
+                                                                                                                                                </a>
                                                                                                                                 </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Budget
-                                                                                                                                                Laptops</a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Business
-                                                                                                                                                Laptops</a>
-                                                                                                                                </li>
+                                                                                                                               
+                                                                                                
                                                                                                                         </ul>
+
                                                                                                                         <span
                                                                                                                                 class="u-header__sub-menu-title">Shop
                                                                                                                                 By
                                                                                                                                 Brand</span>
                                                                                                                         <ul
                                                                                                                                 class="u-header__sub-menu-nav-group">
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">Apple<br>
-                                                                                                                                        </a>
-                                                                                                                                </li>
-                                                                                                                                <li><a href="#"
-                                                                                                                                                class="nav-link u-header__sub-menu-nav-link">HP</a>
-                                                                                                                                </li>
+                                                                                                                               
+                                                                                                                               
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Dell</a>
                                                                                                                                 </li>
@@ -1607,9 +1545,9 @@
                                                                                                                                 </li>
                                                                                                                         </ul>
                                                                                                                 </div>
-                                                                                                                <div
-                                                                                                                        class="col-md-3">
-                                                                                                                        <span
+                                                                                                                {{!-- <div
+                                                                                                                        class="col-md-3"> --}}
+                                                                                                                        {{!-- <span
                                                                                                                                 class="u-header__sub-menu-title">Tablets</span>
                                                                                                                         <ul
                                                                                                                                 class="u-header__sub-menu-nav-group mb-3">
@@ -1628,8 +1566,9 @@
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">iBall</a>
                                                                                                                                 </li>
-                                                                                                                        </ul>
-                                                                                                                        <span
+                                                                                                                        </ul> --}}
+
+                                                                                                                        {{!-- <span
                                                                                                                                 class="u-header__sub-menu-title">PC
                                                                                                                                 Accessories</span>
                                                                                                                         <ul
@@ -1657,8 +1596,8 @@
                                                                                                                                 <li><a href="#"
                                                                                                                                                 class="nav-link u-header__sub-menu-nav-link">Batteries</a>
                                                                                                                                 </li>
-                                                                                                                        </ul>
-                                                                                                                </div>
+                                                                                                                        </ul> --}}
+                                                                                                                {{!-- </div> --}}
                                                                                                                 <div
                                                                                                                         class="col-md-3">
                                                                                                                         <span
@@ -3027,6 +2966,7 @@
 
         <!-- JS Plugins Init. -->
         <script>
+
                 $(window).on('load', function () {
                         // initialization of HSMegaMenu component
                         $('.js-mega-menu').HSMegaMenu({

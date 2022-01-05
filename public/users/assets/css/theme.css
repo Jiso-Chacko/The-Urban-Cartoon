@@ -33931,7 +33931,7 @@ blockquote:not(.blockquote) p {
 
 @media (min-width: 1200px) {
   .product-item:hover .product-item__inner:not(.remove-prodcut-hover) {
-    position: absolute;
+    position: relative; /* changed from abslute to relative */
     width: 100%;
     height: auto;
     min-height: 100%;

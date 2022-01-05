@@ -69,12 +69,13 @@
                                         Address type
                                         <span class="text-danger">*</span>
                                     </label>
-                                    <select class="form-control" name="addressType" id="addressType">
-                                        <option>Select address type</option>
+                                    <select class="form-control required" name="addressType" id="addressType">
+                                        <option value="">Select address type</option>
                                         <option value="home">home</option>
                                         <option value="office">office</option>
                                         <option value="other">other</option>
                                     </select>
+                                    <span style="color: brown;" id="selectErr"></span>
                                 </div>
                                 <!-- End Input -->
                             </div>
@@ -232,6 +233,7 @@
         var state = document.getElementById('state').value
         var email = document.getElementById('email').value
         var phone = document.getElementById("phone").value
+        var select = document.getElementById("addressType").value
         var regx =
             /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         var pattern = /^[6-9]\d{9}$/;
@@ -288,8 +290,18 @@
             document.getElementById("phone").focus()
             document.getElementById('phoneErr').innerHTML = "Enter valid phonenumber"
             e.preventDefault()
-        } else {
+        } 
+        else {
             document.getElementById('phoneErr').innerHTML = ""
+        }
+        if(select == "" ){
+            alert('please select a valid address type!')
+            document.getElementById("addressType").focus()
+            document.getElementById("selectErr").innerHTML = "Please select valid address type"
+            e.preventDefault()
+        }
+        else{
+            document.getElementById("selectErr").innerHTML = ""
         }
     })
 </script>

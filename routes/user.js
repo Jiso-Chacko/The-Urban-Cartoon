@@ -6,6 +6,7 @@ var userProductHelper = require('../userhelpers/userProductHelper')
 var userHelper = require('../userhelpers/userHelper')
 const multer = require('multer')
 const path = require('path');
+const paypal = require('paypal-rest-sdk');
 
 var serviceId = "VA6a2e7c39a684110d315bb5f33dbaa6ea";
 var accountSid = "AC32945c998d7d8a3d3f6e401b8947654b";
@@ -18,8 +19,15 @@ const client = require('twilio')(accountSid, authToken, {
   lazyLoading: true
 });
 
+paypal.configure({
+  'mode': 'sandbox', //sandbox or live
+  'client_id': 'AV1osUK-SmdJTr4qkz3kFQj7_M_LoqcxqP-st1MUIYxYBctQhTKbQl8DbVvV63DaT6RMp3QxCMj2VXny',
+  'client_secret': 'EDY5h9B3NyWgIcEa2zoswhWeZ5xcm_W4JXXK4087AO9FjOvbYjTcDHsVEZpP0e20X3KJRIyf78x4cPxx'
+});
+
 var sigupData = {}
 var loginPhonenumber = {}
+let count = 0
 
 // verify user function
 // function verifyUserLogg (){
@@ -330,7 +338,6 @@ function verifyUser(req, res, next) {
 // This is view product example
 router.get('/viewProduct', getCartCount, async (req, res, next) => {
   let proId = req.query.id
-  console.log(proId);
 
   if (req.session.user) {
     user = req.session.user.userFirstName
@@ -345,8 +352,9 @@ router.get('/viewProduct', getCartCount, async (req, res, next) => {
   }
 
   let product = await userProductHelper.getProduct(proId)
+  console.log("******");
   console.log("This is viewproduct");
-  console.log(product[0]);
+  console.log(product);
   res.render('users/viewProduct', {
     layout: 'users/layout',
     product: product,
@@ -578,11 +586,15 @@ router.post('/removeWishlist', (req, res, next) => {
 
 // checkout get router 
 router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => {
+  if(req.session.cartCount != 0){
+
+  
 
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   let addressType = await userHelper.getAllAddressType(req.session.user._id)
+  req.session.totalAmount = price.totalSum
   console.log("This is /checkout get");
   console.log("Address  : " + address.address);
 
@@ -610,7 +622,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   res.render('users/checkout', {
     layout: 'users/layout',
     cartProducts: cartProducts,
-    totalAmount: price.totalSum,
+    totalAmount: req.session.totalAmount,
     userFname: userFname,
     userLname: userLname,
     "addressErr": req.session.addressErr,
@@ -621,6 +633,12 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     addressType: addressType,
     address: address.address
   })
+  req.session.invalidCoupon = false
+
+}
+else{
+  res.redirect('/')
+}
 })
 
 
@@ -638,23 +656,31 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   address.address.lastName = req.session.user.userLastName
   address.address.payment = req.body.payment
   console.log(address.address);
-  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, totalAmount).then((orderId) => {
+
+  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount).then((orderId) => {
 
     if (req.body.payment === 'cod') {
       res.send({
         status: true,
-        response: null
+        response: null,
+        payment : 'cod'
       })
-    } else {
-      userProductHelper.generateRazorpay(orderId, totalAmount.totalSum).then((response) => {
+    }
+     else {
+      console.log("#######");
+      console.log(req.session.totalAmount);
+      userProductHelper.generateRazorpay(orderId, req.session.totalAmount).then((response) => {
         res.send({
           status: false,
-          response
+          response,
+          payment : 'razorpay'
         })
       })
     }
   })
 })
+
+
 
 // ************* checkout with new address save post route ******
 router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) => {
@@ -723,7 +749,7 @@ router.post('/checkoutNewAddress', verifyUserLogg, async (req, res, next) => {
       })
     }
   })
-  
+
 })
 
 // ********************* order success get page ***********************
@@ -791,6 +817,12 @@ router.get('/viewProfile/:id/address', verifyUserLogg, async (req, res, next) =>
   userLoggedIn = req.session.userLoggedIn
   userCartCount = req.session.cartCount
 
+  if (req.session.addressLengthErr === true) {
+    var blockNewAdderess = true
+  } else {
+    var blockNewAdderess = false
+  }
+
   let userAddress = address.address
   if (address.status == false) {
     req.session.addressErr = true
@@ -841,13 +873,15 @@ router.post('/viewProfile/:id/address', verifyUserLogg, (req, res, next) => {
   })
 })
 
-// ****************** edit address get ************
-router.get('/editAddress/:id/:type', verifyUserLogg, async (req, res, next) => {
 
-  console.log("Enterd edit address");
-  console.log(req.params.type);
+// ****************** edit address get ************
+router.get('/editAddress', verifyUserLogg, async (req, res, next) => {
+
+  console.log("Entered edit address");
+  console.log("This is type" + req.query.type);
   console.log(req.session.user._id);
-  let address = await userHelper.getAddress(req.session.user._id, req.params.type)
+
+  let address = await userHelper.getAddress(req.session.user._id, req.query.type)
   res.render('users/editAddress', {
     layout: 'users/layout',
     userId: req.session.user._id,
@@ -858,8 +892,10 @@ router.get('/editAddress/:id/:type', verifyUserLogg, async (req, res, next) => {
 // ****************** edit address post ******************
 router.post('/editAddress/:id/:type', verifyUserLogg, async (req, res, next) => {
 
+  console.log("This is edit address post");
   console.log(req.body);
-  userHelper.editAddress(req.session.user._id, req.body).then(() => {
+  console.log(req.body.addressType);
+  userHelper.editAddress(req.session.user._id, req.body.addressType, req.body).then(() => {
     // res.redirect('/viewProfile/:id/address')
     res.redirect(`/viewProfile/:${req.session.user._id}/address`)
 
@@ -910,13 +946,37 @@ router.post('/deleteAddress', async (req, res, next) => {
   })
 })
 
-// ************** add new address get *****************
-router.get('/addNewAddress', verifyUserLogg, (req, res, next) => {
+// ************** add new address ajax call *****************
+router.get('/addNewAddress', verifyUserLogg, async (req, res, next) => {
+  console.log("ajax call **************");
+  await userHelper.getAllAddress(req.session.user._id).then((response) => {
+    if (response.status == true) {
+      if (response.address.length == 3) {
+        res.send({
+          addressLimit: true
+        })
+      } else {
+        res.send({
+          addressLimit: false
+        })
+      }
+    } else {
+      res.send({
+        addressLimit: false
+      })
+    }
+  })
+})
 
-  console.log("/addNewAddress");
+
+
+// ************** add new address get *****************
+router.get('/addNewAddress1', verifyUserLogg, (req, res, next) => {
+
   res.render('users/addNewAddress', {
     layout: 'users/layout',
   })
+
 })
 
 // ******************* add new address post ****************
@@ -1048,13 +1108,6 @@ router.post('/viewProfile/:id/changePassword', verifyUserLogg, (req, res, next) 
   })
 })
 
-// ******** sweet alert sample *************
-router.get('/sweetAlert', (req, res, next) => {
-  res.render('users/sweetAlertSample', {
-    layout: 'users/layout'
-  })
-})
-
 
 // ******* view all orders get *******************
 router.get('/viewProfile/:id/orders', verifyUserLogg, async (req, res, next) => {
@@ -1085,14 +1138,158 @@ router.post('/cancelProduct', (req, res, next) => {
 })
 
 // *************** view products *************
-router.get('/viewProducts',(req,res,next) => {
-  res.render('users/productsView',{
-    layout : 'users/layout'
+router.get('/viewProducts', async (req, res, next) => {
+
+  console.log(req.query.category)
+
+  if (req.query.value === 'featured') {
+    let products = await userProductHelper.getAllFeaturedSmartPhone()
+    let value = 'Featured'
+    console.log("******///")
+    console.log(products);
+    res.render('users/productsView', {
+      layout: 'users/layout',
+      products: products,
+      'value': value
+    })
+  }
+
+  if (req.query.value === 'topRated') {
+    let products = await userProductHelper.getAllTopRatedSmartPhone()
+    let value = 'Top rated'
+    console.log("******///")
+    console.log(products);
+    res.render('users/productsView', {
+      layout: 'users/layout',
+      products: products,
+      'value': value
+    })
+  }
+
+  if (req.query.value === 'onSale') {
+    let products = await userProductHelper.getAllOnsaleSmartPhone()
+    let value = 'On sale'
+    console.log("******///")
+    console.log(products);
+    res.render('users/productsView', {
+      layout: 'users/layout',
+      products: products,
+      'value': value
+    })
+  }
+
+  if (req.query.category === 'brand') {
+    let products = await userProductHelper.getBrandProduct(req.query.value)
+    let value = req.query.value
+    console.log("******///")
+    console.log(products);
+    res.render('users/productsView', {
+      layout: 'users/layout',
+      products: products,
+      'value': value
+    })
+  }
+
+})
+
+// ************ apply coupon ajax call **********
+router.post('/applyCoupon', async (req, res, next) => {
+  console.log("/applyCoupon");
+  console.log(req.body);
+  await userProductHelper.applyCoupon(req.body).then((response) => {
+    console.log(response);
+    if (response.invalidCode == false) {      
+      let oldAmount = req.session.totalAmount;
+      response.totalAmount = req.session.totalAmount
+      var discountPrice = response.totalAmount * (response.coupon.offer / 100)
+      let sumTotal = response.totalAmount - parseInt(discountPrice)
+      req.session.totalAmount = sumTotal
+      console.log("**********************");
+      console.log(req.session.totalAmount);
+      response.totalAmount = oldAmount
+      res.send(response)
+    } 
+    else {
+      response.totalAmount = req.session.totalAmount
+      res.send(response)
+    }
+
   })
 })
 
-router.get('/zoom', (req, res, next) => {
+// *********** product search ***************
+router.post('/productSearch',async (req,res,next) => {
+  console.log(req.body);
+  if(req.body != null && req.body !== ''){
+   let search = new RegExp(req.body.search, 'i')
+   let products = await userProductHelper.searchProduct(search)
+   console.log(products);
+   if(products == null){
+    req.session.searchErr = true
+   }
+   else{
+    req.session.searchErr = false
+  }
+  res.render('users/search',{
+    layout : 'users/layout',
+    'searchErr' : req.session.searchErr,
+    products : products
+  })
+  req.session.searchErr = false
+  }
+  else{
+    res.redirect('/')
+  }
+})
+
+// ******** sweet alert sample *************
+router.get('/sweetAlert', (req, res, next) => {
   res.render('users/sweetAlertSample')
 })
+
+// router.post('/pay', (req, res) => {
+//   const create_payment_json = {
+//     "intent": "sale",
+//     "payer": {
+//         "payment_method": "paypal"
+//     },
+//     "redirect_urls": {
+//         "return_url": "http://localhost:3000/success",
+//         "cancel_url": "http://localhost:3000/cancel"
+//     },
+//     "transactions": [{
+//         "item_list": {
+//             "items": [{
+//                 "name": "Red Sox Hat",
+//                 "sku": "001",
+//                 "price": "25.00",
+//                 "currency": "USD",
+//                 "quantity": 1
+//             }]
+//         },
+//         "amount": {
+//             "currency": "USD",
+//             "total": "25.00"
+//         },
+//         "description": "Hat for the best team ever"
+//     }]
+// };
+
+// paypal.payment.create(create_payment_json, function (error, payment) {
+//   if (error) {
+//       throw error;
+//   } else {
+//       for(let i = 0;i < payment.links.length;i++){
+//         if(payment.links[i].rel === 'approval_url'){
+//           res.redirect(payment.links[i].href);
+//         }
+//       }
+//   }
+// });
+
+// });
+
+
+
 
 module.exports = router;

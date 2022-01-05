@@ -62,8 +62,8 @@
 
     <div class="d-flex justify-content-around mt-8" id="addressCard">
         {{#each address}}
-        <div class="card " style="width: 20rem; height:18rem" >
-            <div class="card-body" >
+        <div class="card " style="width: 20rem; height:18rem">
+            <div class="card-body">
                 <h5 class="card-title" style="text-transform: uppercase;">{{this.addressType}}</h5>
 
                 <h6 class="card-subtitle mb-2 text-muted"></h6>
@@ -71,7 +71,7 @@
                     <span>{{this.address.address}},</span><span>{{this.address.city}},</span><span>{{this.address.district}},</span><span>{{this.address.state}},</span><span>{{this.address.postcode}},</span><span>+91{{this.address.phone}}</span>
                 </p>
                 <div class="d-flex justify-content-between">
-                    <h6><a class="text-primary" href="/editAddress/:{{userId}}/{{this.addressType}}">Edit</a> </h6>
+                    <h6><a class="text-primary" href="/editAddress?type={{this.addressType}}">Edit</a></h6>
                     <h6><a class="text-danger" onclick="deleteAddress('{{userId}}','{{this.addressType}}')">Delete</a>
                     </h6>
                 </div>
@@ -92,7 +92,7 @@
     {{!-- <button id="Mybtn" class="btn btn-primary" type="button">Add new address</button> --}}
     <div class="card " style="width: 25rem; height:6rem" id="addressCard1">
         <div class="card-body">
-            <h5 class="card-title" style="text-transform: uppercase;"><a href="/addNewAddress"><i
+            <h5 class="card-title" style="text-transform: uppercase;"><a onclick="addNewAddress()"><i
                         class="fa fa-plus-square-o mr-xl-5" aria-hidden="true" style=""></i>Add new address </a></h5>
         </div>
 
@@ -171,5 +171,25 @@
 
         })
 
+    }
+
+    function addNewAddress() {
+        $.ajax({
+            url: '/addNewAddress',
+            method: 'get',
+            success: (response) => {
+                if (response.addressLimit == true) {
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'error',
+                        title: 'Address limit achieved!',
+                        showConfirmButton: false,
+                        timer: 2000
+                    })
+                } else {
+                    location.href = '/addNewAddress1'
+                }
+            }
+        })
     }
 </script>
