@@ -8,5 +8,6 @@ module.exports = {
     ADDRESS_COLLECTION : 'address',
     WISHLIST_COLLECTION :  'wishlist',
     ORDER_COLLECTION : 'order',
-    COUPON_COLLECTION : 'coupon'
+    COUPON_COLLECTION : 'coupon',
+    OFFER_COLLECTION : 'offer'
 }

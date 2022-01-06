@@ -738,4 +738,82 @@ router.get('/deleteCoupon/:id',(req,res,next) => {
   })
 })
 
+// *************** brand offer management *********
+router.get('/brandOffers',async (req,res,next) => {
+
+  let brands = await adminProductHelper.getAllBrandsForOffers()
+  let brandOffers = await adminProductHelper.getAllBrandOffers()
+  console.log("*******" + brandOffers);
+  console.log(brands);
+  res.render('admin/brandofferManagement',{
+    layout : 'admin/layout',
+    brands : brands,
+    'offerErr' : req.session.offerErr,
+    brandOffers : brandOffers
+  })
+  req.session.offerErr = false
+})
+
+// *************** brand offer management post *******
+router.post('/addBrandOffer', (req,res,next) => {
+
+  console.log(req.body);
+  adminProductHelper.createBrandOffer(req.body).then((response) => {
+    if(response == true){
+      res.redirect('/admin/brandOffers')
+    }
+    else{
+      req.session.offerErr = true
+      res.redirect('/admin/brandOffers')
+    }
+  })
+ 
+})
+
+// *********** delete offer ******************
+router.get('/deleteOffer/:id',(req,res,next) => {
+
+  console.log(req.params.id);
+  adminProductHelper.deleteBrandOffer(req.params.id).then(() => {
+    res.send("success")
+  })
+})
+
+// *************** category offer management ********
+router.get('/categoryOffers',async (req,res,next) => {
+
+  let category = await adminProductHelper.getAllCategoryForOffers()
+  let categoryOffers = await adminProductHelper.getAllCategoryOffers()
+  res.render('admin/categoryOfferManagement',{
+    layout : 'admin/layout',
+    category : category,
+    categoryOffers : categoryOffers
+  })
+})
+
+// *************** category offer management post *******
+router.post('/addCategoryOffer', (req,res,next) => {
+
+  console.log(req.body);
+  adminProductHelper.createCategoryOffer(req.body).then((response) => {
+    if(response == true){
+      res.redirect('/admin/categoryOffers')
+    }
+    else{
+      req.session.offerErr = true
+      res.redirect('/admin/categoryOffers')
+    }
+  })
+
+})
+
+// ************ delete category offer *******
+router.get('/deleteCategoryOffer/:id',(req,res,next) => {
+
+  console.log(req.params.id);
+  adminProductHelper.deleteCategoryOffer(req.params.id).then(() => {
+    res.send("success")
+  })
+})
+
 module.exports = router;

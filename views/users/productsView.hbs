@@ -279,7 +279,12 @@
                                                     </div>
                                                     <div class="flex-center-between mb-1">
                                                         <div class="prodcut-price">
-                                                            <div class="text-gray-100">₹{{this.price}}</div>
+                                                           {{#if offer}}
+                                                <del class="font-size-16 text-gray-9 d-block">₹{{this.price}}</del>
+                                                <ins class="font-size-20 text-red text-decoration-none d-block">₹{{this.oldPrice}}</ins>
+                                                {{else}}
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                                {{/if}}
                                                         </div>
                                                         <div class="d-none d-xl-block prodcut-add-cart">
                                                             <a onclick="addToCart('{{this._id}}')" class="btn-add-cart btn-primary transition-3d-hover"><i class="ec ec-add-to-cart"></i></a>

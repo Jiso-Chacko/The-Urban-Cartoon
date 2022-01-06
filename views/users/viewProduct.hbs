@@ -112,7 +112,12 @@
                         {{!-- <p><strong>SKU</strong>: FW511948218</p> --}}
                         <div class="mb-4">
                             <div class="d-flex align-items-baseline">
-                                <ins class="font-size-36 text-decoration-none">₹{{this.price}}</ins>
+                                {{#if offer}}
+                                                <del class="font-size-16 text-gray-9 d-block">₹{{this.price}}</del>
+                                                <ins class="font-size-20 text-red text-decoration-none d-block">₹{{this.oldPrice}}</ins>
+                                                {{else}}
+                                                <div class="text-gray-100">₹{{this.price}}</div>
+                                                {{/if}}
                                 {{!-- <del class="font-size-20 ml-2 text-gray-6">$2,299.00</del> --}}
                             </div>
                         </div>

@@ -276,7 +276,7 @@ module.exports = {
             $set : {
                 productName : body.productName,
                 description : body.description,
-                price : body.price,
+                price : parseInt(body.price) ,
                 quantity : body.quantity,
                 brand : body.brand,
                 category : body.category,
@@ -293,7 +293,7 @@ module.exports = {
             $set : {
                 productName : body.productName,
                 description : body.description,
-                price : body.price,
+                price : parseInt(body.price) ,
                 quantity : body.quantity,
                 brand : body.brand,
                 category : body.category,
@@ -310,7 +310,7 @@ module.exports = {
             $set : {
                 productName : body.productName,
                 description : body.description,
-                price : body.price,
+                price : parseInt(body.price) ,
                 quantity : body.quantity,
                 brand : body.brand,
                 category : body.category,
@@ -326,7 +326,7 @@ module.exports = {
             $set : {
                 productName : body.productName,
                 description : body.description,
-                price : body.price,
+                price : parseInt(body.price) ,
                 quantity : body.quantity,
                 brand : body.brand,
                 category : body.category,
@@ -342,7 +342,7 @@ module.exports = {
             $set : {
                 productName : body.productName,
                 description : body.description,
-                price : body.price,
+                price : parseInt(body.price),
                 quantity : body.quantity,
                 brand : body.brand,
                 category : body.category,
@@ -385,6 +385,223 @@ module.exports = {
             db.get().collection(collection.COUPON_COLLECTION).deleteOne({
                 _id : ObjectID(couponId)
             })
+            resolve()
+        })
+    },
+
+    getAllBrandsForOffers: () => {
+        return new Promise(async (resolve,reject) => {
+            let brands = await db.get().collection(collection.CATEGORY_COLLECTION).aggregate([
+                {
+                    $project : {
+                        brand : 1
+                    }
+                },
+                {
+                    $unwind : '$brand'
+                },
+                {
+                    $group : {
+                        _id : '$brand', 
+                    }
+                }
+            ]).toArray()
+
+            resolve(brands)   
+        })
+    },
+
+    createBrandOffer: (body) => {
+
+        return new Promise( async (resolve,reject) => {
+
+            let brandExist = await db.get().collection(collection.OFFER_COLLECTION).findOne({
+                brand : body.brand
+            })
+
+            if(brandExist == null){
+                db.get().collection(collection.OFFER_COLLECTION).insertOne({
+                    brand : body.brand,
+                    offer : parseInt(body.offerPercentage),
+                    validity : body.validity,
+                    offerFor : body.brand,
+                    offerTitle : 'brand'
+                })
+                console.log("///////")
+
+                var bulkOp = db.get().collection(collection.PRODUCT_COLLECTION).initializeOrderedBulkOp()
+
+              await db.get().collection(collection.PRODUCT_COLLECTION).find({ brand : body.brand }).forEach( (products) => {
+                console.log(products.price)
+                let oldPrice = products.price
+                let offerPrice = products.price - products.price * parseInt(body.offerPercentage)/100
+                console.log(parseInt(offerPrice))
+                bulkOp.find({
+                    '_id' : products._id
+                }).updateOne({
+                    '$set' : {
+                        offer : true,
+                        price : parseInt(offerPrice),
+                        oldPrice : oldPrice
+                    }
+                })
+                bulkOp.execute();
+            })
+
+               
+                resolve(offerAdded = true)
+            }
+            else{
+                resolve(offerAdded = false)
+            }
+
+        })
+    },
+
+    getAllBrandOffers : () => {
+
+        return new Promise(async (resolve,reject) => {
+            let offers = await db.get().collection(collection.OFFER_COLLECTION).find({
+                offerTitle : 'brand'
+            }).toArray()
+            resolve(offers)
+        })
+    },
+
+    deleteBrandOffer : (offerId) => {
+        return new Promise(async (resolve,reject) => {
+
+            let brand = await db.get().collection(collection.OFFER_COLLECTION).findOne({
+                _id : ObjectID(offerId)
+            })
+            console.log("*****");
+            console.log(brand);
+            db.get().collection(collection.OFFER_COLLECTION).deleteOne({
+                _id : ObjectID(offerId)
+            })
+
+            var bulkOp = db.get().collection(collection.PRODUCT_COLLECTION).initializeOrderedBulkOp()
+
+            await db.get().collection(collection.PRODUCT_COLLECTION).find({ brand : brand.brand }).forEach( (products) => {
+                console.log(products.price)
+                let Price = products.oldPrice
+
+                bulkOp.find({
+                    '_id' : products._id
+                }).updateOne({
+                    '$set' : {
+                        offer : false,
+                        price : parseInt(Price),
+                    }
+                })
+                bulkOp.execute();
+            })
+
+            resolve()
+        })
+    },
+
+    getAllCategoryForOffers : () => {
+
+        return new Promise(async (resolve,reject) => {
+            let category = await db.get().collection(collection.CATEGORY_COLLECTION).aggregate([
+                {
+                    $project : {
+                        categoryName : 1,
+                        _id : 0
+                    }
+                }
+            ]).toArray()
+            console.log(category);
+            resolve(category)   
+        })
+    },
+
+    createCategoryOffer: (body) => {
+        return new Promise( async (resolve,reject) => {
+
+            let categoryExist = await db.get().collection(collection.OFFER_COLLECTION).findOne({
+                category : body.category
+            })
+
+            if(categoryExist == null){
+                db.get().collection(collection.OFFER_COLLECTION).insertOne({
+                    category : body.category,
+                    offer : parseInt(body.offerPercentage),
+                    validity : body.validity,
+                    offerFor : body.category,
+                    offerTitle : 'category'
+                })
+
+                var bulkOp = db.get().collection(collection.PRODUCT_COLLECTION).initializeOrderedBulkOp()
+
+                await db.get().collection(collection.PRODUCT_COLLECTION).find({ category : body.category }).forEach( (products) => {
+                  console.log(products.price)
+                  let oldPrice = products.price
+                  let offerPrice = products.price - products.price * parseInt(body.offerPercentage)/100
+                  console.log(parseInt(offerPrice))
+                  
+                  bulkOp.find({
+                      '_id' : products._id
+                  }).updateOne({
+                      '$set' : {
+                          offer : true,
+                          price : parseInt(offerPrice),
+                          oldPrice : oldPrice
+                      }
+                  })
+                  bulkOp.execute();
+              })
+
+
+                resolve(offerAdded = true)
+            }
+            else{
+                resolve(offerAdded = false)
+            }
+
+        })
+    },
+
+    getAllCategoryOffers : () => {
+        return new Promise(async (resolve,reject) => {
+            let offers = await db.get().collection(collection.OFFER_COLLECTION).find({
+                offerTitle : 'category'
+            }).toArray()
+            resolve(offers)
+        })
+    },
+
+    deleteCategoryOffer : (offerId) => {
+
+        return new Promise(async (resolve,reject) => {
+
+            let category = await db.get().collection(collection.OFFER_COLLECTION).findOne({
+                _id : ObjectID(offerId)
+            })
+            console.log("*****");
+            console.log(category);
+    
+            db.get().collection(collection.OFFER_COLLECTION).deleteOne({
+                _id : ObjectID(offerId)
+            })
+    
+            var bulkOp = db.get().collection(collection.PRODUCT_COLLECTION).initializeOrderedBulkOp()
+    
+            await db.get().collection(collection.PRODUCT_COLLECTION).find({ category : category.category }).forEach( (products) => {
+                    console.log(products.price)
+                    let Price = products.oldPrice
+    
+                    bulkOp.find({
+                        '_id' : products._id
+                    }).updateOne({
+                        '$set' : {
+                            offer : false,
+                            price : parseInt(Price),
+                        }
+                    })
+                    bulkOp.execute();
+                })
             resolve()
         })
     }
