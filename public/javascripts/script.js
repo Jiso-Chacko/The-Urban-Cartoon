@@ -46,6 +46,7 @@
 function addToCart(proId) {
 
     console.log("This is addtoacart");
+    console.log(proId);
     $.ajax({
         url: '/addToCart/',
         method: 'post',
@@ -71,7 +72,8 @@ function addToCart(proId) {
                     console.log("Element fount");
                     // console.log(response.renderHtml);
                 })
-            } else {
+            } 
+            else {
                 Swal.fire({
                     title: 'Please login to continue!',
                     icon: 'warning',

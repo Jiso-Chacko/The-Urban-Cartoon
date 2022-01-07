@@ -252,8 +252,8 @@ module.exports = {
 
             ]).toArray()
 
-            // console.log("This is get Products for cart");
-            // console.log(products);
+            console.log("///////// This is get Products for cart ///////");
+            console.log(products);
             resolve(products)
         })
     },
@@ -346,6 +346,8 @@ module.exports = {
                     }
                 },
             ]).toArray()
+            console.log("**** total amount *******");
+            console.log(totalAmount);
             let array = []
             for (i = 0; i < totalAmount.length; i++) {
                 console.log(totalAmount[i].quantity);
@@ -524,7 +526,8 @@ module.exports = {
                 allShipped: false,
                 allDeliverd: false,
                 allCancelled: false,
-                date: dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT")
+                date: dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"),
+                dateIso : new Date()
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((result) => {

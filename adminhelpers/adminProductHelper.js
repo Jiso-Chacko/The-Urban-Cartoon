@@ -2,6 +2,7 @@ var db = require('../config/connections')
 var collection = require('../config/collections')
 var ObjectID = require('mongodb').ObjectID
 const { response } = require('express')
+var dateFormat = require('dateformat');
 const { PRODUCT_COLLECTION, SLIDER_COLLECTION, BANNER_COLLECTION } = require('../config/collections')
 
 
@@ -180,6 +181,77 @@ module.exports = {
            let orders = await db.get().collection(collection.ORDER_COLLECTION).find({}).toArray()
         //    console.log(orders);
            resolve(orders)
+        })
+    },
+
+    getTotalSales : () => {
+
+        return new Promise(async (resolve,reject) => {
+            let sum =0
+            await db.get().collection(collection.ORDER_COLLECTION).find({}).forEach( (orders) => {
+                sum += orders.totalAmount
+            })  
+            // console.log(sum);
+            resolve(sum)
+        })
+    },
+
+    categoryWiseChartData : () => {
+        let laptop = 0
+        let smartPhone = 0
+        return new Promise(async (resolve,reject) => {
+            await db.get().collection(collection.ORDER_COLLECTION).find({}).forEach( (orders) => {
+                for(i=0;i<orders.products.length;i++){
+                   let category = orders.products[i].productDetails[0].category 
+                   console.log(category);
+                   if(category === 'laptop'){
+                    laptop += 1
+                   }
+                   else if(category === 'smartphone'){
+                    smartPhone += 1
+                   }
+                }
+            })
+            console.log(laptop,smartPhone);
+            resolve({laptop : laptop,smartPhone : smartPhone})
+        })
+    },
+
+    brandWiseChartData : () => {
+        let brand = {}
+        brand.count = 0
+        return new Promise(async (resolve,reject) => {
+            let brand = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $project: {
+                        products : 1,
+                        _id : 0
+                    }
+                },
+                {
+                    $unwind : '$products'
+                }
+                                        
+            ]).toArray()
+            
+            let brandArray = []
+            let brandCount =[]
+            for(let i=0;i<brand.length;i++){
+                console.log(brand[i].products.productDetails[0].brand);
+                brandArray.push(brand[i].products.productDetails[0].brand)
+            }
+            console.log(brandArray);
+            let counts = {};
+            brandArray.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+            console.log(counts)
+            console.log(Object.keys(counts)); // brand array
+
+            console.log(counts[Object.keys(counts)[0]]); // first value in brand array
+            for(i=0;i<Object.keys(counts).length;i++){
+                brandCount.push(counts[Object.keys(counts)[i]])
+            }
+            console.log(brandCount);
+            resolve({brands : Object.keys(counts), count : brandCount})
         })
     },
 
@@ -602,6 +674,40 @@ module.exports = {
                     })
                     bulkOp.execute();
                 })
+            resolve()
+        })
+    },
+
+    getSalesReport : () => {
+        return new Promise(async (resolve,reject) => {
+            let products = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $project: {
+                        products : 1,
+                        _id : 0
+                    }
+                },
+                {
+                    $unwind : '$products'
+                }
+                                        
+            ]).toArray()
+            console.log(products);
+            resolve(products)
+        })
+    },
+
+    getSalesReportByDate : (query) => {
+        return new Promise(async (resolve,reject) => {
+            var startdate= new Date(query.StartDate)
+            var enddate= new Date(query.enddate)
+            console.log(startdate);
+            console.log(enddate);
+            let products = await db.get().collection(collection.ORDER_COLLECTION).find({
+                dateIso : {$gte : startdate, $lt : enddate}
+            }).toArray()
+            console.log("*****/////*****");
+            console.log(products);
             resolve()
         })
     }

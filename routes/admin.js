@@ -27,11 +27,32 @@ const verifyAdminLogin = (req, res, next) => {
 }
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
+router.get('/',async function (req, res, next) {
 
   if (req.session.adminLogin) {
+    let totalOrders = await adminProductHelper.getAllOrders()
+    let orders = totalOrders.length
+    let totalSales = await adminProductHelper.getTotalSales() 
+    let totalProfit = parseInt(totalSales - totalSales * (10/100)) 
+    let graphData = await adminProductHelper.categoryWiseChartData()
+    let donutCartData = await adminProductHelper.brandWiseChartData()
+
+    console.log("**///");
+    console.log(donutCartData.count);
+    console.log(donutCartData.brands);
+    let brands = donutCartData.brands
+    let brandCount = donutCartData.count
+    let smartPhoneCount = graphData.smartPhone
+    let laptopCount = graphData.laptop
     res.render('admin/dashboard', {
-      layout: 'admin/layout'
+      layout: 'admin/layout',
+      orders : orders,
+      totalSales : totalSales,
+      totalProfit : totalProfit,
+      smartPhoneCount : smartPhoneCount,
+      laptopCount : laptopCount,
+      brands : brands,
+      brandCount : brandCount
     });
   } else {
     res.redirect('/admin/login')
@@ -185,13 +206,14 @@ router.post('/addProduct', function (req, res, next) {
       console.log(res.req.body);
       var body = res.req.body
       // console.log(req.files.fileinputimage1[0].filename);
+
       var images = [req.files.fileinputimage1[0].filename, req.files.fileinputimage2[0].filename, req.files.fileinputimage3[0].filename, req.files.fileinputimage4[0].filename]
       console.log("Success");
       adminProductHelper.addProduct(body, images, (id) => {
         console.log(id);
         res.redirect('/admin/viewProducts')
       })
-      
+
     }
   })
 })
@@ -814,6 +836,29 @@ router.get('/deleteCategoryOffer/:id',(req,res,next) => {
   adminProductHelper.deleteCategoryOffer(req.params.id).then(() => {
     res.send("success")
   })
+})
+
+// ******* sales report get page *********
+router.get('/salesReport', async (req,res,next) => {
+  let revenue =[]
+  let products = await adminProductHelper.getSalesReport()
+  
+  for(i=0;i<products.length;i++){
+    let value = products[i].products.productDetails[0].price - products[i].products.productDetails[0].price*0.1
+    products[i].revenue = parseInt(value);
+  }
+  console.log(revenue);
+  res.render('admin/salesReport',{
+    layout : 'admin/layout',
+    products : products,
+  })
+})
+
+// ************ search product with date sales report ***********
+router.get('/searchProductDate',(req,res,next) => {
+  console.log(req.query); 
+  adminProductHelper.getSalesReportByDate(req.query)
+  res.redirect('/admin/salesReport')
 })
 
 module.exports = router;

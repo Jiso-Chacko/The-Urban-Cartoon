@@ -8,13 +8,23 @@ const bp = require('body-parser')
 var db = require('./config/connections') //  requiring database
 var Swal = require('sweetalert2')
 
-
-
+var {create} =  require('express-handlebars');
 var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+const hbs = create({
+  helpers : {
+    calculateRevenue : (price) => {
+      console.log(price);
+     return price
+    }
+  }
+});
+
+
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -66,5 +76,7 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
 
 module.exports = app;
