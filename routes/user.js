@@ -594,6 +594,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   let addressType = await userHelper.getAllAddressType(req.session.user._id)
+
   req.session.totalAmount = price.totalSum
   console.log("This is /checkout get");
   console.log("Address  : " + address.address);
@@ -618,10 +619,10 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     cartProducts[i].individualSum = price.individualSum[i];
   }
 
-
   res.render('users/checkout', {
     layout: 'users/layout',
     cartProducts: cartProducts,
+    productCount :  cartProducts.length,
     totalAmount: req.session.totalAmount,
     userFname: userFname,
     userLname: userLname,
@@ -651,12 +652,14 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAddress(req.session.user._id, req.body.address)
+
   console.log("///////");
   address.address.firstName = req.session.user.userFirstName
   address.address.lastName = req.session.user.userLastName
   address.address.payment = req.body.payment
   console.log(address.address);
-
+  // console.log("###### Total amount before place ordre #######");
+  // console.log(req.session.totalAmount);
   await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount).then((orderId) => {
 
     if (req.body.payment === 'cod') {
@@ -667,8 +670,8 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
       })
     }
      else {
-      console.log("#######");
-      console.log(req.session.totalAmount);
+      // console.log("####### Total amount before razorpay ########");
+      // console.log(req.session.totalAmount);
       userProductHelper.generateRazorpay(orderId, req.session.totalAmount).then((response) => {
         res.send({
           status: false,
@@ -699,14 +702,14 @@ router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) =>
   address.email = req.body.email
   address.phone = req.body.phone
   await userHelper.addAddress(address, req.session.user._id, req.body.addressType)
-  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, totalAmount).then((orderId) => {
+  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, req.session.totalAmount).then((orderId) => {
     if (req.body.payment === 'cod') {
       res.send({
         status: true,
         response: null
       })
     } else {
-      userProductHelper.generateRazorpay(orderId, totalAmount.totalSum).then((response) => {
+      userProductHelper.generateRazorpay(orderId, req.session.totalAmount).then((response) => {
         res.send({
           status: false,
           response
@@ -734,14 +737,14 @@ router.post('/checkoutNewAddress', verifyUserLogg, async (req, res, next) => {
   address.email = req.body.email
   address.phone = req.body.phone
 
-  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, totalAmount).then((orderId) => {
+  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, req.session.totalAmount).then((orderId) => {
     if (req.body.payment === 'cod') {
       res.send({
         status: true,
         response: null
       })
     } else {
-      userProductHelper.generateRazorpay(orderId, totalAmount.totalSum).then((response) => {
+      userProductHelper.generateRazorpay(orderId, req.session.totalAmount).then((response) => {
         res.send({
           status: false,
           response

@@ -38,7 +38,7 @@
                             <td><a>{{#each this.productDetails}}{{this.productName}}{{/each}}</a></td>
 
                             <td>{{../this.paymentMethod}}</td>
-                            <td>₹{{../this.totalAmount.totalSum}}</td>
+                            <td>₹{{../this.totalAmount}}</td>
                             {{#if this.placed}}
                             <td style="text-transform: uppercase;" class="badge badge-primary ">{{this.status}}</td>
                             {{/if}}

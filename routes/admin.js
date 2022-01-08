@@ -27,32 +27,32 @@ const verifyAdminLogin = (req, res, next) => {
 }
 
 /* GET users listing. */
-router.get('/',async function (req, res, next) {
+router.get('/', async function (req, res, next) {
 
   if (req.session.adminLogin) {
     let totalOrders = await adminProductHelper.getAllOrders()
     let orders = totalOrders.length
-    let totalSales = await adminProductHelper.getTotalSales() 
-    let totalProfit = parseInt(totalSales - totalSales * (10/100)) 
+    let totalSales = await adminProductHelper.getTotalSales()
+    let totalProfit = parseInt(totalSales - totalSales * (10 / 100))
     let graphData = await adminProductHelper.categoryWiseChartData()
     let donutCartData = await adminProductHelper.brandWiseChartData()
 
     console.log("**///");
-    console.log(donutCartData.count);
-    console.log(donutCartData.brands);
+    console.log(totalSales);
+    console.log(totalProfit);
     let brands = donutCartData.brands
     let brandCount = donutCartData.count
     let smartPhoneCount = graphData.smartPhone
     let laptopCount = graphData.laptop
     res.render('admin/dashboard', {
       layout: 'admin/layout',
-      orders : orders,
-      totalSales : totalSales,
-      totalProfit : totalProfit,
-      smartPhoneCount : smartPhoneCount,
-      laptopCount : laptopCount,
-      brands : brands,
-      brandCount : brandCount
+      orders: orders,
+      totalSales: totalSales,
+      totalProfit: totalProfit,
+      smartPhoneCount: smartPhoneCount,
+      laptopCount: laptopCount,
+      brands: brands,
+      brandCount: brandCount
     });
   } else {
     res.redirect('/admin/login')
@@ -275,220 +275,202 @@ router.post('/editProduct', verifyAdminLogin, (req, res, next) => {
         console.log('lengeth is 0')
         let images = await adminProductHelper.getImages(req.query.id)
         adminProductHelper.updateProduct(req.query.id, res.req.body, images)
-      }
-      else if (Object.keys(res.req.files).length == 1) {
-            console.log("length is 1");
+      } else if (Object.keys(res.req.files).length == 1) {
+        console.log("length is 1");
 
-            if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
-              console.log("img1");
-              console.log(res.req.files);
-              console.log(req.body);
-              let image1 = res.req.files.fileinputimage1[0].filename
-              adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-            } 
-            else if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
-              console.log("img2");
-              console.log(res.req.files);
-              console.log(req.body);
-              let image2 = res.req.files.fileinputimage2[0].filename
-              adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-            }
-            else if (Object.keys(res.req.files).includes('fileinputimage3' == true)) {
-              console.log("img3");
-              console.log(res.req.files);
-              console.log(req.body);
-              let image3 = res.req.files.fileinputimag3[0].filename
-              adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-            }
-            else if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
-              console.log("img4");
-              console.log(res.req.files);
-              console.log(req.body);
-              let image4 = res.req.files.fileinputimage4[0].filename
-              adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-            }
+        if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+          console.log("img1");
+          console.log(res.req.files);
+          console.log(req.body);
+          let image1 = res.req.files.fileinputimage1[0].filename
+          adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
+        } else if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+          console.log("img2");
+          console.log(res.req.files);
+          console.log(req.body);
+          let image2 = res.req.files.fileinputimage2[0].filename
+          adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
+        } else if (Object.keys(res.req.files).includes('fileinputimage3' == true)) {
+          console.log("img3");
+          console.log(res.req.files);
+          console.log(req.body);
+          let image3 = res.req.files.fileinputimag3[0].filename
+          adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
+        } else if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+          console.log("img4");
+          console.log(res.req.files);
+          console.log(req.body);
+          let image4 = res.req.files.fileinputimage4[0].filename
+          adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
+        }
 
-      } 
-      else if (Object.keys(res.req.files).length == 2) {
+      } else if (Object.keys(res.req.files).length == 2) {
         console.log("length is 2");
-          if(Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage2') == true){
-            console.log(" 1 & 2");
-              if(Object.keys(res.req.files).includes('fileinputimage1') == true){
-                console.log(res.req.files);
-                console.log(req.body);
-                let image1 = res.req.files.fileinputimage1[0].filename
-                adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-              }
-              if(Object.keys(res.req.files).includes('fileinputimage2') == true){
-                console.log(res.req.files);
-                console.log(req.body);
-                let image2 = res.req.files.fileinputimage2[0].filename
-                adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-              }
+        if (Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage2') == true) {
+          console.log(" 1 & 2");
+          if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+            console.log(res.req.files);
+            console.log(req.body);
+            let image1 = res.req.files.fileinputimage1[0].filename
+            adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
+          }
+          if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+            console.log(res.req.files);
+            console.log(req.body);
+            let image2 = res.req.files.fileinputimage2[0].filename
+            adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
+          }
 
+        } else if (Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage3') == true) {
+          console.log("1 & 3");
+          if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+            console.log(req.body);
+            let image1 = res.req.files.fileinputimage1[0].filename
+            adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
+          } else if (Object.keys(res.req.files).includes('fileinputimage3') == true) {
+            console.log(req.body);
+            let image3 = res.req.files.fileinputimage3[0].filename
+            adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage3') == true){
-              console.log("1 & 3");
-              if(Object.keys(res.req.files).includes('fileinputimage1') == true){
-                console.log(req.body);
-                let image1 = res.req.files.fileinputimage1[0].filename
-                adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-              }
-              else if(Object.keys(res.req.files).includes('fileinputimage3') == true){
-                console.log(req.body);
-                let image3 = res.req.files.fileinputimage3[0].filename
-                adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-              }
 
+        } else if (Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage4') == true) {
+          console.log("1 & 4");
+          if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+            console.log(req.body);
+            let image1 = res.req.files.fileinputimage1[0].filename
+            adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
+          } else if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+            console.log(req.body);
+            let image4 = res.req.files.fileinputimage4[0].filename
+            adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage4') == true){
-              console.log("1 & 4");
-              if(Object.keys(res.req.files).includes('fileinputimage1') == true){
-                console.log(req.body);
-                let image1 = res.req.files.fileinputimage1[0].filename
-                adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-              }
-              else if(Object.keys(res.req.files).includes('fileinputimage4') == true){
-                console.log(req.body);
-                let image4 = res.req.files.fileinputimage4[0].filename
-                adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-              }
 
+        } else if (Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage3') == true) {
+          console.log("2 & 3");
+          if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+            console.log(req.body);
+            let image2 = res.req.files.fileinputimage2[0].filename
+            adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
+          } else if (Object.keys(res.req.files).includes('fileinputimage3') == true) {
+            console.log(req.body);
+            let image3 = res.req.files.fileinputimage3[0].filename
+            adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage3') == true){
-              console.log("2 & 3");
-              if(Object.keys(res.req.files).includes('fileinputimage2') == true){
-                console.log(req.body);
-                let image2 = res.req.files.fileinputimage2[0].filename
-                adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-              }
-              else if(Object.keys(res.req.files).includes('fileinputimage3') == true){
-                console.log(req.body);
-                let image3 = res.req.files.fileinputimage3[0].filename
-                adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-              }
 
+        } else if (Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage4') == true) {
+          console.log("2 & 4");
+          if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+            console.log(req.body);
+            let image2 = res.req.files.fileinputimage2[0].filename
+            adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
+          } else if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+            console.log(req.body);
+            let image4 = res.req.files.fileinputimage4[0].filename
+            adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage4') == true){
-              console.log("2 & 4");
-              if(Object.keys(res.req.files).includes('fileinputimage2') == true){
-                console.log(req.body);
-                let image2 = res.req.files.fileinputimage2[0].filename
-                adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-              }
-              else if(Object.keys(res.req.files).includes('fileinputimage4') == true){
-                console.log(req.body);
-                let image4 = res.req.files.fileinputimage4[0].filename
-                adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-              }
 
+        } else if (Object.keys(res.req.files).includes('fileinputimage3') == true && Object.keys(res.req.files).includes('fileinputimage4') == true) {
+          console.log("3 & 4");
+          if (Object.keys(res.req.files).includes('fileinputimage3') == true) {
+            console.log(req.body);
+            let image3 = res.req.files.fileinputimage3[0].filename
+            adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
+          } else if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+            console.log(req.body);
+            let image4 = res.req.files.fileinputimage4[0].filename
+            adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage3') == true && Object.keys(res.req.files).includes('fileinputimage4') == true){
-              console.log("3 & 4");
-              if(Object.keys(res.req.files).includes('fileinputimage3') == true){
-                console.log(req.body);
-                let image3 = res.req.files.fileinputimage3[0].filename
-                adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-              }
-              else if(Object.keys(res.req.files).includes('fileinputimage4') == true){
-                console.log(req.body);
-                let image4 = res.req.files.fileinputimage4[0].filename
-                adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-              }
-          }
+        }
 
 
 
       } else if (Object.keys(res.req.files).length == 3) {
         console.log("length is 3");
 
-          if(Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage3') == true){
-              console.log("images 1,2,3");
+        if (Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage3') == true) {
+          console.log("images 1,2,3");
 
-              if(Object.keys(res.req.files).includes('fileinputimage1') == true){
-                console.log(req.body);
-                let image1 = res.req.files.fileinputimage1[0].filename
-                adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-              }
-
-              if(Object.keys(res.req.files).includes('fileinputimage2') == true){
-                console.log(req.body);
-                let image2 = res.req.files.fileinputimage2[0].filename
-                adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-              }
-
-              if(Object.keys(res.req.files).includes('fileinputimage3') == true){
-                console.log(req.body);
-                let image3 = res.req.files.fileinputimage3[0].filename
-                adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-              }
-
+          if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+            console.log(req.body);
+            let image1 = res.req.files.fileinputimage1[0].filename
+            adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage3') == true && Object.keys(res.req.files).includes('fileinputimage4') == true){
-            console.log("images 1,3,4");
 
-            if(Object.keys(res.req.files).includes('fileinputimage1') == true){
-              console.log(req.body);
-              let image1 = res.req.files.fileinputimage1[0].filename
-              adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-            }
-
-            if(Object.keys(res.req.files).includes('fileinputimage3') == true){
-              console.log(req.body);
-              let image3 = res.req.files.fileinputimage3[0].filename
-              adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-            }
-
-            if(Object.keys(res.req.files).includes('fileinputimage4') == true){
-              console.log(req.body);
-              let image4 = res.req.files.fileinputimage4[0].filename
-              adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-            }
+          if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+            console.log(req.body);
+            let image2 = res.req.files.fileinputimage2[0].filename
+            adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage4') == true && Object.keys(res.req.files).includes('fileinputimage2') == true){
-            console.log("images 1,4,2");
 
-            if(Object.keys(res.req.files).includes('fileinputimage1') == true){
-              console.log(req.body);
-              let image1 = res.req.files.fileinputimage1[0].filename
-              adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
-            }
-
-            if(Object.keys(res.req.files).includes('fileinputimage4') == true){
-              console.log(req.body);
-              let image4 = res.req.files.fileinputimage4[0].filename
-              adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-            }
-
-            if(Object.keys(res.req.files).includes('fileinputimage2') == true){
-              console.log(req.body);
-              let image2 = res.req.files.fileinputimage2[0].filename
-              adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-            }
-
+          if (Object.keys(res.req.files).includes('fileinputimage3') == true) {
+            console.log(req.body);
+            let image3 = res.req.files.fileinputimage3[0].filename
+            adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
           }
-          else if(Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage3') == true && Object.keys(res.req.files).includes('fileinputimage4') == true){
-            console.log("images 2,3,4");
 
-            if(Object.keys(res.req.files).includes('fileinputimage2') == true){
-              console.log(req.body);
-              let image2 = res.req.files.fileinputimage2[0].filename
-              adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
-            }
+        } else if (Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage3') == true && Object.keys(res.req.files).includes('fileinputimage4') == true) {
+          console.log("images 1,3,4");
 
-            if(Object.keys(res.req.files).includes('fileinputimage3') == true){
-              console.log(req.body);
-              let image3 = res.req.files.fileinputimage3[0].filename
-              adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
-            }
-
-            if(Object.keys(res.req.files).includes('fileinputimage4') == true){
-              console.log(req.body);
-              let image4 = res.req.files.fileinputimage4[0].filename
-              adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
-            }
-
+          if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+            console.log(req.body);
+            let image1 = res.req.files.fileinputimage1[0].filename
+            adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
           }
+
+          if (Object.keys(res.req.files).includes('fileinputimage3') == true) {
+            console.log(req.body);
+            let image3 = res.req.files.fileinputimage3[0].filename
+            adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
+          }
+
+          if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+            console.log(req.body);
+            let image4 = res.req.files.fileinputimage4[0].filename
+            adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
+          }
+        } else if (Object.keys(res.req.files).includes('fileinputimage1') == true && Object.keys(res.req.files).includes('fileinputimage4') == true && Object.keys(res.req.files).includes('fileinputimage2') == true) {
+          console.log("images 1,4,2");
+
+          if (Object.keys(res.req.files).includes('fileinputimage1') == true) {
+            console.log(req.body);
+            let image1 = res.req.files.fileinputimage1[0].filename
+            adminProductHelper.updateProductimg1(req.query.id, res.req.body, image1)
+          }
+
+          if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+            console.log(req.body);
+            let image4 = res.req.files.fileinputimage4[0].filename
+            adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
+          }
+
+          if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+            console.log(req.body);
+            let image2 = res.req.files.fileinputimage2[0].filename
+            adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
+          }
+
+        } else if (Object.keys(res.req.files).includes('fileinputimage2') == true && Object.keys(res.req.files).includes('fileinputimage3') == true && Object.keys(res.req.files).includes('fileinputimage4') == true) {
+          console.log("images 2,3,4");
+
+          if (Object.keys(res.req.files).includes('fileinputimage2') == true) {
+            console.log(req.body);
+            let image2 = res.req.files.fileinputimage2[0].filename
+            adminProductHelper.updateProductimg2(req.query.id, res.req.body, image2)
+          }
+
+          if (Object.keys(res.req.files).includes('fileinputimage3') == true) {
+            console.log(req.body);
+            let image3 = res.req.files.fileinputimage3[0].filename
+            adminProductHelper.updateProductimg3(req.query.id, res.req.body, image3)
+          }
+
+          if (Object.keys(res.req.files).includes('fileinputimage4') == true) {
+            console.log(req.body);
+            let image4 = res.req.files.fileinputimage4[0].filename
+            adminProductHelper.updateProductimg4(req.query.id, res.req.body, image4)
+          }
+
+        }
 
       } else if (Object.keys(res.req.files).length == 4) {
         console.log("length is 4");
@@ -543,9 +525,39 @@ router.post('/addSlider', function (req, res, next) {
 
 
 // edit sider get
-router.get('/editSlider', verifyAdminLogin, function (req, res, next) {
-  res.render('admin/editSlider')
-});
+// router.get('/editSlider', verifyAdminLogin, function (req, res, next) {
+//   res.render('admin/editSlider')
+// });
+
+// ************ Edit slider date get **********
+router.get('/getSliderData',async (req,res,next) => {
+  console.log(req.query);
+  req.session.sliderData = req.query
+  await adminProductHelper.getSliderData(req.query).then((slider) => {
+    res.send(slider)
+  })
+})
+
+// ************* edit slider post ****************
+router.post('/editSlider',async (req,res,next) => {
+  console.log("***** edit slider post ******");
+  console.log(req.body);
+  // console.log(req.session.sliderData.id);
+  let slider = await adminProductHelper.getSliderData(req.session.sliderData)
+  // console.log(Object.keys(req.body.fileinputimage1).length);
+  console.log(slider);
+  if(Object.keys(req.body.fileinputimage1).length == 0){
+    await adminProductHelper.updateSliderOutImage(req.body,slider.sliderImage,req.session.sliderData.id).then(() => {
+      res.redirect('/admin/addSlider')
+    })
+  }
+  else{
+    await adminProductHelper.updateSliderOutImage(req.body,slider.sliderImage,req.session.sliderData.id).then(() => {
+      res.redirect('/admin/addSlider')
+    })
+  }
+
+})
 
 // edit slider post
 router.post('/editSlider', function (req, res, next) {
@@ -622,7 +634,7 @@ router.get('/deleteProduct', verifyAdminLogin, (req, res, next) => {
 })
 
 // ********* user Mangement **********
-router.get('/userManagement',verifyAdminLogin, async (req, res, next) => {
+router.get('/userManagement', verifyAdminLogin, async (req, res, next) => {
 
   let users = await userHelper.getUsersForAdmin()
   res.render('admin/userManagement', {
@@ -632,7 +644,7 @@ router.get('/userManagement',verifyAdminLogin, async (req, res, next) => {
 })
 
 // ********** product management ************
-router.get('/productMangement',verifyAdminLogin, async (req, res, next) => {
+router.get('/productMangement', verifyAdminLogin, async (req, res, next) => {
 
   let orders = await adminProductHelper.getAllOrders()
   console.log("this is product management route");
@@ -704,46 +716,45 @@ router.get('/swalForm', (req, res, next) => {
 })
 
 // ********* block user ******************
-router.get('/disable_user',verifyAdminLogin,(req,res,next) => {
+router.get('/disable_user', verifyAdminLogin, (req, res, next) => {
 
   console.log(req.query.id);
   console.log("/disable_user");
-  userHelper.blockUser(req.query.id).then((response)  => {
+  userHelper.blockUser(req.query.id).then((response) => {
     res.send(response)
   })
 })
 
 // ********* unblock user ******************
-router.get('/enable_user',verifyAdminLogin,(req,res,next) => {
+router.get('/enable_user', verifyAdminLogin, (req, res, next) => {
 
   console.log(req.query.id);
   console.log("/enable_user");
-  userHelper.unblockUser(req.query.id).then((response)  => {
+  userHelper.unblockUser(req.query.id).then((response) => {
     res.send(response)
   })
 })
 
 // ************* coupon management get page************
-router.get('/couponManagement',async (req,res,next) => {
+router.get('/couponManagement', async (req, res, next) => {
 
   let coupon = await adminProductHelper.getAllCoupen()
   console.log(coupon);
-  res.render('admin/couponManagement',{
-    layout : 'admin/layout',
-    coupon : coupon,
+  res.render('admin/couponManagement', {
+    layout: 'admin/layout',
+    coupon: coupon,
     "couponErr": req.session.couponErr
   })
   req.session.couponErr = false
 })
 
-router.post('/addCoupen',(req,res,next) => {
+router.post('/addCoupen', (req, res, next) => {
   console.log(req.body);
 
   adminProductHelper.createCoupon(req.body).then((created) => {
-    if(created ==true) {
+    if (created == true) {
       res.redirect('/admin/couponManagement')
-    }
-    else{
+    } else {
       req.session.couponErr = true
       res.redirect('/admin/couponManagement')
     }
@@ -751,7 +762,7 @@ router.post('/addCoupen',(req,res,next) => {
 })
 
 // ******** delete coupon **********
-router.get('/deleteCoupon/:id',(req,res,next) => {
+router.get('/deleteCoupon/:id', (req, res, next) => {
 
   console.log(req.params.id);
   adminProductHelper.deleteCoupon(req.params.id).then(() => {
@@ -761,39 +772,38 @@ router.get('/deleteCoupon/:id',(req,res,next) => {
 })
 
 // *************** brand offer management *********
-router.get('/brandOffers',async (req,res,next) => {
+router.get('/brandOffers', async (req, res, next) => {
 
   let brands = await adminProductHelper.getAllBrandsForOffers()
   let brandOffers = await adminProductHelper.getAllBrandOffers()
   console.log("*******" + brandOffers);
   console.log(brands);
-  res.render('admin/brandofferManagement',{
-    layout : 'admin/layout',
-    brands : brands,
-    'offerErr' : req.session.offerErr,
-    brandOffers : brandOffers
+  res.render('admin/brandofferManagement', {
+    layout: 'admin/layout',
+    brands: brands,
+    'offerErr': req.session.offerErr,
+    brandOffers: brandOffers
   })
   req.session.offerErr = false
 })
 
 // *************** brand offer management post *******
-router.post('/addBrandOffer', (req,res,next) => {
+router.post('/addBrandOffer', (req, res, next) => {
 
   console.log(req.body);
   adminProductHelper.createBrandOffer(req.body).then((response) => {
-    if(response == true){
+    if (response == true) {
       res.redirect('/admin/brandOffers')
-    }
-    else{
+    } else {
       req.session.offerErr = true
       res.redirect('/admin/brandOffers')
     }
   })
- 
+
 })
 
 // *********** delete offer ******************
-router.get('/deleteOffer/:id',(req,res,next) => {
+router.get('/deleteOffer/:id', (req, res, next) => {
 
   console.log(req.params.id);
   adminProductHelper.deleteBrandOffer(req.params.id).then(() => {
@@ -802,26 +812,25 @@ router.get('/deleteOffer/:id',(req,res,next) => {
 })
 
 // *************** category offer management ********
-router.get('/categoryOffers',async (req,res,next) => {
+router.get('/categoryOffers', async (req, res, next) => {
 
   let category = await adminProductHelper.getAllCategoryForOffers()
   let categoryOffers = await adminProductHelper.getAllCategoryOffers()
-  res.render('admin/categoryOfferManagement',{
-    layout : 'admin/layout',
-    category : category,
-    categoryOffers : categoryOffers
+  res.render('admin/categoryOfferManagement', {
+    layout: 'admin/layout',
+    category: category,
+    categoryOffers: categoryOffers
   })
 })
 
 // *************** category offer management post *******
-router.post('/addCategoryOffer', (req,res,next) => {
+router.post('/addCategoryOffer', (req, res, next) => {
 
   console.log(req.body);
   adminProductHelper.createCategoryOffer(req.body).then((response) => {
-    if(response == true){
+    if (response == true) {
       res.redirect('/admin/categoryOffers')
-    }
-    else{
+    } else {
       req.session.offerErr = true
       res.redirect('/admin/categoryOffers')
     }
@@ -830,7 +839,7 @@ router.post('/addCategoryOffer', (req,res,next) => {
 })
 
 // ************ delete category offer *******
-router.get('/deleteCategoryOffer/:id',(req,res,next) => {
+router.get('/deleteCategoryOffer/:id', (req, res, next) => {
 
   console.log(req.params.id);
   adminProductHelper.deleteCategoryOffer(req.params.id).then(() => {
@@ -839,26 +848,136 @@ router.get('/deleteCategoryOffer/:id',(req,res,next) => {
 })
 
 // ******* sales report get page *********
-router.get('/salesReport', async (req,res,next) => {
-  let revenue =[]
+router.get('/salesReport', async (req, res, next) => {
+  let revenue = []
   let products = await adminProductHelper.getSalesReport()
-  
-  for(i=0;i<products.length;i++){
-    let value = products[i].products.productDetails[0].price - products[i].products.productDetails[0].price*0.1
+
+  for (i = 0; i < products.length; i++) {
+    let value = products[i].products.productDetails[0].price - products[i].products.productDetails[0].price * 0.1
     products[i].revenue = parseInt(value);
   }
   console.log(revenue);
-  res.render('admin/salesReport',{
-    layout : 'admin/layout',
-    products : products,
+  res.render('admin/salesReport', {
+    layout: 'admin/layout',
+    products: products,
   })
 })
 
 // ************ search product with date sales report ***********
-router.get('/searchProductDate',(req,res,next) => {
-  console.log(req.query); 
-  adminProductHelper.getSalesReportByDate(req.query)
-  res.redirect('/admin/salesReport')
+router.get('/searchProductDate',async (req, res, next) => {
+  console.log(req.query);
+  let products = await adminProductHelper.getSalesReportByDate(req.query)
+  for (i = 0; i < products.length; i++) {
+    let value = products[i].products.productDetails[0].price - products[i].products.productDetails[0].price * 0.1
+    products[i].revenue = parseInt(value);
+  }
+  res.render('admin/salesReportByDate',{
+    layout : 'admin/layout',
+    products : products
+  })
+})
+
+// ******* sales report get page *********
+router.get('/stockReport', async (req, res, next) => {
+
+  let products = await adminProductHelper.getSalesReport()
+  let productArray = []
+  console.log("******** products ********");
+  for (i = 0; i < products.length; i++) {
+    productArray.push({
+      name : products[i].products.productDetails[0].productName,
+      category : products[i].products.productDetails[0].category,
+      brand : products[i].products.productDetails[0].brand,
+      quantity : products[i].products.productDetails[0].quantity,
+    })
+  }
+  let counts = {};
+  productArray.forEach(function (x) {
+    counts[x.name] = (counts[x.name] || 0) + 1;
+  });
+  console.log(counts)
+  console.log(Object.keys(counts)); // brand array
+  
+  // remove duplicates
+  productArray = productArray.filter((value, index, self) =>
+  index === self.findIndex((t) => (
+    t.name === value.name
+  ))
+)
+
+for(i=0;i<productArray.length;i++){
+  productArray[i].sold = counts[Object.keys(counts)[i]]
+}
+
+productArray.forEach((products)  => {
+  if(products.quantity > 0){
+    products.quantity = parseInt(products.quantity - products.sold)
+  }
+  else{
+    products.quantity = 0
+  }
+})
+
+console.log(" removed duplicates");
+console.log(productArray);
+
+  res.render('admin/stockReport', {
+    layout: 'admin/layout',
+    productArray: productArray
+  })
+})
+
+
+//********** sales report by date get page ************
+router.get('/searchStockDate',async (req,res,next) => {
+  console.log(req.query);
+  let products = await adminProductHelper.getStockReportByDate(req.query)
+
+  let productArray = []
+  console.log("******** products ********");
+  for (i = 0; i < products.length; i++) {
+    productArray.push({
+      name : products[i].products.productDetails[0].productName,
+      category : products[i].products.productDetails[0].category,
+      brand : products[i].products.productDetails[0].brand,
+      quantity : products[i].products.productDetails[0].quantity,
+    })
+  }
+  let counts = {};
+  productArray.forEach(function (x) {
+    counts[x.name] = (counts[x.name] || 0) + 1;
+  });
+  console.log(counts)
+  console.log(Object.keys(counts)); // brand array
+  
+  // remove duplicates
+  productArray = productArray.filter((value, index, self) =>
+  index === self.findIndex((t) => (
+    t.name === value.name
+  ))
+)
+
+for(i=0;i<productArray.length;i++){
+  productArray[i].sold = counts[Object.keys(counts)[i]]
+}
+
+productArray.forEach((products)  => {
+  if(products.quantity > 0){
+    products.quantity = parseInt(products.quantity - products.sold)
+  }
+  else{
+    products.quantity = 0
+  }
+})
+
+console.log(" removed duplicates");
+console.log(productArray);
+
+  res.render('admin/stockReportByDate',{
+    layout : 'admin/layout',
+    productArray : productArray
+  })
+  
 })
 
 module.exports = router;

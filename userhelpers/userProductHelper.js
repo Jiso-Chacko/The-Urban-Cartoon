@@ -475,8 +475,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             console.log("This is create order");
             // console.log(userId);
-            // console.log(products);
-            // console.log(totalAmount);
+            console.log("******* products in place order **********");
+            console.log(products);
+            
             // console.log(order);
             let status = order.payment === 'cod' ? 'placed' : 'pending'
 
@@ -539,6 +540,8 @@ module.exports = {
                 console.log(result.ops[0]);
                 resolve(result.ops[0]._id)
             })
+
+
         })
 
     },

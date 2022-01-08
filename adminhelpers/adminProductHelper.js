@@ -57,6 +57,36 @@ module.exports = {
             resolve(slider)
         })
     },
+    
+    getSliderData : (sliderId) => {
+        return new Promise(async (resolve,reject) => {
+            let slider = await db.get().collection(collection.SLIDER_COLLECTION).findOne({
+                _id : ObjectID(sliderId.id)
+            })
+            console.log("**** ***** ****");
+            console.log(slider);
+            resolve(slider) 
+        })
+    },
+
+    updateSliderOutImage : (body,image,id) => {
+        console.log(body);
+        console.log(image);
+        console.log(id);
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.SLIDER_COLLECTION).updateOne({
+                _id : ObjectID(id)
+            },
+            {
+                $set : {
+                    sliderTitle : body.sliderTitle,
+                    sliderTagline : body.sliderTagline,
+                    sliderImage : image
+                }
+            })
+            resolve()
+        })
+    },
 
     addNewBanner : (body,image) => {
         
@@ -703,12 +733,61 @@ module.exports = {
             var enddate= new Date(query.enddate)
             console.log(startdate);
             console.log(enddate);
-            let products = await db.get().collection(collection.ORDER_COLLECTION).find({
-                dateIso : {$gte : startdate, $lt : enddate}
-            }).toArray()
-            console.log("*****/////*****");
+            console.log("***** Produts by date *****");
+            // let products = await db.get().collection(collection.ORDER_COLLECTION).find({
+            //     dateIso : {$gte : startdate, $lte : enddate}
+            // }).toArray()
+            let products = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match : {
+                        dateIso : {$gte : startdate, $lte : enddate}
+                    }
+                },
+                {
+                    $project: {
+                        products : 1,
+                        _id : 0
+                    }
+                },
+                {
+                    $unwind : '$products'
+                }
+            ]).toArray()
             console.log(products);
-            resolve()
+            console.log("***** Produts by date *****");
+            resolve(products)
+        })
+    },
+
+    getStockReportByDate: (query) => {
+        return new Promise(async (resolve,reject) => {
+            var startdate= new Date(query.StartDate)
+            var enddate= new Date(query.enddate)
+            console.log(startdate);
+            console.log(enddate);
+            console.log("***** Produts by date *****");
+            // let products = await db.get().collection(collection.ORDER_COLLECTION).find({
+            //     dateIso : {$gte : startdate, $lte : enddate}
+            // }).toArray()
+            let products = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $match : {
+                        dateIso : {$gte : startdate, $lte : enddate}
+                    }
+                },
+                {
+                    $project: {
+                        products : 1,
+                        _id : 0
+                    }
+                },
+                {
+                    $unwind : '$products'
+                }
+            ]).toArray()
+            console.log(products);
+            console.log("***** Produts by date *****");
+            resolve(products)
         })
     }
 }

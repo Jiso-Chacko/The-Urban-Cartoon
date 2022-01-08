@@ -1,8 +1,8 @@
 <div class="container">
-    <h1 class="text-center"> Sales Report</h1>
+    <h1 class="text-center"> Stock Report</h1>
 
     <div class="d-flex justify-content-end" style="margin-top: 5rem;">
-        <form action="/admin/searchProductDate" method="GET">
+        <form action="/admin/searchStockDate" method="GET">
             {{!-- <label for="birthday">Date</label> --}}
             <label>From date</label>
             <input type="date" id="startdate" class="selectdate" onchange="selectdate()" name="StartDate">
@@ -19,26 +19,20 @@
                     <thead>
                         <tr>
                             <th>Product</th>
-                            <th>Status</th>
-                            <th>Quantity</th>
-                            <th>Value</th>
-                            <th>Revenue</th>
+                            <th>Category</th>
+                            <th>Brand</th>
+                            <th>Current</th>
+                            <th>Sold</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {{#each products}}
+                        {{#each productArray}}
                         <tr>
-                            <td>{{#each this.products.productDetails}}{{this.productName}}{{/each}}</td>
-                            <td>{{this.products.status}}</td>
-                            <td>{{this.products.quantity}}</td>
-                            <td>{{#each this.products.productDetails}}{{this.price}}{{/each}}</td>
-                            <td>{{this.revenue}}</td>
-
-
-
-
-
-
+                            <td>{{this.name}}</td>
+                            <td>{{this.category}}</td>
+                            <td>{{this.brand}}</td>
+                            <td>{{this.quantity}}</td>
+                            <td>{{this.sold}}</td>
 
 
                             {{!-- <a class="btn btn-success" style="width: 5.5rem;" onclick="return confirm('Are you sure to enable {{ this.userFirstName }}? ')"  href="/admin/enable-user?id={{ this._id }}">Unblock</a> --}}
@@ -83,11 +77,8 @@
             {extend : 'pdf', className : 'downloadButton'},
             {extend : 'excel', className : 'downloadButton'},
             {extend : 'print', className : 'downloadButton'},
-
             ]
-
         }).buttons().container().appendTo("#downloadButton")
-
     });
 
 

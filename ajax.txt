@@ -700,3 +700,7 @@
 
 /////////////////////////////////
 data: [12, 19, 3, 5, 2, 3],
+
+"responsive" : true,
+            "lenghtChange" : false,
+            "autoWidth" : false

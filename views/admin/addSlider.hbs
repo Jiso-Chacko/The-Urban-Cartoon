@@ -16,11 +16,12 @@
 
                     <div class="form-group">
                         <label for="exampleTextarea1">Add Slider tagline</label>
-                        <textarea class="form-control" id="exampleTextarea1" rows="4" name="tagline" placeholder="Slider tagline" required></textarea>
+                        <textarea class="form-control" id="exampleTextarea1" rows="4" name="tagline"
+                            placeholder="Slider tagline" required></textarea>
                     </div>
 
-                   
-                   
+
+
 
                     <div class="row form-group">
                         <div class="col col-md-3">
@@ -34,8 +35,8 @@
                             {{!-- <textarea name="pro_img1" id="pro_img1" style="display: none;"></textarea> --}}
                         </div>
                     </div>
-                    
-                  <div id="submitdiv">
+
+                    <div id="submitdiv">
                         <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
                         <button class="btn btn-light" value="Reset">Cancel</button>
                     </div>
@@ -70,8 +71,10 @@
                             <td>{{this.sliderTagline}}</td>
                             <td><img style="width:80px; height:80px" src="/productimages/{{this.sliderImage}}" alt="">
                             </td>
-                            
-                            <td><a class="btn btn-success btn-sm" onclick="verifyEdit('{{this.productName}}')" href="/admin/editSlider?id={{this._id}}">Edit</a></td>        
+
+                            <td><a class="btn btn-success btn-sm" onclick="verifyEdit(event,'{{this._id}}')">Edit</a>
+                            </td>
+
                             <td><button class="btn btn-danger btn-sm"
                                     onclick="return confirm('Are you sure you want to delete {{this.productName}}?');">Delete</button>
                             </td>
@@ -84,6 +87,52 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Slider</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/editSlider" method="POST">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label" id="sliderTitle">Slider Title</label>
+                            <input type="text" class="form-control" id="recipient-name" name="sliderTitle">
+                        </div>
+                        <div class="form-group">
+                           
+                            <label for="recipient-tagline" class="col-form-label" id="sliderTagline">Slider Title</label>
+                            <input type="text" class="form-control" id="recipient-tagline" name="sliderTagline">
+
+                        </div>
+                        <div class="form-group">
+                           
+                            <label for="recipient-image" class=" form-control-label">Image</label> 
+                            <img style="width: 15rem; margin: 10px" id="img2">                                  
+                            <input type="file" id="fileinputimage1" name="fileinputimage1" class="form-control-file"
+                                    onchange="viewimage2(event)">
+
+                        </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Edit Slider</button>
+                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -100,4 +149,42 @@
         document.getElementById('img1').src = URL.createObjectURL(event.target.files[0])
     }
 
+    function viewimage2(event) {
+        document.getElementById('img2').src = URL.createObjectURL(event.target.files[0])
+    }
+
+    function verifyEdit(event, sliderId) {
+
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to edit this slider?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, edit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                console.log(event.target)
+                console.log(sliderId)
+
+                $.ajax({
+                    url : `/admin/getSliderData?id=${sliderId}`,
+                    method : 'get',
+                    success : (result) => {
+                        document.getElementById('recipient-name').placeholder = result.sliderTitle
+                        document.getElementById('recipient-name').value = result.sliderTitle
+
+                        document.getElementById('recipient-tagline').placeholder = result.sliderTagline
+                        document.getElementById('recipient-tagline').value = result.sliderTagline                      
+
+                        document.getElementById('img2').src = `/productimages/${result.sliderImage}`
+                        document.getElementById('img2').value = result.sliderImage
+
+                    }
+                })
+            $('#exampleModal').modal('show')
+            }
+        })
+    }
 </script>

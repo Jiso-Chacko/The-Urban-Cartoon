@@ -13577,3 +13577,7 @@ dl {
   flex-grow: 1; }
 
 /*# sourceMappingURL=style.css.map */
+.downloadButton{
+  color : white !important;
+  background-color: #0050e3 !important;
+}
