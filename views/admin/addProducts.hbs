@@ -346,12 +346,16 @@
     });
 
     save1.addEventListener('click', (e) => {
+        console.log('clicked save btn 1')
         e.preventDefault();
         // get result to data uri
         let imgSrc1 = cropper1.getCroppedCanvas({
             width: 6000,
             height: 500 // img disp value
         }).toDataURL();
+        console.log('******* looking for base64 *********')
+        let base64Data = imgSrc1.substring(22)
+        console.log(base64Data)
         $("#exampleModalCenter1").modal("hide");
         img1.src = imgSrc1;
         $('#pro_img1').val(imgSrc1)

@@ -73,7 +73,7 @@
                                     <!-- End Title -->
 
                                     <!-- Product Content -->
-                                    <table class="table">
+                                    <table class="table" id="checkoutTable">
                                         <thead>
                                             <tr>
                                                 <th class="product-name">Product</th>
@@ -373,7 +373,7 @@
                                     <!-- End Title -->
 
                                     <!-- Product Content -->
-                                    <table class="table">
+                                    <table class="table" id="checkoutTable">
                                         <thead>
                                             <tr>
                                                 <th class="product-name">Product</th>
@@ -714,14 +714,14 @@
 
                                                 <div class="form-check">
                                                     <input type="radio" name="payment" id="flexRadioDefault1"
-                                                        value="cod">
+                                                        value="cod" onchange="billingPaypal()" >
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Cash on delivery
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input type="radio" name="payment" id="flexRadioDefault2"
-                                                        value="razorpay">
+                                                        value="razorpay" onchange="billingPaypal()" >
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Razorpay
                                                     </label>
@@ -729,7 +729,7 @@
 
                                                  <div class="form-check">
                                                     <input type="radio" name="payment" id="flexRadioDefault2"
-                                                        value="paypal">
+                                                        value="paypal" onchange="billingPaypal()" id="paypal">
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Paypal
                                                     </label>
@@ -748,6 +748,9 @@
                                         </div>
                                         <button id="billingDetails_btn" type="button"
                                             class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
+                                            order</button>
+                                            <button id="billingPaypal_btn" type="button"
+                                            class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Paypal
                                             order</button>
                                     </div>
                                     <!-- End Order Summary -->
@@ -889,6 +892,36 @@
 </script>
 {{/if}}
 
+
+<script>
+
+    function billingPaypal(){
+
+        let payment = document.querySelector('input[name=payment]:checked').value
+        console.log(payment)
+        if(payment === 'paypal'){
+
+        $('#billingDetails_btn').hide()
+        $('#billingPaypal_btn').show()
+        }
+        else{
+        $('#billingDetails_btn').show()
+        $('#billingPaypal_btn').hide();
+        }        
+    }
+    $('#billingPaypal_btn').click((e) => {
+
+        $.ajax({
+            url : '/pay',
+            method : 'post',
+            success : (res) => {    
+                window.location = res.forwardLink            
+            }
+        })
+    })
+
+</script>
+
 <script>
     $(document).ready(function () {
         $('#Mybtn').click(function () {
@@ -915,7 +948,8 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-        } else if (!document.querySelector('input[name = address]:checked')) {
+        } 
+        else if (!document.querySelector('input[name = address]:checked')) {
             e.preventDefault()
             Swal.fire({
                 title: 'Please select an address!',
@@ -926,7 +960,8 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-        } else {
+        } 
+        else {
             let type = document.querySelector('input[name=address]:checked').value
             let payment = document.querySelector('input[name=payment]:checked').value
             console.log(type, payment)
@@ -947,7 +982,7 @@
                         location.href = '/orderSuccess'
 
                     }
-                     else if(response.payment === 'razorpay') {
+                    else if(response.payment === 'razorpay') {
                         razorpayPayment(response.response)
                     }
                 }
@@ -955,10 +990,10 @@
         }
     })
 
-    // *************** billing details form ends **********************
+    // *************** billing details form ends *********************
 
 
-    // ************************** existing user with new address form *********************
+    // *************** existing user with new address form ************
 
     $('#MyForm_btn').click((e) => {
 
@@ -1283,7 +1318,9 @@
                 code: code
             },
             success: (response) => {
-                if (response.invalidCode == true) {
+                console.log(response)
+                         
+                    if (response.invalidCode == true) {
                     Swal.fire({
                         title: 'Please enter a valid coupon code!',
                         icon: 'info',
@@ -1293,9 +1330,26 @@
                         closeOnEsc: false,
                         allowOutsideClick: false,
                     })
-                } else {
+                } 
+                else if(response.userApplied == true){
+                    const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'You have already applied this coupon!'
+                        })
+                }
+                else {
                     successCount++
                     console.log(successCount)
+
                     if (successCount == 1) {
                         var discountPrice = response.totalAmount * (response.coupon.offer / 100)
 
@@ -1303,8 +1357,8 @@
                         let sumTotal = response.totalAmount - parseInt(discountPrice)
                         console.log(sumTotal)
                         var table = document.getElementById("checkoutTable");
-                        var row = table.insertRow(count + 1);
-                        var row1 = table.insertRow(count + 2);
+                        var row = table.insertRow(count + 2);
+                        var row1 = table.insertRow(count + 3);
 
                         var cell1 = row.insertCell(0);
                         var cell2 = row.insertCell(1);
@@ -1318,7 +1372,8 @@
 
                         cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
                         cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
-                    } else {
+                    }                     
+                    else {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top',
@@ -1335,7 +1390,7 @@
                     }
 
                 }
-                console.log(response)
+                
             }
         })
     }

@@ -32,21 +32,25 @@
                         <button type="submit" class="btn btn-gradient-primary mr-2">Add</button>
                         <button class="btn btn-light" type="reset" value="Reset">Cancel</button>
                     </div>
-                <h3 class="mt-5">View existing brands</h3>
+                    <h3 class="mt-5">View existing brands</h3>
                 </form>
                 {{#each brands}}
                 <ul class="list-group mt-5">
                     <li class="list-group-item active">CATEGORY NAME : {{this.categoryName}}</li>
-                  
-                       <table class="table table-hover">
-                           {{#each brand}}
+
+                    <table class="table table-hover" id="brandTable">
+                        {{#each brand}}
                         <tbody>
-                        <tr>
-                          <td>{{this}}</td>
-                          {{!-- <td><a class="btn btn-sm btn-success">View products</a></td> --}}
-                        </tr>
-                    </tbody>
-                    {{/each}}   
+                            <tr>
+                                <td>{{this}}</td>
+                                <td><a class="btn btn-success btn-sm"
+                                        onclick="editBrand(event,'{{this}}','{{../this.categoryName}}')">Edit</a></td>
+                                <td><button class="btn btn-danger btn-sm"
+                                        onclick="deleteBrand(event,'{{this}}','{{../this.categoryName}}')">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        {{/each}}
                     </table>
 
                 </ul>
@@ -55,3 +59,99 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Brand</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <form action="/admin/editBrand" method="POST">
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label" id="sliderTitle">Brand Title</label>
+                        <input type="text" class="form-control" id="recipient-name" name="brandName">
+                        <input id="categoryName" name="categoryName" hidden> 
+                        <input id="brandName" name="oldBrand" hidden>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Edit Brand</button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function deleteBrand(event, brand, category) {
+        console.log(brand, category)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to delete this ${brand}?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `/admin/deleteBrand?brand=${brand}&category=${category}`,
+                    method: 'get',
+                    success: (response) => {
+                        console.log(response)
+                        alert(response)
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Produt deleted!',
+                            showConfirmButton: false,
+                            timer: 1000
+                        })
+                        event.target.closest('tr').style.display = 'none'
+                    }
+
+                })
+            }
+        })
+    }
+
+    function editBrand(event, brand, category) {
+        console.log(brand, category)
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Do you want to edit this ${brand}?`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, edit it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+
+                        document.getElementById('recipient-name').placeholder = brand
+                        document.getElementById('recipient-name').value = brand
+                        document.getElementById('categoryName').value = category
+                        document.getElementById('brandName').value = brand
+
+
+                        $('#exampleModal').modal('show')
+
+                        $("#brandTable").html(htmlData)
+                    }
+                })
+            }
+   
+</script>

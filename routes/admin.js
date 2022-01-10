@@ -110,7 +110,6 @@ router.get('/addCategory', verifyAdminLogin, async function (req, res, next) {
 
 });
 
-
 // add Category post
 router.post('/addCategory', function (req, res, next) {
   // console.log(req.body);
@@ -126,6 +125,23 @@ router.post('/addCategory', function (req, res, next) {
     res.redirect('/admin/addCategory')
   })
 });
+
+// *********** delete brand ajax call ****************
+router.get('/deleteBrand',(req,res,next) => {
+
+  console.log(req.query);
+  adminProductHelper.deleteBrand(req.query.brand,req.query.category)
+  res.send('success')
+})
+
+// ********* edit brandName ********
+router.post('/editBrand',(req,res,next)  => {
+  console.log(req.body);
+  adminProductHelper.editBrandName(req.body.brandName,req.body.oldBrand,req.body.categoryName).then(() => {
+    res.redirect('/admin/addCategory')
+  })
+
+})
 
 // ********** addNewCategory ***************** 
 router.get('/addNewCategory', async (req, res, next) => {
@@ -183,13 +199,16 @@ var upload = multer({
 const imageUpload = upload.fields([{
   name: 'fileinputimage1',
   maxCount: 1
-}, {
+},
+ {
   name: 'fileinputimage2',
   maxCount: 1
-}, {
+}, 
+{
   name: 'fileinputimage3',
   maxCount: 1
-}, {
+}, 
+{
   name: 'fileinputimage4',
   maxCount: 1
 }]) // product image upload
@@ -217,7 +236,6 @@ router.post('/addProduct', function (req, res, next) {
     }
   })
 })
-
 
 
 // get viewProducts

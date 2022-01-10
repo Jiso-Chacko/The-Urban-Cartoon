@@ -596,6 +596,9 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let addressType = await userHelper.getAllAddressType(req.session.user._id)
 
   req.session.totalAmount = price.totalSum
+  req.session.coupon = {}
+  req.session.coupon.Applied =  false
+  req.session.coupon.code = null
   console.log("This is /checkout get");
   console.log("Address  : " + address.address);
 
@@ -644,7 +647,7 @@ else{
 
 
 
-// ************** checkout post router ******************************
+// ************** checkout post router *********************
 router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   console.log("This is /checkout post");
   console.log(req.body);
@@ -658,9 +661,9 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   address.address.lastName = req.session.user.userLastName
   address.address.payment = req.body.payment
   console.log(address.address);
-  // console.log("###### Total amount before place ordre #######");
-  // console.log(req.session.totalAmount);
-  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount).then((orderId) => {
+  console.log("###### coupon applied before place order #######");
+  console.log(req.session.coupon);
+  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon).then((orderId) => {
 
     if (req.body.payment === 'cod') {
       res.send({
@@ -670,8 +673,7 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
       })
     }
      else {
-      // console.log("####### Total amount before razorpay ########");
-      // console.log(req.session.totalAmount);
+
       userProductHelper.generateRazorpay(orderId, req.session.totalAmount).then((response) => {
         res.send({
           status: false,
@@ -683,7 +685,77 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   })
 })
 
+// ************ paypal post route for billing details *********
+router.post('/pay', (req, res) => {
+  console.log("******** paypal *************");
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http://localhost:3000/success",
+        "cancel_url": "http://localhost:3000/cancel"
+    },
+    "transactions": [{
+        "item_list": {
+            "items": [{
+                "name": "Red Sox Hat",
+                "sku": "001",
+                "price": "25.00",
+                "currency": "USD",
+                "quantity": 1
+            }]
+        },
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        },
+        "description": "Hat for the best team ever"
+    }]
+};
 
+paypal.payment.create(create_payment_json, function (error, payment) {
+  if (error) {
+      throw error;
+  } else {
+      for(let i = 0;i < payment.links.length;i++){
+        if(payment.links[i].rel === 'approval_url'){
+          // res.redirect(payment.links[i].href);
+          res.json({forwardLink: payment.links[i].href});
+        }
+      }
+  }
+});
+
+});
+
+router.get('/success', (req, res) => {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+        console.log(JSON.stringify(payment));
+        res.send('Success');
+    }
+});
+});
+
+router.get('/cancel', (req, res) => res.send('Cancelled'));
 
 // ************* checkout with new address save post route ******
 router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) => {
@@ -780,7 +852,7 @@ router.post('/verifyPayment', verifyUserLogg, (req, res, next) => {
   console.log(req.session.user._id);
   console.log(req.body);
   userProductHelper.verifyPayment(req.body).then((result) => {
-    userProductHelper.changePaymentStatus(req.body['order[receipt]'], req.session.user._id).then((response) => {
+    userProductHelper.changePaymentStatus(req.body['order[receipt]'], req.session.user._id,req.session.coupon).then((response) => {
       console.log("Payment successful");
       res.send({
         status: true
@@ -1157,6 +1229,37 @@ router.get('/viewProducts', async (req, res, next) => {
     })
   }
 
+  if(req.query.value === 'featuredLaptop'){
+    let products = await userProductHelper.getAllFeaturedLaptop()
+    let value = "Featured"
+    res.render('users/productsView',{
+     layout : 'users/layout',
+     products : products,
+     'value': value
+    })
+  }
+
+  if(req.query.value === 'onSaleLaptop'){
+    let products = await userProductHelper.getAllOnsaleLaptop()
+    let value = "Featured"
+    res.render('users/productsView',{
+     layout : 'users/layout',
+     products : products,
+     'value': value
+    })
+  }
+
+  if(req.query.value === 'topRatedLaptop'){
+    let products = await userProductHelper.getAllTopRatedLaptop()
+    let value = "Featured"
+    res.render('users/productsView',{
+     layout : 'users/layout',
+     products : products,
+     'value': value
+    })
+  }
+
+
   if (req.query.value === 'topRated') {
     let products = await userProductHelper.getAllTopRatedSmartPhone()
     let value = 'Top rated'
@@ -1193,6 +1296,28 @@ router.get('/viewProducts', async (req, res, next) => {
     })
   }
 
+  if (req.query.category === 'laptop') {
+    let products = await userProductHelper.getLaptopProduct(req.query.value)
+    let value = req.query.value
+    console.log("******///")
+    console.log(products);
+    res.render('users/productsView', {
+      layout: 'users/layout',
+      products: products,
+      'value': value
+    })
+  }
+
+  if(req.query.value === 'offer'){
+    let products = await userProductHelper.getOfferSmartphones()
+    let value = req.query.category
+    res.render('users/productsView', {
+      layout: 'users/layout',
+      products: products,
+      'value': value
+    })
+  }
+
 })
 
 // ************ apply coupon ajax call **********
@@ -1200,24 +1325,49 @@ router.post('/applyCoupon', async (req, res, next) => {
   console.log("/applyCoupon");
   console.log(req.body);
   await userProductHelper.applyCoupon(req.body).then((response) => {
+    console.log("*** apply coupon ******");
     console.log(response);
-    if (response.invalidCode == false) {      
-      let oldAmount = req.session.totalAmount;
-      response.totalAmount = req.session.totalAmount
-      var discountPrice = response.totalAmount * (response.coupon.offer / 100)
-      let sumTotal = response.totalAmount - parseInt(discountPrice)
-      req.session.totalAmount = sumTotal
-      console.log("**********************");
-      console.log(req.session.totalAmount);
-      response.totalAmount = oldAmount
-      res.send(response)
-    } 
-    else {
-      response.totalAmount = req.session.totalAmount
+
+    if(response.userApplied == true){
+      console.log(">>>>>>>>>>");
       res.send(response)
     }
+    else{
+
+      if (response.invalidCode == false) {      
+        let oldAmount = req.session.totalAmount;
+        response.totalAmount = req.session.totalAmount
+        var discountPrice = response.totalAmount * (response.coupon.offer / 100)
+        let sumTotal = response.totalAmount - parseInt(discountPrice)
+        req.session.totalAmount = sumTotal
+        req.session.coupon.Applied = true
+        req.session.coupon.code = req.body.code
+        console.log("**********************");
+        console.log(req.session.totalAmount);
+        console.log(req.session.coupon);
+        response.totalAmount = oldAmount
+        res.send(response)
+      } 
+      else {  
+        response.totalAmount = req.session.totalAmount
+        res.send(response)
+      }
+  
+    }
+    
 
   })
+})
+
+// *********** apply coupon count *********
+router.get('/applyCouponCount',(req,res,next)  => {
+  console.log(req.query);
+  if(req.query.count == 1){
+    res.send('success')
+  }
+  else{
+    res.send('fail')
+  }
 })
 
 // *********** product search ***************

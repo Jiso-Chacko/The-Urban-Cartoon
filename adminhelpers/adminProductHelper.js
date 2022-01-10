@@ -190,6 +190,40 @@ module.exports = {
         })
     },
 
+    deleteBrand : (brand,category) => {
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.CATEGORY_COLLECTION).updateOne({
+                categoryName : category
+            },
+            {
+                $pull : {
+                    brand : brand
+                }
+            })
+
+            db.get().collection(collection.PRODUCT_COLLECTION).deleteOne({
+                category : category,
+                brand : brand
+            })
+            resolve()
+        })
+    },
+
+    editBrandName : (brand,oldBrand,category) => {
+        return new Promise((resolve,reject) => {
+            db.get().collection(collection.CATEGORY_COLLECTION).updateOne({
+                categoryName : category,
+                brand : oldBrand
+            },
+            {
+                $set : {
+                    'brand.$' : brand
+                }
+            })
+            resolve()
+        })
+    },
+
     getAllBrands : () => {
         return new Promise(async (resolve,reject) => {
 

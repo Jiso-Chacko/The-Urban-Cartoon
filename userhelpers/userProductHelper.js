@@ -149,6 +149,26 @@ module.exports = {
         })
     },
 
+    getLaptopProduct : (laptop) => {
+        return new Promise(async (resolve,reject) => {
+            let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                category : 'laptop',
+                brand : laptop
+            }).toArray()
+            resolve(products)
+        })
+    },
+
+    getOfferSmartphones : () => {
+        return new Promise(async (resolve,reject) => {
+            let products = await db.get().collection(collection.PRODUCT_COLLECTION).find({
+                category : 'smartphone',
+                offer : true
+            }).toArray()
+            resolve(products)
+        })
+    },
+
     getProduct: (proId) => {
         return new Promise(async (resolve, reject) => {
             let product = await db.get().collection(collection.PRODUCT_COLLECTION).find({
@@ -471,10 +491,11 @@ module.exports = {
         })
     },
 
-    placeOrder: (userId, order, products, totalAmount) => {
+    placeOrder: (userId, order, products, totalAmount,coupon) => {
         return new Promise((resolve, reject) => {
-            console.log("This is create order");
-            // console.log(userId);
+            console.log("This is coupon in place order");
+            console.log(coupon);
+            
             console.log("******* products in place order **********");
             console.log(products);
             
@@ -533,6 +554,18 @@ module.exports = {
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((result) => {
                 if(order.payment === 'cod'){
+                    if(coupon.Applied == true){
+                        db.get().collection(collection.USER_COLLECTION).updateOne({
+                            _id : ObjectID(userId)
+                        },
+                        {
+                            $set : {
+                                coupon : coupon.code,
+                                couponApplied : coupon.Applied 
+                            }
+                        })
+                    }
+
                     db.get().collection(collection.CART_COLLECTION).deleteMany({
                         user: ObjectID(userId)
                     })
@@ -581,8 +614,9 @@ module.exports = {
         })
     },
 
-    changePaymentStatus: (orerId,userId) => {
+    changePaymentStatus: (orerId,userId,coupon) => {
         console.log("This is change payment status");
+        console.log(coupon);
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).updateOne({
                 _id: ObjectID(orerId)
@@ -601,6 +635,18 @@ module.exports = {
                 db.get().collection(collection.CART_COLLECTION).deleteMany({
                     user: ObjectID(userId)
                 })
+
+                if(coupon.Applied == true){
+                    db.get().collection(collection.USER_COLLECTION).updateOne({
+                        _id : ObjectID(userId)
+                    },
+                    {
+                        $set : {
+                            coupon : coupon.code,
+                            couponApplied : coupon.Applied 
+                        }
+                    })
+                }
             })
             resolve()
         })
@@ -694,20 +740,30 @@ module.exports = {
 
         return new Promise(async (resolve,reject) => {
             let response = {}
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({
+                coupon : code.code
+            })
             let couponCode = await db.get().collection(collection.COUPON_COLLECTION).findOne({
                 code : code.code
             })
             console.log("/////");
             console.log(couponCode);
-            if(couponCode == null){
-                response.invalidCode = true
-                resolve(response)
-            }
-            else{
-                response.invalidCode = false
-                response.coupon = couponCode
-                resolve(response)
-            }
+            console.log(user);
+           if(user != null){
+               response.userApplied = true
+               resolve(response)
+           }
+           else{                         
+                if(couponCode == null){
+                    response.invalidCode = true
+                    resolve(response)
+                }
+                else{
+                    response.invalidCode = false
+                    response.coupon = couponCode
+                    resolve(response)
+                } 
+            } 
         })
     },
 
