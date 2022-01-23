@@ -73,7 +73,7 @@
                                     <!-- End Title -->
 
                                     <!-- Product Content -->
-                                    <table class="table" id="checkoutTable">
+                                    <table class="table" id="newUserCheckout">  
                                         <thead>
                                             <tr>
                                                 <th class="product-name">Product</th>
@@ -111,20 +111,26 @@
                                         <div id="basicsAccordion1">
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment"
+                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal2()"
                                                     id="flexRadioDefault1" value="cod">
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     Cash on delivery
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment"
+                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal2()"
                                                     id="flexRadioDefault2" value="razorpay">
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Razorpay
                                                 </label>
                                             </div>
 
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault3" value="paypal" onchange="billingPaypal2()">                                                    
+                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                    Paypal
+                                                </label>
+                                            </div>
 
 
 
@@ -137,7 +143,9 @@
                                     <button type="button" id="newForm_btn"
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                         order</button>
-
+                                    <button id="newFormPaypal_btn" type="button"
+                                    class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Paypal
+                                    order</button>
                                 </div>
                                 <!-- End Order Summary -->
                             </div>
@@ -327,15 +335,34 @@
                                     <!-- End Input -->
                                 </div>
 
-                            </div>
-                            <!-- End Billing Form -->
-                            <div>
 
                             </div>
+                            <!-- End Billing Form -->
+                            
+                               
                         </div>
                     </div>
                 </div>
             </form>
+
+                <div class="mb-3 mb-md-0 w-xl-40">
+                    <!-- Apply coupon Form -->
+                    <form class="js-focus-state">
+                        <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
+                        <div class="input-group mb-6">
+                            <input type="text" class="form-control" name="coupon" id="coupon3" placeholder="Coupon code"
+                                aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
+                            <div class="input-group-append">
+                                <input hidden value="{{productCount}}" id="productCount">
+                                <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
+                                    onclick="applyCouponNewUser()"><i class="fas fa-tags d-md-none"></i><span
+                                        class="d-none d-md-inline">Apply coupon</span></button>
+
+                            </div>
+                        </div>
+                    </form>
+                    <!-- End Apply coupon Form -->
+                </div>
         </div>
 
         {{else}}
@@ -356,8 +383,6 @@
         </div>
 
         <div class="container">
-
-
 
             <form id="MyForm">
                 <div class="row">
@@ -411,17 +436,26 @@
                                         <div id="basicsAccordion1">
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment"
-                                                    id="flexRadioDefault1" value="cod">
+                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal1()"
+                                                    id="flexRadioDefault1" value="cod" >
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     Cash on delivery
                                                 </label>
                                             </div>
+
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment"
-                                                    id="flexRadioDefault2" value="razorpay">
+                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal1()"
+                                                    id="flexRadioDefault2" value="razorpay" >
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Razorpay
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal1()"
+                                                    id="flexRadioDefault3" value="paypal" >
+                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                    paypal
                                                 </label>
                                             </div>
 
@@ -438,6 +472,9 @@
                                     </div>
                                     <button type="button" id="MyForm_btn"
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
+                                        order</button>
+                                        <button type="button" id="MyFormPaypal_btn"
+                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Paypal
                                         order</button>
 
 
@@ -641,8 +678,25 @@
                     </div>
                 </div>
             </form>
+            
+            <div class="mb-3 mb-md-0 w-xl-40" id="applyCouponNew" style="display: none;">
+                    <!-- Apply coupon Form -->
+                    <form class="js-focus-state">
+                        <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
+                        <div class="input-group mb-6">
+                            <input type="text" class="form-control" name="coupon" id="coupon2" placeholder="Coupon Code"
+                                aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
+                            <div class="input-group-append">
+                                <input hidden value="{{productCount}}" id="productCount">
+                                <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
+                                    onclick="applyCouponMyform()"><i class="fas fa-tags d-md-none"></i><span
+                                        class="d-none d-md-inline">Apply coupon</span></button>
 
-
+                            </div>
+                        </div>
+                    </form>
+                    <!-- End Apply coupon Form -->
+                </div>
 
 
 
@@ -671,7 +725,7 @@
                                         <!-- End Title -->
 
                                         <!-- Product Content -->
-                                        <table class="table" id="checkoutTable">
+                                        <table class="table" id="checkoutTable1">
                                             <thead>
                                                 <tr>
                                                     <th class="product-name">Product</th>
@@ -690,14 +744,7 @@
 
                                             </tbody>
                                             <tfoot>
-                                                {{!-- <tr>
-                                                <th>Subtotal</th>
-                                                <td>$1,785.00</td>
-                                            </tr>
-                                            <tr>
-                                                <th>Shipping</th>
-                                                <td>Flat rate $300.00</td>
-                                            </tr> --}}
+                                    
                                                 <tr>
                                                     <th>Total</th>
                                                     <td><strong>{{totalAmount}}</strong></td>
@@ -713,30 +760,27 @@
                                             <div id="basicsAccordion1">
 
                                                 <div class="form-check">
-                                                    <input type="radio" name="payment" id="flexRadioDefault1"
-                                                        value="cod" onchange="billingPaypal()" >
+                                                    <input type="radio" name="payment" onchange="billingPaypal()" id="flexRadioDefault1"
+                                                        value="cod"  >
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Cash on delivery
                                                     </label>
                                                 </div>
+
                                                 <div class="form-check">
-                                                    <input type="radio" name="payment" id="flexRadioDefault2"
-                                                        value="razorpay" onchange="billingPaypal()" >
+                                                    <input type="radio" name="payment" onchange="billingPaypal()" id="flexRadioDefault2"
+                                                        value="razorpay" >
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Razorpay
                                                     </label>
                                                 </div>
 
-                                                 <div class="form-check">
-                                                    <input type="radio" name="payment" id="flexRadioDefault2"
-                                                        value="paypal" onchange="billingPaypal()" id="paypal">
-                                                    <label class="form-check-label" for="flexRadioDefault2">
-                                                        Paypal
-                                                    </label>
-                                                </div>
-
-                                                
-                                                
+                                            <div class="form-check">
+                                                <input  type="radio" name="payment" id="flexRadioDefault2" value="paypal" onchange="billingPaypal()">                                                    
+                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                    Paypal
+                                                </label>
+                                            </div>
 
                                             </div>
                                             <!-- End Basics Accordion -->
@@ -746,11 +790,12 @@
                                             class="form-group d-flex align-items-center justify-content-between px-3 mb-5">
 
                                         </div>
+
                                         <button id="billingDetails_btn" type="button"
                                             class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                             order</button>
                                             <button id="billingPaypal_btn" type="button"
-                                            class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Paypal
+                                            class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Place
                                             order</button>
                                     </div>
                                     <!-- End Order Summary -->
@@ -812,12 +857,12 @@
                     </div>
                 </form>
 
-                <div class="mb-3 mb-md-0 w-xl-40">
+                <div class="mb-3 mb-md-0 w-xl-40" id="applyCoupon">
                     <!-- Apply coupon Form -->
                     <form class="js-focus-state">
                         <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
                         <div class="input-group mb-6">
-                            <input type="text" class="form-control" name="coupon" id="coupon" placeholder="Coupon code"
+                            <input type="text" class="form-control" name="coupon" id="coupon1" placeholder="Coupon code"
                                 aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
                             <div class="input-group-append">
                                 <input hidden value="{{productCount}}" id="productCount">
@@ -893,12 +938,206 @@
 {{/if}}
 
 
+
+ {{!-- // ******** apply coupon for user with existing address ************ --}}
+<script>
+     var successCount = 0;
+
+    function applyCoupon() {
+       
+        let code = document.getElementById('coupon1').value
+        let count = parseInt(document.getElementById('productCount').value)
+        console.log("apply coupon "+ code)
+        $.ajax({
+            url: '/applyCoupon',
+            method: 'post',
+            data: {
+                code: code
+            },
+            success: (response) => {
+                console.log("*** response ***")
+                console.log(response)
+                         
+                    if (response.invalidCode == true) {
+                    Swal.fire({
+                        title: 'Please enter a valid coupon code!',
+                        icon: 'info',
+                        confirmButtonColor: '#42ba96',
+                        confirmButtonText: 'Ok',
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                        allowOutsideClick: false,
+                    })
+                } 
+                else if(response.userApplied == true){
+                    const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'You have already applied this coupon!'
+                        })
+                }
+                else {
+                    successCount++
+                    console.log(successCount)
+
+                    if (successCount == 1) {
+                        var discountPrice = response.totalAmount * (response.coupon.offer / 100)
+
+                        var discount = parseInt(discountPrice)
+                        let sumTotal = response.totalAmount - parseInt(discountPrice)
+                        console.log(sumTotal)
+                        var table = document.getElementById("checkoutTable1");
+                        var row = table.insertRow(count + 2);
+                        console.log(row)
+                        var row1 = table.insertRow(count + 3);
+                        console.log(row1)
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+
+                        var cell3 = row1.insertCell(0);
+                        var cell4 = row1.insertCell(1);
+
+                        cell1.innerHTML = "<strong>" + `Coupon applied (-${response.coupon.offer}%)` +
+                            "</strong> ";
+                        cell2.innerHTML = `- ${discount}`;
+
+                        cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
+                        cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
+                    }                     
+                    else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Coupon exist!'
+                        })
+                    }
+                }
+                
+            }
+        })
+    }
+</script>
+
+{{!-- // ******** apply coupon for new user ************** --}}
+
+<script>
+     var successCount = 0;
+
+    function applyCouponNewUser() {
+        
+        let code = document.getElementById('coupon3').value
+        let count = parseInt(document.getElementById('productCount').value)
+        console.log(code + "code")
+        $.ajax({
+            url: '/applyCoupon',
+            method: 'post',
+            data: {
+                code: code
+            },
+            success: (response) => {
+                console.log("*** response ***")
+                console.log(response)
+                         
+                    if (response.invalidCode == true) {
+                    Swal.fire({
+                        title: 'Please enter a valid coupon code!',
+                        icon: 'info',
+                        confirmButtonColor: '#42ba96',
+                        confirmButtonText: 'Ok',
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                        allowOutsideClick: false,
+                    })
+                } 
+                else if(response.userApplied == true){
+                    const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'You have already applied this coupon!'
+                        })
+                }
+                else {
+                    successCount++
+                    console.log(successCount)
+
+                    if (successCount == 1) {
+                        var discountPrice = response.totalAmount * (response.coupon.offer / 100)
+
+                        var discount = parseInt(discountPrice)
+                        let sumTotal = response.totalAmount - parseInt(discountPrice)
+                        console.log(sumTotal)
+                        var table = document.getElementById("newUserCheckout");
+                        var row = table.insertRow(count + 2);
+                        console.log(row)
+                        var row1 = table.insertRow(count + 3);
+                        console.log(row1)
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+
+                        var cell3 = row1.insertCell(0);
+                        var cell4 = row1.insertCell(1);
+
+                        cell1.innerHTML = "<strong>" + `Coupon applied (-${response.coupon.offer}%)` +
+                            "</strong> ";
+                        cell2.innerHTML = `- ${discount}`;
+
+                        cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
+                        cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
+                    }                     
+                    else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Coupon exist!'
+                        })
+                    }
+                }
+                
+            }
+        })
+    }
+</script>
+
+{{!-- // ********* paypal checkout for existing user *************** --}}
+
 <script>
 
     function billingPaypal(){
 
         let payment = document.querySelector('input[name=payment]:checked').value
-        console.log(payment)
+
         if(payment === 'paypal'){
 
         $('#billingDetails_btn').hide()
@@ -910,24 +1149,370 @@
         }        
     }
     $('#billingPaypal_btn').click((e) => {
-
+       if( !document.querySelector('input[name = address]:checked')){
+           Swal.fire({
+                title: 'Please select an address!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+       }
+       else{
+        let type = document.querySelector('input[name=address]:checked').value
         $.ajax({
             url : '/pay',
             method : 'post',
+            data : {
+                address : type,
+                payment : 'paypal'
+            },
             success : (res) => {    
                 window.location = res.forwardLink            
             }
         })
+       }
     })
 
 </script>
+
+
+
+{{!-- // ************* paypal checkout for new user **************** --}}
+
+<script>
+
+    function billingPaypal2(){
+
+        let payment = document.querySelector('input[name=payment]:checked').value
+
+        if(payment === 'paypal'){
+
+        $('#newForm_btn').hide()
+        $('#newFormPaypal_btn').show()
+        }
+        else{
+        $('#newForm_btn').show()
+        $('#newFormPaypal_btn').hide();
+        }        
+    }
+
+    $('#newFormPaypal_btn').click((e) => {
+       
+        console.log("clicked")
+        let fname = document.getElementById('firstName').value
+        let lname = document.getElementById('lastName').value
+        let address = document.getElementById('address').value
+        let state = document.getElementById('state').value
+        let district = document.getElementById('district').value
+        let city = document.getElementById('city').value
+        let postcode = document.getElementById('postcode').value
+        let email = document.getElementById('email').value
+        let phone = document.getElementById('phone').value
+        var regx =
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!document.querySelector('input[name = payment]:checked')) {
+            console.log('This is if case')
+            e.preventDefault()
+
+            Swal.fire({
+                title: 'Please enter a payment method!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+        } else if (fname.trim() == "" || fname < 2) {
+            e.preventDefault()
+            document.getElementById('firstName').focus();
+            document.getElementById('fNameErr').innerHTML = "Enter valid first name"
+        } else if (lname.trim() == "" || lname < 2) {
+            e.preventDefault()
+            document.getElementById('lastName').focus();
+            document.getElementById('lNameErr').innerHTML = "Enter valid last name"
+        } else if (address.trim() == "" || address < 2) {
+            e.preventDefault()
+            document.getElementById('address').focus();
+            document.getElementById('addressErr').innerHTML = "Enter valid address"
+        } else if (state.trim() == "" || state < 2) {
+            e.preventDefault()
+            document.getElementById('state').focus();
+            document.getElementById('stateErr').innerHTML = "Enter valid state"
+        } else if (district.trim() == "" || district < 2) {
+            e.preventDefault()
+            document.getElementById('district').focus();
+            document.getElementById('districtErr').innerHTML = "Enter valid district"
+        } else if (city.trim() == "" || city < 2) {
+            e.preventDefault()
+            document.getElementById('city').focus();
+            document.getElementById('cityErr').innerHTML = "Enter valid city"
+        } else if (postcode.trim() == "" || postcode < 2 || isNaN(postcode)) {
+            e.preventDefault()
+            document.getElementById('postcode').focus();
+            document.getElementById('postcodeErr').innerHTML = "Enter valid postcode"
+        } else if (email.trim() == "" || email < 2 || !email.match(regx)) {
+            e.preventDefault()
+            document.getElementById('email').focus();
+            document.getElementById('emailErr').innerHTML = "Enter valid Email"
+        } else if (phone.trim() == "" || phone < 2 || isNaN(phone)) {
+            e.preventDefault()
+            document.getElementById('phone').focus();
+            document.getElementById('phoneErr').innerHTML = "Enter valid phone number"
+        }
+       else{
+        console.log("New user paypal")
+        $.ajax({
+            url : '/payNewUser',
+            method : 'post',
+            data : $("#newForm").serialize(),
+            success : (res) => {    
+                window.location = res.forwardLink            
+            }
+        })
+       }
+    })
+
+</script>
+
+ {{!-- // ******** existing user apply coupon with new address ***********//  --}}
+
+<script>
+     var successCountNew = 0;
+
+    function applyCouponMyform() {
+        
+        let code = document.getElementById('coupon2').value
+        let count = parseInt(document.getElementById('productCount').value)
+        console.log("This is code " +code)
+        $.ajax({
+            url: '/applyCoupon',
+            method: 'post',
+            data: {
+                code: code
+            },
+            success: (response) => {
+                console.log("*** response ***")
+                console.log(response)
+                         
+                    if (response.invalidCode == true) {
+                    Swal.fire({
+                        title: 'Please enter a valid coupon code!',
+                        icon: 'info',
+                        confirmButtonColor: '#42ba96',
+                        confirmButtonText: 'Ok',
+                        closeOnClickOutside: false,
+                        closeOnEsc: false,
+                        allowOutsideClick: false,
+                    })
+                } 
+                else if(response.userApplied == true){
+                    const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'You have already applied this coupon!'
+                        })
+                }
+                else {
+                    successCountNew++
+                    console.log(successCountNew)
+
+                    if (successCountNew == 1) {
+                        var discountPrice = response.totalAmount * (response.coupon.offer / 100)
+
+                        var discount = parseInt(discountPrice)
+                        let sumTotal = response.totalAmount - parseInt(discountPrice)
+                        console.log(sumTotal)
+                        var table = document.getElementById("checkoutTable");
+                        var row = table.insertRow(count + 2);
+                        console.log(row)
+                        var row1 = table.insertRow(count + 3);
+                        console.log(row1)
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+
+                        var cell3 = row1.insertCell(0);
+                        var cell4 = row1.insertCell(1);
+
+                        cell1.innerHTML = "<strong>" + `Coupon applied (-${response.coupon.offer}%)` +
+                            "</strong> ";
+                        cell2.innerHTML = `- ${discount}`;
+
+                        cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
+                        cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
+                    }                     
+                    else {
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top',
+                            showConfirmButton: false,
+                            timer: 2100,
+                            timerProgressBar: false,
+                           
+                        })
+
+                        Toast.fire({
+                            icon: 'error',
+                            title: 'Coupon exist!'
+                        })
+                    }
+                }
+                
+            }
+        })
+    }
+</script>
+
+ {{!-- // ********** paypal checkout for existing users with new address **********// --}}
+
+
+ <script>
+     function billingPaypal1(){
+         let payment = document.querySelector('input[name=payment]:checked').value
+
+        if(payment === 'paypal'){
+
+        $('#MyForm_btn').hide()
+        $('#MyFormPaypal_btn').show()
+        }
+        else{
+        $('#MyForm_btn').show()
+        $('#MyFormPaypal_btn').hide();
+        }
+     }
+
+     $('#MyFormPaypal_btn').click((e) => {
+       
+        console.log("clicked")
+        let fname = document.getElementById('firstName').value
+        let lname = document.getElementById('lastName').value
+        let address = document.getElementById('address').value
+        let state = document.getElementById('state').value
+        let district = document.getElementById('district').value
+        let city = document.getElementById('city').value
+        let postcode = document.getElementById('postcode').value
+        let email = document.getElementById('email').value
+        let phone = document.getElementById('phone').value
+        var regx =
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        if (!document.querySelector('input[name = payment]:checked')) {
+            console.log('This is if case')
+            e.preventDefault()
+
+            Swal.fire({
+                title: 'Please enter a payment method!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+        } else if (fname.trim() == "" || fname < 2) {
+            e.preventDefault()
+            document.getElementById('firstName').focus();
+            document.getElementById('fNameErr').innerHTML = "Enter valid first name"
+        } else if (lname.trim() == "" || lname < 2) {
+            e.preventDefault()
+            document.getElementById('lastName').focus();
+            document.getElementById('lNameErr').innerHTML = "Enter valid last name"
+        } else if (address.trim() == "" || address < 2) {
+            e.preventDefault()
+            document.getElementById('address').focus();
+            document.getElementById('addressErr').innerHTML = "Enter valid address"
+        } else if (state.trim() == "" || state < 2) {
+            e.preventDefault()
+            document.getElementById('state').focus();
+            document.getElementById('stateErr').innerHTML = "Enter valid state"
+        } else if (district.trim() == "" || district < 2) {
+            e.preventDefault()
+            document.getElementById('district').focus();
+            document.getElementById('districtErr').innerHTML = "Enter valid district"
+        } else if (city.trim() == "" || city < 2) {
+            e.preventDefault()
+            document.getElementById('city').focus();
+            document.getElementById('cityErr').innerHTML = "Enter valid city"
+        } else if (postcode.trim() == "" || postcode < 2 || isNaN(postcode)) {
+            e.preventDefault()
+            document.getElementById('postcode').focus();
+            document.getElementById('postcodeErr').innerHTML = "Enter valid postcode"
+        } else if (email.trim() == "" || email < 2 || !email.match(regx)) {
+            e.preventDefault()
+            document.getElementById('email').focus();
+            document.getElementById('emailErr').innerHTML = "Enter valid Email"
+        } else if (phone.trim() == "" || phone < 2 || isNaN(phone)) {
+            e.preventDefault()
+            document.getElementById('phone').focus();
+            document.getElementById('phoneErr').innerHTML = "Enter valid phone number"
+        }
+        else {
+
+            Swal.fire({
+                title: 'Do you want to save the changes?',
+                showDenyButton: true,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                denyButtonText: `Don't save`,
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+
+                    let payment = document.querySelector('input[name=payment]:checked').value
+                    console.log(payment)
+                    console.log('This is confirmed')
+                    $.ajax({
+                        url : '/payNewUser',
+                        method : 'post',
+                        data : $("#MyForm").serialize(),
+                        success : (res) => {    
+                            window.location = res.forwardLink            
+                        }
+                    })
+                } else if (result.isDenied) {
+                    console.log('This is denied')
+                    $.ajax({
+                        url : '/payDontSave',
+                        method : 'post',
+                        data : $("#MyForm").serialize(),
+                        success : (res) => {    
+                            window.location = res.forwardLink            
+                        }
+                    })
+                }
+            })
+        }
+    })
+
+ </script>
 
 <script>
     $(document).ready(function () {
         $('#Mybtn').click(function () {
             $('#MyForm').toggle(500);
             $('#billingDetails').toggle(500);
-
+            $('#applyCoupon').toggle(500)
+            $('#applyCouponNew').toggle(500)
+            
+            $.ajax({
+                url : '/clearCoupon',
+                method : 'get',
+                success : () => {
+                    
+                }
+            })
         });
     });
 
@@ -1215,11 +1800,11 @@
                         }
                     })
                 } else if (result.isDenied) {
-                    console.log('This is is denied')
+                    console.log('This is denied')
                     $.ajax({
                         url: '/checkoutNewAddress',
                         method: 'post',
-                        data: $("#MyForm").serialize(),
+                        data: $("#newForm").serialize(),
                         success: (response) => {
                             console.log(response)
                             if (response.status == true) {
@@ -1305,93 +1890,5 @@
         })
     }
 
-    var successCount = 0;
-
-    function applyCoupon() {
-
-        let code = document.getElementById('coupon').value
-        let count = parseInt(document.getElementById('productCount').value)
-        $.ajax({
-            url: '/applyCoupon',
-            method: 'post',
-            data: {
-                code: code
-            },
-            success: (response) => {
-                console.log(response)
-                         
-                    if (response.invalidCode == true) {
-                    Swal.fire({
-                        title: 'Please enter a valid coupon code!',
-                        icon: 'info',
-                        confirmButtonColor: '#42ba96',
-                        confirmButtonText: 'Ok',
-                        closeOnClickOutside: false,
-                        closeOnEsc: false,
-                        allowOutsideClick: false,
-                    })
-                } 
-                else if(response.userApplied == true){
-                    const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top',
-                            showConfirmButton: false,
-                            timer: 2100,
-                            timerProgressBar: false,
-                           
-                        })
-
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'You have already applied this coupon!'
-                        })
-                }
-                else {
-                    successCount++
-                    console.log(successCount)
-
-                    if (successCount == 1) {
-                        var discountPrice = response.totalAmount * (response.coupon.offer / 100)
-
-                        var discount = parseInt(discountPrice)
-                        let sumTotal = response.totalAmount - parseInt(discountPrice)
-                        console.log(sumTotal)
-                        var table = document.getElementById("checkoutTable");
-                        var row = table.insertRow(count + 2);
-                        var row1 = table.insertRow(count + 3);
-
-                        var cell1 = row.insertCell(0);
-                        var cell2 = row.insertCell(1);
-
-                        var cell3 = row1.insertCell(0);
-                        var cell4 = row1.insertCell(1);
-
-                        cell1.innerHTML = "<strong>" + `Coupon applied (-${response.coupon.offer}%)` +
-                            "</strong> ";
-                        cell2.innerHTML = `- ${discount}`;
-
-                        cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
-                        cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
-                    }                     
-                    else {
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top',
-                            showConfirmButton: false,
-                            timer: 2100,
-                            timerProgressBar: false,
-                           
-                        })
-
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'Coupon exist!'
-                        })
-                    }
-
-                }
-                
-            }
-        })
-    }
+   
 </script>

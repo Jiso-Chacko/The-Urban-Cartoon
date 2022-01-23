@@ -29,15 +29,13 @@
     {{#each products}}
 
     {{#if this.placed}}
-    <div class="card mt-6 ml-10" style="width: 75rem; height: 22rem;">
+    <div class="card mt-6 ml-10" style="width: 75rem; height: 25rem;">
         <div class="card-header d-flex justify-content-between">
             <div>
                 Order placed<br>{{../this.date}}
             </div>
 
-            <div>
-                Total<br>Rs.{{../this.totalAmount.totalSum}}
-            </div>
+            
         </div>
 
         <div class="d-flex justify-content-between">
@@ -46,7 +44,7 @@
                 <div>
                     <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
                         class="img-fluid max-width-100 p-1">
-                    <span>Rs.{{#each this.productDetails}}{{this.price}}{{/each}} </span>
+                    <span>Payable, Rs.{{#each this.productDetails}}{{this.price}}{{/each}} </span>
                 </div>
                 <div>
                     <p class="card-text text-dark">Order will be shipped in the next working day.</p>
@@ -78,9 +76,9 @@
                 Order placed<br>{{../this.date}}
             </div>
 
-            <div>
+            {{!-- <div>
                 Total<br>Rs.{{../this.totalAmount.totalSum}}
-            </div>
+            </div> --}}
         </div>
 
         <div class="d-flex justify-content-between">
@@ -89,7 +87,7 @@
                 <div>
                     <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
                         class="img-fluid max-width-100 p-1">
-                    <span>Rs.{{#each this.productDetails}}{{this.price}}{{/each}}</span>
+                    <span>Payable, Rs.{{#each this.productDetails}}{{this.price}}{{/each}}</span>
                 </div>
                 <div>
                     <p class="card-text text-dark">Order will be delivered in 7 working days.</p>
@@ -119,9 +117,9 @@
                 Order placed<br>{{../this.date}}
             </div>
 
-            <div>
+            {{!-- <div>
                 Total<br>Rs.{{../this.totalAmount.totalSum}}
-            </div>
+            </div> --}}
 
         </div>
 
@@ -131,7 +129,7 @@
                 <div>
                     <img src="/productimages/{{#each this.productDetails}}{{this.imageName.[0]}}{{/each}}"
                         class="img-fluid max-width-100 p-1">
-                    <span>{{this.price}} </span>
+                    <span> Rs.{{#each this.productDetails}}{{this.price}}{{/each}}</span>
                 </div>
                 <div>
                     <p class="card-text text-dark">Order has been successfully delivered.</p>

@@ -22,6 +22,7 @@
                             <th>Product</th>
                             <th>Payment method</th>
                             <th>Amount received</th>
+
                             <th>Status</th>
                             <th>Change Status</th>
                             <th>Cancel order</th>
@@ -39,7 +40,8 @@
 
                             <td>{{../this.paymentMethod}}</td>
                             <td>₹{{../this.totalAmount}}</td>
-                            {{#if this.placed}}
+
+                            {{!-- {{#if this.placed}}
                             <td style="text-transform: uppercase;" class="badge badge-primary ">{{this.status}}</td>
                             {{/if}}
                             {{#if this.shipped}}
@@ -51,7 +53,26 @@
                             {{#if this.cancelled}}
                             <td style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</td>
                             {{/if}}
+                            {{#if this.pending}}
+                            <td style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</td>
+                            {{/if}} --}}
 
+                            <td>
+                            {{#if this.placed}}
+                            <p style="text-transform: uppercase;" class="badge badge-primary ">{{this.status}}</p>
+                            {{/if}}
+                            {{#if this.shipped}}
+                            <p style="text-transform: uppercase;" class="badge badge-info">{{this.status}}</p>
+                            {{/if}}
+                            {{#if this.delivered}}
+                            <p style="text-transform: uppercase;" class="badge badge-success">{{this.status}}</p>
+                            {{/if}}
+                            {{#if this.cancelled}}
+                            <p style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</p>
+                            {{/if}}
+ 
+                            </td>
+                            
                             <td>
                                 {{#if this.placed}}
                                 <select onmousedown="" 

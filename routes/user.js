@@ -10,7 +10,7 @@ const paypal = require('paypal-rest-sdk');
 
 var serviceId = "VA6a2e7c39a684110d315bb5f33dbaa6ea";
 var accountSid = "AC32945c998d7d8a3d3f6e401b8947654b";
-var authToken = "e751e3bec1f169a08d5ca694846b93d8";
+var authToken = "d21b8c40205375548a17b88a6dced591";
 var session = require('express-session')
 var Swal = require('sweetalert2')
 var hb = require('express-handlebars').create()
@@ -58,6 +58,7 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
 
   userHelper.doLogin(req.body).then((response) => {
+    console.log("This is response");
     console.log(response);
     if (response.userExist) {
       req.session.user = response.user
@@ -65,7 +66,7 @@ router.post('/login', (req, res, next) => {
       res.redirect('/')
     } else {
       req.session.userLoggedIn = false,
-        req.session.userLoggedInErr = true
+      req.session.userLoggedInErr = true
       res.redirect('/login')
     }
   }).catch((err) => {
@@ -91,18 +92,18 @@ router.post('/otplogin', (req, res, next) => {
     console.log("************");
     console.log(result);
     console.log(req.body.phone);
-    console.log(result.phone.userPhone);
-    phoneNumber = parseInt(result.phone.userPhone)
-    req.session.loginData = result
-    req.session.user = result
-    req.session.userLoggedIn = true
-    let cartCount = await userProductHelper.getCartCount(result.phone._id)
+    console.log(result.user.userPhone);
+    phoneNumber = parseInt(result.user.userPhone)
+    req.session.loginData = result.user
+    req.session.user = result.user
+    req.session.userLoggedIn = result.userExist
+    let cartCount = await userProductHelper.getCartCount(result.user._id)
     req.session.cartCount = cartCount
 
-    if (result.status == true) {
+    if (result.userExist == true) {
       req.session.logInPhnErr = false
       client.verify.services(serviceId).verifications.create({
-        to: `+91${result.phone.userPhone}`,
+        to: `+91${result.user.userPhone}`,
         channel: "sms"
       }).then((result) => {
         res.redirect('/otp4Login')
@@ -336,7 +337,7 @@ function verifyUser(req, res, next) {
 }
 
 // This is view product example
-router.get('/viewProduct', getCartCount, async (req, res, next) => {
+router.get('/viewProduct',verifyUserLogg, getCartCount, async (req, res, next) => {
   let proId = req.query.id
 
   if (req.session.user) {
@@ -351,9 +352,20 @@ router.get('/viewProduct', getCartCount, async (req, res, next) => {
       userId = null
   }
 
+  let products = await userProductHelper.getAllProductsForViewProduct()
   let product = await userProductHelper.getProduct(proId)
-  console.log("******");
+  if(product[0].category == "smartphone"){
+    req.session.smartPhone = true
+    req.session.laptop = false
+
+  }
+  else{
+    req.session.smartPhone = false
+    req.session.laptop = true 
+  }
   console.log("This is viewproduct");
+  console.log(req.session.smartPhone);
+  console.log(req.session.laptop);
   console.log(product);
   res.render('users/viewProduct', {
     layout: 'users/layout',
@@ -361,6 +373,9 @@ router.get('/viewProduct', getCartCount, async (req, res, next) => {
     "loggIn": userLoggedIn,
     user: user,
     userCartCount: userCartCount,
+    products : products,
+    smartPhone : req.session.smartPhone,
+    laptop : req.session.laptop 
   })
 })
 
@@ -686,8 +701,11 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
 })
 
 // ************ paypal post route for billing details *********
-router.post('/pay', (req, res) => {
+router.post('/pay',verifyUserLogg, (req, res) => {
   console.log("******** paypal *************");
+  console.log(req.body);
+  req.session.address = req.body.address
+  req.session.payment = req.body.payment
   const create_payment_json = {
     "intent": "sale",
     "payer": {
@@ -730,9 +748,19 @@ paypal.payment.create(create_payment_json, function (error, payment) {
 
 });
 
-router.get('/success', (req, res) => {
+router.get('/success',verifyUserLogg, async (req, res) => {
   const payerId = req.query.PayerID;
   const paymentId = req.query.paymentId;
+  let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+  let address = await userHelper.getAddress(req.session.user._id, req.session.address)
+  address.address.firstName = req.session.user.userFirstName
+  address.address.lastName = req.session.user.userLastName
+  address.address.payment = req.session.payment
+
+  console.log(cartProducts);
+  console.log(req.session.totalAmount);
+  console.log(req.session.coupon);
+  console.log(address.address);
 
   const execute_payment_json = {
     "payer_id": payerId,
@@ -744,18 +772,24 @@ router.get('/success', (req, res) => {
     }]
   };
 
-  paypal.payment.execute(paymentId, execute_payment_json, function (error, payment) {
+  paypal.payment.execute(paymentId, execute_payment_json,async function (error, payment) {
     if (error) {
         console.log(error.response);
         throw error;
     } else {
+      
+  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon)
         console.log(JSON.stringify(payment));
-        res.send('Success');
+        // res.send('Success');
+        res.redirect('orderSuccess')
     }
 });
 });
 
-router.get('/cancel', (req, res) => res.send('Cancelled'));
+router.get('/cancel', (req, res) =>{
+// res.send('Cancelled'));
+res.redirect('/checkout')
+})
 
 // ************* checkout with new address save post route ******
 router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) => {
@@ -780,7 +814,8 @@ router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) =>
         status: true,
         response: null
       })
-    } else {
+    }
+     else {
       userProductHelper.generateRazorpay(orderId, req.session.totalAmount).then((response) => {
         res.send({
           status: false,
@@ -792,12 +827,13 @@ router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) =>
 })
 
 
-// ************* checkout with new address dont save post route ******
+// ************* checkout with new address dont save post route ****************
 router.post('/checkoutNewAddress', verifyUserLogg, async (req, res, next) => {
 
   console.log("/checkoutNewAddress");
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let totalAmount = await userProductHelper.getTotalAmount(req.session.user._id)
+  console.log("***** req.body  ******");
   console.log(req.body);
   let address = {}
   address.addressType = req.body.addressType
@@ -826,6 +862,202 @@ router.post('/checkoutNewAddress', verifyUserLogg, async (req, res, next) => {
   })
 
 })
+
+// ************** new user paypal route  **************
+router.post('/payNewUser',(req,res,next)=>{
+  console.log("******** paypal *************");
+  console.log(req.body);
+  req.session.address = req.body
+  req.session.payment = req.body.payment
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http://localhost:3000/success1",
+        "cancel_url": "http://localhost:3000/cancel1"
+    },
+    "transactions": [{
+        "item_list": {
+            "items": [{
+                "name": "Red Sox Hat",
+                "sku": "001",
+                "price": "25.00",
+                "currency": "USD",
+                "quantity": 1
+            }]
+        },
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        },
+        "description": "Hat for the best team ever"
+    }]
+};
+
+paypal.payment.create(create_payment_json, function (error, payment) {
+  if (error) {
+      throw error;
+  } else {
+      for(let i = 0;i < payment.links.length;i++){
+        if(payment.links[i].rel === 'approval_url'){
+          // res.redirect(payment.links[i].href);
+          res.json({forwardLink: payment.links[i].href});
+        }
+      }
+  }
+});
+})
+
+router.get('/success1',verifyUserLogg, async (req, res) => {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+  let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+  
+  console.log(cartProducts);
+  console.log(req.session.totalAmount);
+  console.log(req.session.coupon);
+  console.log(req.session.address);
+
+  let address = {}
+  address.addressType = req.session.address.addressType
+  address.address =req.session.address.address
+  address.city = req.session.address.city
+  address.district = req.session.address.district
+  address.postcode = req.session.address.postcode
+  address.state = req.session.address.state
+  address.email = req.session.address.email
+  address.phone = req.session.address.phone
+  await userHelper.addAddress(address, req.session.user._id, req.session.address.addressType)
+
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json,async function (error, payment) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+      
+  await userProductHelper.placeOrder(req.session.user._id, req.session.address, cartProducts, req.session.totalAmount,req.session.coupon)
+        console.log(JSON.stringify(payment));
+        // res.send('Success');
+        res.redirect('orderSuccess')
+    }
+});
+});
+
+router.get('/cancel1', (req, res) =>{
+  // res.send('Cancelled'));
+  res.redirect('/checkout')
+  })
+
+// ************* paypal address dont save route ************
+
+router.post('/payDontSave',(req,res,next)=>{
+  console.log("******** paypal *************");
+  console.log(req.body);
+  req.session.address = req.body
+  req.session.payment = req.body.payment
+  const create_payment_json = {
+    "intent": "sale",
+    "payer": {
+        "payment_method": "paypal"
+    },
+    "redirect_urls": {
+        "return_url": "http://localhost:3000/success2",
+        "cancel_url": "http://localhost:3000/cancel2"
+    },
+    "transactions": [{
+        "item_list": {
+            "items": [{
+                "name": "Red Sox Hat",
+                "sku": "001",
+                "price": "25.00",
+                "currency": "USD",
+                "quantity": 1
+            }]
+        },
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        },
+        "description": "Hat for the best team ever"
+    }]
+};
+
+paypal.payment.create(create_payment_json, function (error, payment) {
+  if (error) {
+      throw error;
+  } else {
+      for(let i = 0;i < payment.links.length;i++){
+        if(payment.links[i].rel === 'approval_url'){
+          // res.redirect(payment.links[i].href);
+          res.json({forwardLink: payment.links[i].href});
+        }
+      }
+  }
+});
+})
+
+router.get('/success2',verifyUserLogg, async (req, res) => {
+  const payerId = req.query.PayerID;
+  const paymentId = req.query.paymentId;
+  let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+  
+  console.log(cartProducts);
+  console.log(req.session.totalAmount);
+  console.log(req.session.coupon);
+  console.log(req.session.address);
+
+  let address = {}
+  address.addressType = req.session.address.addressType
+  address.address =req.session.address.address
+  address.city = req.session.address.city
+  address.district = req.session.address.district
+  address.postcode = req.session.address.postcode
+  address.state = req.session.address.state
+  address.email = req.session.address.email
+  address.phone = req.session.address.phone
+
+  const execute_payment_json = {
+    "payer_id": payerId,
+    "transactions": [{
+        "amount": {
+            "currency": "USD",
+            "total": "25.00"
+        }
+    }]
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json,async function (error, payment) {
+    if (error) {
+        console.log(error.response);
+        throw error;
+    } else {
+      
+  await userProductHelper.placeOrder(req.session.user._id, req.session.address, cartProducts, req.session.totalAmount,req.session.coupon)
+        console.log(JSON.stringify(payment));
+        // res.send('Success');
+        res.redirect('orderSuccess')
+    }
+});
+});
+
+
+router.get('/cancel2', (req, res) =>{
+  // res.send('Cancelled'));
+  res.redirect('/checkout')
+  })
+
 
 // ********************* order success get page ***********************
 router.get('/orderSuccess', async (req, res, next) => {
@@ -1357,6 +1589,19 @@ router.post('/applyCoupon', async (req, res, next) => {
     
 
   })
+})
+
+
+// ********* clear coupon ********
+router.get('/clearCoupon',verifyUserLogg,async (req,res,next) => {
+  let price = await userProductHelper.getTotalAmount(req.session.user._id)
+  req.session.totalAmount = price.totalSum
+  req.session.coupon.Applied =  false
+  req.session.coupon.code = null
+  console.log("/clearCoupon");
+  console.log( req.session.coupon);
+  console.log(req.session.totalAmount);
+  res.send('success')
 })
 
 // *********** apply coupon count *********

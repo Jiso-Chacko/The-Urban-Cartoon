@@ -219,7 +219,8 @@ router.post('/addProduct', function (req, res, next) {
   imageUpload(req, res, (err) => {
     if (err) {
       console.log(err);
-    } else {
+    }
+     else {
       // console.log("This is addProduct"); 
       // console.log(req.body);
       console.log(res.req.body);

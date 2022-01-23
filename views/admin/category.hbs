@@ -19,7 +19,7 @@
                         <button class="btn btn-light" type="reset" value="Reset">Cancel</button>
                     </div>
 
-                    <h3 class="mt-5">View existing Category</h3>
+                    <h3 class="mt-5">Existing Category</h3>
                 </form>
 
         
@@ -34,10 +34,16 @@
                     <tbody>
                         <tr>
                             <td>{{this.categoryName}}</td>
+
+                            <td><a class="btn btn-success btn-sm" onclick="">Edit</a></td>
+                            
+
+                            <td><button class="btn btn-danger btn-sm"
+                                    onclick="">Delete</button>
+                            </td>
                         </tr>
                     </tbody>
                         {{/each}}
-
                 </table>
             </div>
         </div>

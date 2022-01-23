@@ -73,7 +73,7 @@ module.exports = {
                         console.log("This is dologin response");
                         console.log(user);
                         response.userExist = true,
-                            response.user = user
+                        response.user = user
                         resolve(response)
                     } else {
                         response.invalidPass = true,
@@ -130,11 +130,15 @@ module.exports = {
             })
 
             if (phone == null) {
-                response.status = false
+                // response.status = false
+                response.userExist = false,
+                response.user = user
                 resolve(response)
             } else {
-                response.status = true
-                response.phone = phone
+                // response.status = true
+                response.userExist = true,
+                response.user = phone
+                // response.phone = phone
                 resolve(response)
             }
 

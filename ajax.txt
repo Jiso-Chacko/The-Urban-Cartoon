@@ -704,3 +704,245 @@ data: [12, 19, 3, 5, 2, 3],
 "responsive" : true,
             "lenghtChange" : false,
             "autoWidth" : false
+
+
+
+
+<script>
+
+    function billingPaypal(){
+
+        let payment = document.querySelector('input[name=payment]:checked').value
+      
+        console.log(payment)
+        if(payment === 'paypal'){
+
+        $('#billingDetails_btn').hide()
+        $('#billingPaypal_btn').show()
+        }
+        else{
+        $('#billingDetails_btn').show()
+        $('#billingPaypal_btn').hide();
+        }        
+    }
+    $('#billingPaypal_btn').click((e) => {
+       if( !document.querySelector('input[name = address]:checked')){
+           Swal.fire({
+                title: 'Please select an address!',
+                icon: 'error',
+                confirmButtonColor: '#42ba96',
+                confirmButtonText: 'Ok',
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+                allowOutsideClick: false,
+            })
+       }
+       else{
+        let type = document.querySelector('input[name=address]:checked').value
+        $.ajax({
+            url : '/pay',
+            method : 'post',
+            data : {
+                address : type,
+                payment : 'paypal'
+            },
+            success : (res) => {    
+                window.location = res.forwardLink            
+            }
+        })
+       }
+    })
+
+</script>
+
+
+
+<!-- Single Product Tab -->
+        <div class="mb-8">
+            <div class="position-relative position-md-static px-md-6">
+                <ul class="nav nav-classic nav-tab nav-tab-lg justify-content-xl-center flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble border-0 pb-1 pb-xl-0 mb-n1 mb-xl-0"
+                    id="pills-tab-8" role="tablist">
+                    {{!-- <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                <a class="nav-link active" id="Jpills-one-example1-tab" data-toggle="pill" href="#Jpills-two-example1" role="tab" aria-controls="Jpills-one-example1" aria-selected="true">Accessories</a>
+                            </li> --}}
+                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                        <a class="nav-link active" id="Jpills-two-example1-tab" data-toggle="pill"
+                            href="#Jpills-two-example1" role="tab" aria-controls="Jpills-two-example1"
+                            aria-selected="false">Description</a>
+                    </li>
+                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                        <a class="nav-link" id="Jpills-three-example1-tab" data-toggle="pill"
+                            href="#Jpills-three-example1" role="tab" aria-controls="Jpills-three-example1"
+                            aria-selected="false">Specification</a>
+                    </li>
+                    {{!-- <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                <a class="nav-link" id="Jpills-four-example1-tab" data-toggle="pill" href="#Jpills-four-example1" role="tab" aria-controls="Jpills-four-example1" aria-selected="false">Reviews</a>
+                            </li> --}}
+                </ul>
+            </div>
+            <!-- Tab Content -->
+
+            <div class="borders-radius-17 border p-4 mt-4 mt-md-0 px-lg-10 py-lg-9">
+                <div class="tab-content" id="Jpills-tabContent">
+
+
+
+                    <div class="tab-pane fade active slow" id="Jpills-two-example1" role="tabpanel"
+                        aria-labelledby="Jpills-two-example1-tab">
+
+                        <h3 class="font-size-24 mb-3">Perfectly Done</h3>
+                        <p>{{this.description}}</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="pt-lg-8 pt-xl-10">
+                                    <h3 class="font-size-24 mb-3">Wireless</h3>
+                                    <p class="mb-6">Fusce vitae nibh mi. Integer posuere, libero et ullamcorper
+                                        facilisis, enim eros tincidunt orci, eget vestibulum sapien nisi ut leo. Cras
+                                        finibus vel est ut mollis. Donec luctus condimentum ante et euismod.</p>
+                                    <h3 class="font-size-24 mb-3">Fresh Design</h3>
+                                    <p class="mb-6">Integer bibendum aliquet ipsum, in ultrices enim sodales sed.
+                                        Quisque ut urna vitae lacus laoreet malesuada eu at massa. Pellentesque nibh
+                                        augue, pellentesque nec dictum vel, pretium a arcu. Duis eu urna suscipit,
+                                        lobortis elit quis, ullamcorper massa.</p>
+                                    <h3 class="font-size-24 mb-3">Fabolous Sound</h3>
+                                    <p class="mb-6">Cras rutrum, nibh a sodales accumsan, elit sapien ultrices sapien,
+                                        eget semper lectus ex congue elit. Nullam dui elit, fermentum a varius at,
+                                        iaculis non dolor. In hac habitasse platea dictumst.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <img class="img-fluid mr-n4 mr-lg-n10" src="../../assets/img/580X580/img1.jpg"
+                                    alt="Image Description">
+                            </div>
+                            <div class="col-md-6 text-left">
+                                <img class="img-fluid ml-n4 ml-lg-n10" src="../../assets/img/580X580/img2.jpg"
+                                    alt="Image Description">
+                            </div>
+                            <div class="col-md-6 align-self-center">
+                                <div class="pt-lg-8 pt-xl-10 text-right">
+                                    <h3 class="font-size-24 mb-3">Inteligent Bass</h3>
+                                    <p class="mb-6">Fusce vitae nibh mi. Integer posuere, libero et ullamcorper
+                                        facilisis, enim eros tincidunt orci, eget vestibulum sapien nisi ut leo. Cras
+                                        finibus vel est ut mollis. Donec luctus condimentum ante et euismod.</p>
+                                    <h3 class="font-size-24 mb-3">Battery Life</h3>
+                                    <p class="mb-6">Integer bibendum aliquet ipsum, in ultrices enim sodales sed.
+                                        Quisque ut urna vitae lacus laoreet malesuada eu at massa. Pellentesque nibh
+                                        augue, pellentesque nec dictum vel, pretium a arcu. Duis eu urna suscipit,
+                                        lobortis elit quis, ullamcorper massa.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="nav flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>SKU:</strong>
+                                <span class="sku">FW511948218</span></li>
+                            <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>
+                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>Category:</strong>
+                                <a href="#" class="text-blue">Headphones</a></li>
+                            <li class="nav-item text-gray-111 mx-3 flex-shrink-0 flex-xl-shrink-1">/</li>
+                            <li class="nav-item text-gray-111 flex-shrink-0 flex-xl-shrink-1"><strong>Tags:</strong> <a
+                                    href="#" class="text-blue">Fast</a>, <a href="#" class="text-blue">Gaming</a>, <a
+                                    href="#" class="text-blue">Strong</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane fade" id="Jpills-three-example1" role="tabpanel"
+                        aria-labelledby="Jpills-three-example1-tab">
+                        
+                        <div class="mx-md-5 pt-1">
+                            <div class="table-responsive mb-4">
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th class="px-4 px-xl-5 border-top-0">Product Name</th>
+                                            <td class="border-top-0">
+                                                {{#each this.proDetails}}{{this.productName}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Dimensions</th>
+                                            <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Size</th>
+                                            <td>{{#each this.proDetails}}{{this.screenSize}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Brand</th>
+                                            <td>{{#each this.proDetails}}{{this.brand}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Item Model Name</th>
+                                            <td>{{#each this.proDetails}}{{this.itemModelName}}{{/each}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <h3 class="font-size-18 mb-4">Technical Specifications</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th class="px-4 px-xl-5 border-top-0">Processor Name</th>
+                                            <td class="border-top-0">
+                                                {{#each this.proDetails}}{{this.processorName}}{{/each}}</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Screen Size</th>
+                                            <td>{{#each this.proDetails}}{{this.screenSize}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Product Dimensions</th>
+                                            <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Processor Speed</th>
+                                            <td>{{#each this.proDetails}}{{this.processorSpeed}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">RAM Size</th>
+                                            <td>{{#each this.proDetails}}{{this.ram}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Hard Drive Size</th>
+                                            <td>{{#each this.proDetails}}{{this.hardDiskSize}}{{/each}}</td>
+                                        </tr>
+
+
+
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Operating System</th>
+                                            <td>{{#each this.proDetails}}{{this.operatingSystem}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Display Tech</th>
+                                            <td>{{#each this.proDetails}}{{this.displayTech}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Resolution</th>
+                                            <td>{{#each this.proDetails}}{{this.resolution}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Average Battery Life (in hours)</th>
+                                            <td>{{#each this.proDetails}}{{this.batteryAverageLife}}{{/each}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+
+                </div>
+            </div>
+            <!-- End Tab Content -->
+        </div>
+        <!-- End Single Product Tab -->

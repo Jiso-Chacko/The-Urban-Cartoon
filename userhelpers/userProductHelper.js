@@ -501,9 +501,16 @@ module.exports = {
             
             // console.log(order);
             let status = order.payment === 'cod' ? 'placed' : 'pending'
-
+            if(order.payment === 'cod' || order.payment === 'paypal'){
+                status = 'placed'
+            }
+            else{
+                status = 'pending'
+            }
+            console.log("*** status ***");
+            console.log(status);
             console.log("--------------------------------------------------------------");
-            if(order.payment === 'cod'){
+            if(order.payment === 'cod' || order.payment === 'paypal'){
                 products = products.map((product) => {
                     product.status = status;
                     product.placed = true;
@@ -553,7 +560,7 @@ module.exports = {
             }
 
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((result) => {
-                if(order.payment === 'cod'){
+                if(order.payment === 'cod' || order.payment === 'paypal'){
                     if(coupon.Applied == true){
                         db.get().collection(collection.USER_COLLECTION).updateOne({
                             _id : ObjectID(userId)
@@ -585,7 +592,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             let price = parseInt(total)
             var options = {
-                amount: price,
+                amount: price*100,
                 currency: "INR",
                 receipt: "" + orderId
             }
@@ -786,6 +793,14 @@ module.exports = {
             else{
                 resolve(products = null)
             }
+        })
+    },
+
+    getAllProductsForViewProduct : () => {
+        return new Promise(async (resolve, reject) => {
+            var r =Math.floor(Math.random()*(6))
+            let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().limit(4).skip(r).toArray()
+            resolve(products)
         })
     }
 
