@@ -242,14 +242,16 @@ router.post('/addProduct', function (req, res, next) {
 // get viewProducts
 router.get('/viewProducts', verifyAdminLogin, function (req, res, next) {
   adminProductHelper.getallProducts().then((products) => {
-    console.log(products);
+    // console.log(products);
     console.log(products[0].imageName[0]);
     imageName = products[0].imageName[0];
     res.render('admin/viewProduct', {
       layout: 'admin/layout',
       product: products,
-      imageName: imageName
+      imageName: imageName,
+      "offerCreated" : req.session.proOfferCreated
     })
+    req.session.proOfferCreated = false
   })
 });
 
@@ -819,6 +821,24 @@ router.post('/addBrandOffer', (req, res, next) => {
     }
   })
 
+})
+
+// ****** product offer route ***********
+router.post('/addProductOffer',(req,res,next) => {
+  console.log("/addProductOffer");
+  console.log(req.body);
+  adminProductHelper.createProductOffer(req.body).then(() => {
+    req.session.proOfferCreated = true
+    res.redirect('/admin/viewProducts')
+  })
+})
+
+// ******** remove pro offer **********
+router.get('/removeProOffer',(req,res,next) => {
+  console.log("/removeProOffer");
+  console.log(req.query);
+  adminProductHelper.removeProOffer(req.query.id)
+  res.send()
 })
 
 // *********** delete offer ******************

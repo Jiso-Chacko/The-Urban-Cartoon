@@ -354,6 +354,7 @@ router.get('/viewProduct',verifyUserLogg, getCartCount, async (req, res, next) =
 
   let products = await userProductHelper.getAllProductsForViewProduct()
   let product = await userProductHelper.getProduct(proId)
+  let review = await userProductHelper.getReview(proId)
   if(product[0].category == "smartphone"){
     req.session.smartPhone = true
     req.session.laptop = false
@@ -367,6 +368,7 @@ router.get('/viewProduct',verifyUserLogg, getCartCount, async (req, res, next) =
   console.log(req.session.smartPhone);
   console.log(req.session.laptop);
   console.log(product);
+
   res.render('users/viewProduct', {
     layout: 'users/layout',
     product: product,
@@ -375,7 +377,8 @@ router.get('/viewProduct',verifyUserLogg, getCartCount, async (req, res, next) =
     userCartCount: userCartCount,
     products : products,
     smartPhone : req.session.smartPhone,
-    laptop : req.session.laptop 
+    laptop : req.session.laptop ,
+    review : review
   })
 })
 
@@ -1250,6 +1253,7 @@ router.post('/deleteAddress', async (req, res, next) => {
     }).then((renderHtml) => {
       res.send(renderHtml)
     })
+
   })
 })
 
@@ -1641,51 +1645,63 @@ router.post('/productSearch',async (req,res,next) => {
 })
 
 // ******** sweet alert sample *************
-router.get('/sweetAlert', (req, res, next) => {
-  res.render('users/sweetAlertSample')
+// router.get('/sweetAlert', (req, res, next) => {
+//   res.render('users/sweetAlertSample')
+// })
+
+router.post('/addReview',async (req,res,next) => {
+
+  let proId = req.body.proId
+  console.log("/addReview");
+  console.log(req.body);
+  console.log(req.query);
+
+  if (req.session.user) {
+    user = req.session.user.userFirstName
+    userLoggedIn = req.session.userLoggedIn
+    userCartCount = req.session.cartCount
+    userId = req.session.user._id
+  } else {
+    userLoggedIn = false
+    user = null
+    userCartCount = null,
+      userId = null
+  }
+
+  let products = await userProductHelper.getAllProductsForViewProduct()
+  let product = await userProductHelper.getProduct(proId)
+  let review = await userProductHelper.getReview(proId)
+  if(product[0].category == "smartphone"){
+    req.session.smartPhone = true
+    req.session.laptop = false
+
+  }
+  else{
+    req.session.smartPhone = false
+    req.session.laptop = true 
+  }
+  console.log("This is viewproduct");
+  console.log(req.session.smartPhone);
+  console.log(req.session.laptop);
+  console.log(product);
+  
+  userProductHelper.addReview(req.body)
+
+  hb.render('views/users/viewProduct.hbs', {
+    layout: 'users/layout',
+    product: product,
+    "loggIn": userLoggedIn,
+    user: user,
+    userCartCount: userCartCount,
+    products : products,
+    smartPhone : req.session.smartPhone,
+    laptop : req.session.laptop ,
+    review : review
+  }).then((renderHtml) => {
+    res.send(renderHtml)
+  })
+
 })
-
-// router.post('/pay', (req, res) => {
-//   const create_payment_json = {
-//     "intent": "sale",
-//     "payer": {
-//         "payment_method": "paypal"
-//     },
-//     "redirect_urls": {
-//         "return_url": "http://localhost:3000/success",
-//         "cancel_url": "http://localhost:3000/cancel"
-//     },
-//     "transactions": [{
-//         "item_list": {
-//             "items": [{
-//                 "name": "Red Sox Hat",
-//                 "sku": "001",
-//                 "price": "25.00",
-//                 "currency": "USD",
-//                 "quantity": 1
-//             }]
-//         },
-//         "amount": {
-//             "currency": "USD",
-//             "total": "25.00"
-//         },
-//         "description": "Hat for the best team ever"
-//     }]
-// };
-
-// paypal.payment.create(create_payment_json, function (error, payment) {
-//   if (error) {
-//       throw error;
-//   } else {
-//       for(let i = 0;i < payment.links.length;i++){
-//         if(payment.links[i].rel === 'approval_url'){
-//           res.redirect(payment.links[i].href);
-//         }
-//       }
-//   }
-// });
-
-// });
 
 
 

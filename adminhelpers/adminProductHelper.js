@@ -594,6 +594,49 @@ module.exports = {
         })
     },
 
+    createProductOffer : (body) => {
+        return new Promise(async (resolve,reject) => {
+            let product = await db.get().collection(PRODUCT_COLLECTION).findOne({
+                _id : ObjectID(body.proId)
+            })
+            console.log("*** This is product ***")
+            // console.log(product);
+            let oldPrice = product.price
+            let offerPrice = product.price - product.price * parseInt(body.offerPercentage)/100
+            await db.get().collection(PRODUCT_COLLECTION).updateOne({
+                _id : ObjectID(body.proId)
+            },
+            {
+                $set : {
+                    offer : true,
+                    price : parseInt(offerPrice),
+                    oldPrice : parseInt(oldPrice)
+                }
+            })
+            resolve()
+        })
+    },
+
+    removeProOffer : (proId) => {
+        return new Promise(async (resolve,reject) => {
+            let product = await db.get().collection(PRODUCT_COLLECTION).findOne({
+                _id : ObjectID(proId)
+            })
+
+            let price = product.oldPrice
+            await db.get().collection(PRODUCT_COLLECTION).updateOne({
+                _id : ObjectID(proId)
+            },
+            {
+                $set : {
+                    offer : false,
+                    price : parseInt(price)
+                }
+            })
+            resolve()
+        })
+    },
+
     getAllBrandOffers : () => {
 
         return new Promise(async (resolve,reject) => {

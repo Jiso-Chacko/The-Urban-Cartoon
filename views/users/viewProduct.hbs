@@ -117,14 +117,15 @@
                         {{!-- <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt.</p> --}}
                         {{!-- <p><strong>SKU</strong>: FW511948218</p> --}}
                         <div class="mb-4">
-                        
+
                             <div class="flex-center-between mb-1 d-none d-md-block mt-7">
                                 <div class="prodcut-price d-flex align-items-center position-relative">
                                     {{#if offer}}
                                     <ins class="font-size-30 text-red text-decoration-none">₹{{this.price}}</ins>
-                                    <del class="font-size-18 tex-gray-6 position-absolute bottom-100">₹{{this.oldPrice}}</del>
+                                    <del
+                                        class="font-size-18 tex-gray-6 position-absolute bottom-100">₹{{this.oldPrice}}</del>
                                     {{else}}
-                                <div class="text-gray-100">₹{{this.price}}</div>
+                                    <div class="text-gray-100">₹{{this.price}}</div>
                                     {{/if}}
                                 </div>
                             </div>
@@ -182,6 +183,13 @@
                                             </div>
                                         </a>
                                     </li>
+                                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                        <a class="nav-link" href="#Reviews">
+                                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                                Reviews
+                                            </div>
+                                        </a>
+                                    </li>
 
                                 </ul>
                             </div>
@@ -213,7 +221,13 @@
                                             </div>
                                         </a>
                                     </li>
-
+                                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                        <a class="nav-link" href="#Reviews">
+                                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                                Reviews
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                             {{!-- table starts --}}
@@ -245,12 +259,12 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    </div>
-                                    <h3 class="font-size-18 mb-4">Technical Specifications</h3>
+                                </div>
+                                <h3 class="font-size-18 mb-4">Technical Specifications</h3>
                                 <div class="table-responsive">
                                     <table class="table table-hover">
                                         <tbody>
-                                         
+
                                             <tr>
                                                 <th class="px-4 px-xl-5">Screen Size</th>
                                                 <td>{{#each this.proDetails}}{{this.size}}{{/each}}</td>
@@ -267,7 +281,7 @@
                                                 <th class="px-4 px-xl-5">Product Dimensions</th>
                                                 <td>{{#each this.proDetails}}{{this.dimension}}{{/each}}</td>
                                             </tr>
-                                             <tr>
+                                            <tr>
                                                 <th class="px-4 px-xl-5">Rear camera</th>
                                                 <td>{{#each this.proDetails}}{{this.rearCamera}}{{/each}}</td>
                                             </tr>
@@ -292,7 +306,7 @@
                                                 <th class="px-4 px-xl-5">Display Tech</th>
                                                 <td>{{#each this.proDetails}}{{this.screenType}}{{/each}}</td>
                                             </tr>
-                                            
+
                                             <tr>
                                                 <th class="px-4 px-xl-5">Battery Capacity</th>
                                                 <td>{{#each this.proDetails}}{{this.battery}}{{/each}} mAh</td>
@@ -301,163 +315,414 @@
                                     </table>
                                 </div>
 
-                                    {{/if}}
+                                {{/if}}
 
-                                     {{#if ../laptop}}   
-                                     
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <th class="px-4 px-xl-5 border-top-0">Product Name</th>
-                                                <td class="border-top-0">
-                                                    {{#each this.proDetails}}{{this.productName}}{{/each}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Dimensions</th>
-                                                <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Size</th>
-                                                <td>{{#each this.proDetails}}{{this.screenSize}}{{/each}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Brand</th>
-                                                <td>{{#each this.proDetails}}{{this.brand}}{{/each}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Item Model Name</th>
-                                                <td>{{#each this.proDetails}}{{this.itemModelName}}{{/each}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                {{#if ../laptop}}
+
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th class="px-4 px-xl-5 border-top-0">Product Name</th>
+                                            <td class="border-top-0">
+                                                {{#each this.proDetails}}{{this.productName}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Dimensions</th>
+                                            <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Size</th>
+                                            <td>{{#each this.proDetails}}{{this.screenSize}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Brand</th>
+                                            <td>{{#each this.proDetails}}{{this.brand}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Item Model Name</th>
+                                            <td>{{#each this.proDetails}}{{this.itemModelName}}{{/each}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <h3 class="font-size-18 mb-4">Technical Specifications</h3>
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th class="px-4 px-xl-5 border-top-0">Processor Name</th>
+                                            <td class="border-top-0">
+                                                {{#each this.proDetails}}{{this.processorName}}{{/each}}</td>
+                                        </tr>
+
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Screen Size</th>
+                                            <td>{{#each this.proDetails}}{{this.screenSize}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Product Dimensions</th>
+                                            <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
+                                        </tr>
+
+
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Processor Speed</th>
+                                            <td>{{#each this.proDetails}}{{this.processorSpeed}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">RAM Size</th>
+                                            <td>{{#each this.proDetails}}{{this.ram}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Hard Drive Size</th>
+                                            <td>{{#each this.proDetails}}{{this.hardDiskSize}}{{/each}}</td>
+                                        </tr>
+
+
+
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Operating System</th>
+                                            <td>{{#each this.proDetails}}{{this.operatingSystem}}{{/each}}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Display Tech</th>
+                                            <td>{{#each this.proDetails}}{{this.displayTech}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Resolution</th>
+                                            <td>{{#each this.proDetails}}{{this.resolution}}{{/each}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="px-4 px-xl-5">Average Battery Life (in hours)</th>
+                                            <td>{{#each this.proDetails}}{{this.batteryAverageLife}}{{/each}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                {{/if}}
+                            </div>
+
+                        </div>
+
+                        {{!-- table ends --}}
+                    </div>
+
+                    <div class="bg-white py-4 px-xl-11 px-md-5 px-4 mb-6">
+                        <div id="Reviews" class="mx-md-2">
+                            <div class="position-relative mb-6">
+                                <ul
+                                    class="nav nav-classic nav-tab nav-tab-lg justify-content-xl-center mb-6 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble border-lg-down-bottom-0 pb-1 pb-xl-0 mb-n1 mb-xl-0">
+
+                                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                        <a class="nav-link" href="#Description">
+                                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                                Description
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                        <a class="nav-link" href="#Specification">
+                                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                                Specification
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item flex-shrink-0 flex-xl-shrink-1 z-index-2">
+                                        <a class="nav-link active" href="#Reviews">
+                                            <div class="d-md-flex justify-content-md-center align-items-md-center">
+                                                Reviews
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="mb-4 px-lg-4" id="reviewDiv">
+                                <div class="row mb-8">
+
+                                    <div class="col-md-6">
+                                        <h3 class="font-size-18 mb-5">Add a review</h3>
+                                        <!-- Form -->
+                                        <form class="js-validate" id="reviewForm">
+                                            <div class="row align-items-center mb-4">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label for="rating" class="form-label mb-0">Your Review</label>
+                                                </div>
+                                                <div class="col-md-8 col-lg-9">
+                                                    {{!-- <a href="#" class="d-block">
+                                                            <div class="text-warning text-ls-n2 font-size-16">
+                                                                <small class="far fa-star text-muted"></small>
+                                                                <small class="far fa-star text-muted"></small>
+                                                                <small class="far fa-star text-muted"></small>
+                                                                <small class="far fa-star text-muted"></small>
+                                                                <small class="far fa-star text-muted"></small>
+                                                            </div>
+                                                        </a> --}}
+                                                    <div class="wrapper">
+
+
+
+                                                        <input type="radio" id="rating1" name="rating" value="1">
+                                                        <label id="1" title="Poor" class="fa fa-star"
+                                                            for="rating1"></label>
+
+                                                        <input type="radio" id="rating2" name="rating" value="2">
+                                                        <label id="2" title="Average" class="fa fa-star"
+                                                            for="rating2"></label>
+
+
+                                                        <input type="radio" id="rating3" name="rating" value="3">
+                                                        <label id="3" title="Average" class="fa fa-star"
+                                                            for="rating3"></label>
+
+
+                                                        <input type="radio" id="rating4" name="rating" value="4">
+                                                        <label id="4" title="Good" class="fa fa-star"
+                                                            for="rating4"></label>
+
+
+                                                        <input type="radio" id="rating5" name="rating" value="5">
+                                                        <label id="5" title="Awesome" class="fa fa-star"
+                                                            for="rating5"></label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="js-form-message form-group mb-3 row">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label for="descriptionTextarea" class="form-label">Your
+                                                        Review</label>
+                                                </div>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <textarea class="form-control" rows="3" id="review"
+                                                        data-msg="Please enter your message."
+                                                        data-error-class="u-has-error"
+                                                        data-success-class="u-has-success"></textarea>
+                                                </div>
+                                                <span style="color: brown;" id="reviewErr"></span>
+                                            </div>
+                                            <div class="js-form-message form-group mb-3 row">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label for="inputName" class="form-label">Name <span
+                                                            class="text-danger">*</span></label>
+                                                </div>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input type="text" class="form-control" name="name" id="name"
+                                                        aria-label="Alex Hecker" required
+                                                        data-msg="Please enter your name."
+                                                        data-error-class="u-has-error"
+                                                        data-success-class="u-has-success">
+                                                </div>
+                                                <span style="color: brown;" id="nameErr"></span>
+                                            </div>
+                                            <div class="js-form-message form-group mb-3 row">
+                                                <div class="col-md-4 col-lg-3">
+                                                    <label for="emailAddress" class="form-label">Email <span
+                                                            class="text-danger">*</span></label>
+                                                </div>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input type="email" class="form-control" name="emailAddress"
+                                                        id="email" aria-label="alexhecker@pixeel.com" required
+                                                        data-msg="Please enter a valid email address."
+                                                        data-error-class="u-has-error"
+                                                        data-success-class="u-has-success">
+                                                </div>
+                                                <span style="color: brown;" id="emailErr"></span>
+                                            </div>
+                                            <input id="proId" value="{{this._id}}" hidden>
+                                            <input id="starRating" hidden>
+                                            <div class="row">
+                                                <div class="offset-md-4 offset-lg-3 col-auto">
+                                                    <button type="button"
+                                                        class="btn btn-primary-dark btn-wide transition-3d-hover"
+                                                        id="review_btn">Add Review</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <!-- End Form -->
+                                    </div>
+
                                 </div>
+                                <!-- Review -->
+                                {{#each ../review}}
+                                <div class="border-bottom border-color-1 pb-4 mb-4">
+                                    <!-- Review Rating -->
+                                    <div
+                                        class="d-flex justify-content-between align-items-center text-secondary font-size-1 mb-2">
+                                        <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                            {{#if this.one}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
 
-                                <h3 class="font-size-18 mb-4">Technical Specifications</h3>
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                            <tr>
-                                                <th class="px-4 px-xl-5 border-top-0">Processor Name</th>
-                                                <td class="border-top-0">
-                                                    {{#each this.proDetails}}{{this.processorName}}{{/each}}</td>
-                                            </tr>
+                                            {{#if this.two}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
 
+                                            {{#if this.three}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
 
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Screen Size</th>
-                                                <td>{{#each this.proDetails}}{{this.screenSize}}{{/each}}</td>
-                                            </tr>
+                                            {{#if this.four}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
 
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Product Dimensions</th>
-                                                <td>{{#each this.proDetails}}{{this.productDimensions}}{{/each}}</td>
-                                            </tr>
+                                            {{#if this.five}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            {{/if}}
 
+                                        </div>
+                                    </div>
+                                    <!-- End Review Rating -->
 
+                                    <p class="text-gray-90">{{this.review}}</p>
 
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Processor Speed</th>
-                                                <td>{{#each this.proDetails}}{{this.processorSpeed}}{{/each}}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th class="px-4 px-xl-5">RAM Size</th>
-                                                <td>{{#each this.proDetails}}{{this.ram}}{{/each}}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Hard Drive Size</th>
-                                                <td>{{#each this.proDetails}}{{this.hardDiskSize}}{{/each}}</td>
-                                            </tr>
-
-
-
-
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Operating System</th>
-                                                <td>{{#each this.proDetails}}{{this.operatingSystem}}{{/each}}</td>
-                                            </tr>
-
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Display Tech</th>
-                                                <td>{{#each this.proDetails}}{{this.displayTech}}{{/each}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Resolution</th>
-                                                <td>{{#each this.proDetails}}{{this.resolution}}{{/each}}</td>
-                                            </tr>
-                                            <tr>
-                                                <th class="px-4 px-xl-5">Average Battery Life (in hours)</th>
-                                                <td>{{#each this.proDetails}}{{this.batteryAverageLife}}{{/each}}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    {{/if}}
+                                    <!-- Reviewer -->
+                                    <div class="mb-2">
+                                        <strong>{{this.name}}</strong>
+                                    </div>
+                                    <!-- End Reviewer -->
                                 </div>
+                                {{/each}}
+                                <!-- End Review -->
+
+
+
 
                             </div>
 
-                            {{!-- table ends --}}
                         </div>
                     </div>
-
 
                 </div>
+
+
             </div>
         </div>
-        {{/each}}
+    </div>
+    {{/each}}
 
-        <!-- Related products -->
-        <div class="mb-6">
-            <div
-                class="d-flex justify-content-between align-items-center border-bottom border-color-1 flex-lg-nowrap flex-wrap mb-4">
-                <h3 class="section-title mb-0 pb-2 font-size-22">Recommendation for you</h3>
-            </div>
-            <ul class="row list-unstyled products-group no-gutters">
-                {{#each products}}
-                <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item">
-                    <div class="product-item__outer h-100">
-                        <div class="product-item__inner px-xl-4 p-3">
-                            <div class="product-item__body pb-xl-2">
-                                <div class="mb-2">{{this.productTitle}}</div>
-                                <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}"
-                                        class="text-blue font-weight-bold">{{this.productName}}</a></h5>
-                                <div class="mb-2">
-                                    <a href="/viewProduct?id={{this._id}}" class="d-block text-center"><img
-                                            class="img-fluid" src="/productimages/{{this.imageName.[0]}}"
-                                            alt="Image Description"></a>
+    <!-- Related products -->
+    <div class="mb-6">
+        <div
+            class="d-flex justify-content-between align-items-center border-bottom border-color-1 flex-lg-nowrap flex-wrap mb-4">
+            <h3 class="section-title mb-0 pb-2 font-size-22">Recommendation for you</h3>
+        </div>
+        <ul class="row list-unstyled products-group no-gutters">
+            {{#each products}}
+            <li class="col-6 col-md-3 col-xl-2gdot4-only col-wd-2 product-item">
+                <div class="product-item__outer h-100">
+                    <div class="product-item__inner px-xl-4 p-3">
+                        <div class="product-item__body pb-xl-2">
+                            <div class="mb-2">{{this.productTitle}}</div>
+                            <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}"
+                                    class="text-blue font-weight-bold">{{this.productName}}</a></h5>
+                            <div class="mb-2">
+                                <a href="/viewProduct?id={{this._id}}" class="d-block text-center"><img
+                                        class="img-fluid" src="/productimages/{{this.imageName.[0]}}"
+                                        alt="Image Description"></a>
+                            </div>
+                            <div class="flex-center-between mb-1">
+                                <div class="prodcut-price">
+                                    {{#if offer}}
+                                    <del class="font-size-16 text-gray-9 d-block">₹{{this.oldPrice}}</del>
+                                    <ins
+                                        class="font-size-20 text-red text-decoration-none d-block">₹{{this.price}}</ins>
+                                    {{else}}
+                                    <div class="text-gray-100">₹{{this.price}}</div>
+                                    {{/if}}
                                 </div>
-                                <div class="flex-center-between mb-1">
-                                    <div class="prodcut-price">
-                                        {{#if offer}}
-                                                <del class="font-size-16 text-gray-9 d-block">₹{{this.oldPrice}}</del>
-                                                <ins class="font-size-20 text-red text-decoration-none d-block">₹{{this.price}}</ins>
-                                                {{else}}
-                                                <div class="text-gray-100">₹{{this.price}}</div>
-                                                {{/if}}
-                                    </div>
-                                    <div class="d-none d-xl-block prodcut-add-cart">
-                                        <a onclick="addToCart('{{this._id}}')"
-                                            class="btn-add-cart btn-primary transition-3d-hover"><i
-                                                class="ec ec-add-to-cart"></i></a>
-                                    </div>
+                                <div class="d-none d-xl-block prodcut-add-cart">
+                                    <a onclick="addToCart('{{this._id}}')"
+                                        class="btn-add-cart btn-primary transition-3d-hover"><i
+                                            class="ec ec-add-to-cart"></i></a>
                                 </div>
                             </div>
-                            <div class="product-item__footer">
-                                <div class="border-top pt-2 flex-center-between flex-wrap">                                   
-                                    <a  class="text-gray-6 font-size-13" onclick="addToWishlist('{{this._id}}')"><i
-                                            class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
-                                </div>
+                            <div class="d-flex justify-content-between align-items-center text-secondary font-size-1 mb-2">
+                                            <div class="text-warning text-ls-n2 font-size-16" style="width: 80px;">
+                                                {{#if this.one}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
+
+                                            {{#if this.two}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
+
+                                            {{#if this.three}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
+
+                                            {{#if this.four}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="far fa-star text-muted"></small>
+                                            {{/if}}
+
+                                            {{#if this.five}}
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            <small class="fas fa-star"></small>
+                                            {{/if}}
+                                            </div>
+                                        </div>
+                        </div>
+                        <div class="product-item__footer">
+                            <div class="border-top pt-2 flex-center-between flex-wrap">
+                                <a class="text-gray-6 font-size-13" onclick="addToWishlist('{{this._id}}')"><i
+                                        class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a>
                             </div>
                         </div>
                     </div>
-                </li>
-                {{/each}}
-            </ul>
-        </div>
-        <!-- End Related products -->
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
+    <!-- End Related products -->
 
-        
+
 
     </div>
 </main>
@@ -561,4 +826,154 @@
         img4.style.transform = " scale(1)"
 
     })
+</script>
+
+<script>
+    $('#review_btn').click((e) => {
+        let review = document.getElementById('review').value
+        let name = document.getElementById('name').value
+        let email = document.getElementById('email').value
+        let proId = document.getElementById('proId').value
+        let rating = document.getElementById('starRating').value
+        var regx =
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+        console.log(proId)
+        if (review.trim() == "" || review < 4) {
+            e.preventDefault()
+            document.getElementById('review').focus();
+            document.getElementById('reviewErr').innerHTML = "Please add a review"
+        } else if (review > 4) {
+            document.getElementById('reviewErr').innerHTML = ""
+        } else if (name.trim() == "" || name < 2) {
+            e.preventDefault()
+            document.getElementById('name').focus();
+            document.getElementById('nameErr').innerHTML = "Please enter a name"
+        } else if (email.trim() == "" || email < 2 || !email.match(regx)) {
+            e.preventDefault()
+            document.getElementById('email').focus();
+            document.getElementById('emailErr').innerHTML = "Please enter an email"
+        } else {
+            $.ajax({
+                url: `/addReview`,
+                method: 'post',
+                data: {
+                    name: name,
+                    email: email,
+                    review: review,
+                    rating: rating,
+                    proId: proId
+                },
+                success: (response) => {
+                    
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2100,
+                        timerProgressBar: false,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'We love your reviews!'
+                    }).then(() => {
+                    location.reload()
+                    })
+                }
+            })
+        }
+
+    })
+</script>
+
+<style>
+    .rating {
+        display: flex;
+        color: #9e9e9e;
+        font-size: 58px;
+    }
+
+    [type=radio] {
+        display: none;
+    }
+
+    form label {
+        margin: 0 5px;
+    }
+
+    form label:hover {
+        color: orange;
+    }
+</style>
+
+<script>
+    function rate5() {
+        document.getElementById("5").style.color = "orange";
+        document.getElementById("4").style.color = "orange";
+        document.getElementById("3").style.color = "orange";
+        document.getElementById("2").style.color = "orange";
+        document.getElementById("1").style.color = "orange";
+        document.getElementById('starRating').value = '5'
+    }
+
+    function rate4() {
+        document.getElementById("5").style.color = "#9e9e9e";
+        document.getElementById("4").style.color = "orange";
+        document.getElementById("3").style.color = "orange";
+        document.getElementById("2").style.color = "orange";
+        document.getElementById("1").style.color = "orange";
+        document.getElementById('starRating').value = '4'
+
+    }
+
+    function rate3() {
+        document.getElementById("5").style.color = "#9e9e9e";
+        document.getElementById("4").style.color = "#9e9e9e";
+        document.getElementById("3").style.color = "orange";
+        document.getElementById("2").style.color = "orange";
+        document.getElementById("1").style.color = "orange";
+        document.getElementById('starRating').value = '3'
+
+    }
+
+    function rate2() {
+        document.getElementById("5").style.color = "#9e9e9e";
+        document.getElementById("4").style.color = "#9e9e9e";
+        document.getElementById("3").style.color = "#9e9e9e";
+        document.getElementById("2").style.color = "orange";
+        document.getElementById("1").style.color = "orange";
+        document.getElementById('starRating').value = '2'
+
+    }
+
+    function rate1() {
+        document.getElementById("5").style.color = "#9e9e9e";
+        document.getElementById("4").style.color = "#9e9e9e";
+        document.getElementById("3").style.color = "#9e9e9e";
+        document.getElementById("2").style.color = "#9e9e9e";
+        document.getElementById("1").style.color = "orange";
+        document.getElementById('starRating').value = '1'
+
+    }
+
+    document.getElementById("5").onclick = function () {
+        rate5();
+    }
+    document.getElementById("4").onclick = function () {
+        rate4();
+    }
+    document.getElementById("3").onclick = function () {
+        rate3();
+    }
+    document.getElementById("2").onclick = function () {
+        rate2();
+    }
+    document.getElementById("1").onclick = function () {
+        rate1();
+    }
 </script>

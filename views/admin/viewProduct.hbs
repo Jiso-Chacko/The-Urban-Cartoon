@@ -17,6 +17,7 @@
                             <th>Price</th>
                             <th>Edit</th>
                             <th>Delete</th>
+                            <th>Offer</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -35,10 +36,12 @@
                             <td><a class="btn btn-success btn-sm"
                                     onclick="verifyEdit('{{this._id}}','{{this.productName}}','{{this.productTitle}}','{{this.category}}','{{this.brand}}','{{this.quantity}}','{{this.price}}','{{this.imageName.[0]}}','{{this.imageName.[1]}}','{{this.imageName.[3]}}')">Edit</a>
                             </td>
-                            {{!-- <td><button class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure you want to delete {{this.productName}}?');" >Delete</button>
-                            </td> --}}
                             <td><a class="btn btn-danger btn-sm" onclick="verifyDelete('{{this.productName}}','{{this._id}}')">Delete</a></td>
+                            {{#if this.offer}}
+                            <td><a class="btn btn-danger btn-sm" onclick="removeOffer('{{this.productName}}','{{this._id}}',event)">Remove Offer</a></td>                           
+                            {{else}}
+                            <td><a class="btn btn-primary btn-sm" onclick="addOffer('{{this.productName}}','{{this._id}}')">Add Offer</a></td>
+                            {{/if}}
                                     
                         </tr>
                         {{/each}}
@@ -53,13 +56,71 @@
 </div>
 
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/admin/addProductOffer" method="POST">
+                        <div class="form-group">
+                            <label for="exampleInputName1">Offer Percentage(%)</label>
+                            <input type="number" class="form-control" id="" placeholder="Offer percentage"
+                                name="offerPercentage" required oninput="" style="width: 20rem;">
+
+                            <span id=""></span>
+                            <span style="color: brown;" id=""></span>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputName1">Validity</label>
+                            <input type="date" class="form-control" id="" placeholder=""
+                                name="validity" required oninput="" style="width: 20rem;">
+
+                            <span id=""></span>
+                            <span style="color: brown;" id=""></span>
+                        </div>
+                        <input type="text" class="form-control" id="proId" placeholder=""
+                                name="proId" required  hidden>
+                        
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Offer</button>
+                </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" defer></script>
 
+{{#if offerCreated}}
+<script>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Offer successfully added',
+        showConfirmButton: false,
+        timer: 2000
+    })
+</script>
+{{/if}}
 
 <script>
     $(document).ready(function () {
         $('#myTable').DataTable();
     });
+
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("validity")[0].setAttribute('min', today);
 
     function verifyEdit(proId,proName, proTitle, proCategory, proBrand, quantity, price, img1, img2, img3) {
         Swal.fire({
@@ -97,5 +158,38 @@
         })
     }
 
+    function addOffer(proName,proId){
+            $('#exampleModal').modal('show')
+            document.getElementById('exampleModalLabel').innerHTML = `Add offer to ${proName}`
+            document.getElementById('proId').value = proId
+    }
+
+    function removeOffer(proName,proId,event){
+        Swal.fire({
+            title: `Do you want to remove offer of ${proName}`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#42ba96',
+            confirmButtonText: 'Remove Offer'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url : `/admin/removeProOffer?id=${proId}`,
+                    method : 'get',
+                    success : ()  => {
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'warning',
+                            title: 'Offer removed!',
+                            showConfirmButton: false,
+                            timer: 2000
+                        })
+                        location.reload()
+                    }
+                })
+            }
+        })
+    }
    
 </script>

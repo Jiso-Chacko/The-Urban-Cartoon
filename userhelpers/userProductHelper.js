@@ -6,7 +6,8 @@ var dateFormat = require('dateformat');
 var now = new Date();
 const {
     response
-} = require('express')
+} = require('express');
+const { resolve } = require('path');
 
 var instance = new Razorpay({
     key_id: 'rzp_test_SDgCuI5x7u6nU2',
@@ -801,6 +802,252 @@ module.exports = {
             var r =Math.floor(Math.random()*(6))
             let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().limit(4).skip(r).toArray()
             resolve(products)
+        })
+    },
+
+    addReview : (body) => {
+        return new Promise(async (resolve,reject) => {
+            let rating = parseInt(body.rating)
+            let avgRating = 0
+            let product = await db.get().collection(collection.PRODUCT_COLLECTION).findOne({
+                _id : ObjectID(body.proId)
+            })
+            let proRating = product.rating
+            console.log("// ** //");
+            console.log((proRating));
+            if(proRating != undefined){
+                avgRating = parseInt((proRating + rating)/2)
+            }
+            console.log(avgRating);
+            if(rating === 1){
+                db.get().collection(collection.REVIEW_COLLECTION).insertOne({
+                    proId : ObjectID(body.proId),
+                    name : body.name,
+                    email : body.email,
+                    review : body.review,
+                    one : true,
+                    two : false,
+                    three : false,
+                    four : false,
+                    five : false
+                })
+                if(proRating === undefined){
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                        _id : ObjectID(body.proId)
+                    },
+                    {
+                        $set : {
+                            one : true,
+                            two : false,
+                            three : false,
+                            four : false,
+                            five : false,
+                            rating : rating
+                        }
+                    })
+                }
+                
+            }
+            else if(rating === 2){
+                db.get().collection(collection.REVIEW_COLLECTION).insertOne({
+                    proId : ObjectID(body.proId),
+                    name : body.name,
+                    email : body.email,
+                    review : body.review,
+                    one : false,
+                    two : true,
+                    three : false,
+                    four : false,
+                    five : false
+                })
+                if(proRating === undefined){
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                        _id : ObjectID(body.proId)
+                    },
+                    {
+                        $set : {
+                            one : false,
+                            two : true,
+                            three : false,
+                            four : false,
+                            five : false,
+                            rating : rating
+                        }
+                    })
+                }
+            }
+            else if(rating === 3){
+                db.get().collection(collection.REVIEW_COLLECTION).insertOne({
+                    proId : ObjectID(body.proId),
+                    name : body.name,
+                    email : body.email,
+                    review : body.review,
+                    one : false,
+                    two : false,
+                    three : true,
+                    four : false,
+                    five : false
+                })
+
+                if(proRating === undefined){
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                        _id : ObjectID(body.proId)
+                    },
+                    {
+                        $set : {
+                            one : false,
+                            two : false,
+                            three : true,
+                            four : false,
+                            five : false,
+                            rating : rating
+                        }
+                    })
+                }
+            }
+            else if(rating === 4){
+                db.get().collection(collection.REVIEW_COLLECTION).insertOne({
+                    proId : ObjectID(body.proId),
+                    name : body.name,
+                    email : body.email,
+                    review : body.review,
+                    one : false,
+                    two : false,
+                    three : false,
+                    four : true,
+                    five : false
+                })
+                if(proRating === undefined){
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                        _id : ObjectID(body.proId)
+                    },
+                    {
+                        $set : {
+                            one : false,
+                            two : false,
+                            three : false,
+                            four : true,
+                            five : false,
+                            rating : rating
+                        }
+                    })
+                }
+            }
+            else if(rating === 5){
+                db.get().collection(collection.REVIEW_COLLECTION).insertOne({
+                    proId : ObjectID(body.proId),
+                    name : body.name,
+                    email : body.email,
+                    review : body.review,
+                    one : false,
+                    two : false,
+                    three : false,
+                    four : false,
+                    five : true
+                })
+
+                if(proRating === undefined){
+                    db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                        _id : ObjectID(body.proId)
+                    },
+                    {
+                        $set : {
+                            one : false,
+                            two : false,
+                            three : false,
+                            four : false,
+                            five : true,
+                            rating : rating
+                        }
+                    })
+                }
+            }
+
+            if(avgRating === 1){
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                    _id : ObjectID(body.proId)
+                },
+                {
+                    $set : {
+                        one : true,
+                        two : false,
+                        three : false,
+                        four : false,
+                        five : false,
+                        rating : avgRating
+                    }
+                })
+            }
+            else if(avgRating === 2){
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                    _id : ObjectID(body.proId)
+                },
+                {
+                    $set : {
+                        one : false,
+                        two : true,
+                        three : false,
+                        four : false,
+                        five : false,
+                        rating : avgRating
+                    }
+                })
+            }
+            else if(avgRating === 3){
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                    _id : ObjectID(body.proId)
+                },
+                {
+                    $set : {
+                        one : false,
+                        two : false,
+                        three : true,
+                        four : false,
+                        five : false,
+                        rating : avgRating
+                    }
+                })
+            }
+            else if(avgRating === 4){
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                    _id : ObjectID(body.proId)
+                },
+                {
+                    $set : {
+                        one : false,
+                        two : false,
+                        three : false,
+                        four : true,
+                        five : false,
+                        rating : avgRating
+                    }
+                })
+            }
+            else if(avgRating === 5){
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                    _id : ObjectID(body.proId)
+                },
+                {
+                    $set : {
+                        one : false,
+                        two : false,
+                        three : false,
+                        four : false,
+                        five : true,
+                        rating : avgRating
+                    }
+                })
+            }
+            
+        })
+    },
+
+    getReview : (proId) => {
+        return new Promise(async (resolve,reject) => {
+            let review = await db.get().collection(collection.REVIEW_COLLECTION).find({
+                proId : ObjectID(proId)
+             }).toArray()
+             resolve(review)
         })
     }
 
