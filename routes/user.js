@@ -619,7 +619,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   req.session.coupon.code = null
   console.log("This is /checkout get");
   console.log("Address  : " + address.address);
-
+ 
   if (address.status == false) {
     req.session.addressErr = true
     req.session.userAddress = null
@@ -681,6 +681,7 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   console.log(address.address);
   console.log("###### coupon applied before place order #######");
   console.log(req.session.coupon);
+  
   await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon).then((orderId) => {
 
     if (req.body.payment === 'cod') {
@@ -709,6 +710,9 @@ router.post('/pay',verifyUserLogg, (req, res) => {
   console.log(req.body);
   req.session.address = req.body.address
   req.session.payment = req.body.payment
+  let inr = req.session.totalAmount/75
+  req.session.INR = parseInt(inr)
+  console.log(req.session.INR);
   const create_payment_json = {
     "intent": "sale",
     "payer": {
@@ -723,14 +727,14 @@ router.post('/pay',verifyUserLogg, (req, res) => {
             "items": [{
                 "name": "Red Sox Hat",
                 "sku": "001",
-                "price": "25.00",
+                "price": `${req.session.INR}`,
                 "currency": "USD",
                 "quantity": 1
             }]
         },
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${req.session.INR}`
         },
         "description": "Hat for the best team ever"
     }]
@@ -764,13 +768,14 @@ router.get('/success',verifyUserLogg, async (req, res) => {
   console.log(req.session.totalAmount);
   console.log(req.session.coupon);
   console.log(address.address);
-
+  let inr = req.session.totalAmount/75
+  console.log("INR"+inr);
   const execute_payment_json = {
     "payer_id": payerId,
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${req.session.INR}`
         }
     }]
   };
@@ -872,6 +877,8 @@ router.post('/payNewUser',(req,res,next)=>{
   console.log(req.body);
   req.session.address = req.body
   req.session.payment = req.body.payment
+  let inr = req.session.totalAmount/75
+  req.session.INR = parseInt(inr)
   const create_payment_json = {
     "intent": "sale",
     "payer": {
@@ -886,14 +893,14 @@ router.post('/payNewUser',(req,res,next)=>{
             "items": [{
                 "name": "Red Sox Hat",
                 "sku": "001",
-                "price": "25.00",
+                "price": `${req.session.INR}`,
                 "currency": "USD",
                 "quantity": 1
             }]
         },
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${req.session.INR}`
         },
         "description": "Hat for the best team ever"
     }]
@@ -939,7 +946,7 @@ router.get('/success1',verifyUserLogg, async (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${req.session.INR}`
         }
     }]
   };
@@ -970,6 +977,8 @@ router.post('/payDontSave',(req,res,next)=>{
   console.log(req.body);
   req.session.address = req.body
   req.session.payment = req.body.payment
+  let inr = req.session.totalAmount/75
+  req.session.INR = parseInt(inr)
   const create_payment_json = {
     "intent": "sale",
     "payer": {
@@ -984,14 +993,14 @@ router.post('/payDontSave',(req,res,next)=>{
             "items": [{
                 "name": "Red Sox Hat",
                 "sku": "001",
-                "price": "25.00",
+                "price": `${req.session.INR}`,
                 "currency": "USD",
                 "quantity": 1
             }]
         },
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${req.session.INR}`
         },
         "description": "Hat for the best team ever"
     }]
@@ -1036,7 +1045,7 @@ router.get('/success2',verifyUserLogg, async (req, res) => {
     "transactions": [{
         "amount": {
             "currency": "USD",
-            "total": "25.00"
+            "total": `${req.session.INR}`
         }
     }]
   };
@@ -1313,13 +1322,26 @@ router.get('/viewProfile/:id/profile', verifyUserLogg, async (req, res, next) =>
   console.log(req.params.id);
   // console.log(req.session.user);
   let userId = req.session.user._id
-  let user = await userHelper.getUser(userId)
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  userCartCount = req.session.cartCount
+  let User = await userHelper.getUser(userId)
   console.log("*******");
   console.log(user);
+  console.log(user.image);
+  if(User.image === undefined || User.image === null){
+    req.session.imgErr = true
+  }else{
+    req.session.imgErr = false
+  }
   res.render('users/viewProfileDetails', {
     layout: 'users/layout',
     userId: userId,
-    user: user
+    User: User,
+    "loggIn": userLoggedIn,
+    user : user,
+    userCartCount : userCartCount,
+    'imgErr' : req.session.imgErr
   })
 })
 
@@ -1332,11 +1354,24 @@ router.get('/viewProfile/:id/editProfile', verifyUserLogg, async (req, res, next
   console.log(req.session.user);
   console.log(req.params.id);
   let userId = req.session.user._id
-  let user = await userHelper.getUser(userId)
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  userCartCount = req.session.cartCount
+  let User = await userHelper.getUser(userId)
+  console.log(User);
+  if(User.image === undefined || User.image === null){
+    req.session.imgErr = true
+  }else{
+    req.session.imgErr = false
+  }
   res.render('users/editProfile', {
     layout: 'users/layout',
-    user: user,
-    userId: userId
+    "loggIn": userLoggedIn,
+    user : user,
+    userCartCount : userCartCount,
+    User: User,
+    userId: userId,
+    'imgErr' : req.session.imgErr
   })
 })
 
@@ -1428,7 +1463,7 @@ router.get('/viewProfile/:id/orders', verifyUserLogg, async (req, res, next) => 
   console.log(req.params.id);
   let orders = await userProductHelper.getAllOrders(req.params.id)
 
-  res.render('users/viewOrders1', {
+  res.render('users/viewOrders2', {
     layout: 'users/layout',
     "loggIn": userLoggedIn,
     user: user,
@@ -1456,42 +1491,50 @@ router.get('/viewProducts', async (req, res, next) => {
   if (req.query.value === 'featured') {
     let products = await userProductHelper.getAllFeaturedSmartPhone()
     let value = 'Featured'
+    let product  =  'Smart Phone'
     console.log("******///")
     console.log(products);
     res.render('users/productsView', {
       layout: 'users/layout',
       products: products,
-      'value': value
+      'value': value,
+      product : product
     })
   }
 
   if(req.query.value === 'featuredLaptop'){
     let products = await userProductHelper.getAllFeaturedLaptop()
     let value = "Featured"
+    let product  =  'Laptop'
     res.render('users/productsView',{
      layout : 'users/layout',
      products : products,
-     'value': value
+     'value': value,
+     product : product
     })
   }
 
   if(req.query.value === 'onSaleLaptop'){
     let products = await userProductHelper.getAllOnsaleLaptop()
     let value = "Featured"
+    let product  =  'Laptop'
     res.render('users/productsView',{
      layout : 'users/layout',
      products : products,
-     'value': value
+     'value': value,
+     product : product
     })
   }
 
   if(req.query.value === 'topRatedLaptop'){
     let products = await userProductHelper.getAllTopRatedLaptop()
     let value = "Featured"
+    let product  =  'Laptop'
     res.render('users/productsView',{
      layout : 'users/layout',
      products : products,
-     'value': value
+     'value': value,
+     product : product
     })
   }
 
@@ -1499,68 +1542,79 @@ router.get('/viewProducts', async (req, res, next) => {
   if (req.query.value === 'topRated') {
     let products = await userProductHelper.getAllTopRatedSmartPhone()
     let value = 'Top rated'
+    let product  =  'Smart Phone'
     console.log("******///")
     console.log(products);
     res.render('users/productsView', {
       layout: 'users/layout',
       products: products,
-      'value': value
+      'value': value,
+     product : product
     })
   }
 
   if (req.query.value === 'onSale') {
     let products = await userProductHelper.getAllOnsaleSmartPhone()
     let value = 'On sale'
+    let product  =  'Smart Phone'
     console.log("******///")
     console.log(products);
     res.render('users/productsView', {
       layout: 'users/layout',
       products: products,
-      'value': value
+      'value': value,
+     product : product
     })
   }
 
   if (req.query.category === 'brand') {
     let products = await userProductHelper.getBrandProduct(req.query.value)
     let value = req.query.value
+    let product = req.query.value
     console.log("******///")
     console.log(products);
     res.render('users/productsView', {
       layout: 'users/layout',
       products: products,
-      'value': value
+      'value': value,
+     product : product
     })
   }
 
   if (req.query.category === 'laptop') {
     let products = await userProductHelper.getLaptopProduct(req.query.value)
     let value = req.query.value
+    let product = req.query.value
     console.log("******///")
     console.log(products);
     res.render('users/productsView', {
       layout: 'users/layout',
       products: products,
-      'value': value
+      'value': value,
+     product : product
     })
   }
 
   if(req.query.value === 'offer'){
     let products = await userProductHelper.getOfferSmartphones()
     let value = req.query.category
+    let product = req.query.category
     res.render('users/productsView', {
       layout: 'users/layout',
       products: products,
-      'value': value
+      'value': value,
+     product : product
     })
   }
 
 })
 
 // ************ apply coupon ajax call **********
-router.post('/applyCoupon', async (req, res, next) => {
+router.post('/applyCoupon',verifyUserLogg, async (req, res, next) => {
   console.log("/applyCoupon");
   console.log(req.body);
-  await userProductHelper.applyCoupon(req.body).then((response) => {
+  console.log(req.session.user._id);
+  await userProductHelper.applyCoupon(req.body,req.session.user._id).then((response) => {
     console.log("*** apply coupon ******");
     console.log(response);
 
@@ -1570,19 +1624,23 @@ router.post('/applyCoupon', async (req, res, next) => {
     }
     else{
 
-      if (response.invalidCode == false) {      
-        let oldAmount = req.session.totalAmount;
-        response.totalAmount = req.session.totalAmount
-        var discountPrice = response.totalAmount * (response.coupon.offer / 100)
-        let sumTotal = response.totalAmount - parseInt(discountPrice)
-        req.session.totalAmount = sumTotal
-        req.session.coupon.Applied = true
-        req.session.coupon.code = req.body.code
-        console.log("**********************");
-        console.log(req.session.totalAmount);
-        console.log(req.session.coupon);
-        response.totalAmount = oldAmount
-        res.send(response)
+      if (response.invalidCode == false) {
+        if(req.session.coupon.Applied == false){
+          let oldAmount = req.session.totalAmount;
+          response.totalAmount = req.session.totalAmount
+          var discountPrice = response.totalAmount * (response.coupon.offer / 100)
+          let sumTotal = response.totalAmount - parseInt(discountPrice)
+          req.session.totalAmount = sumTotal
+          req.session.coupon.Applied = true
+          req.session.coupon.code = req.body.code
+          console.log("**********************");
+          console.log(req.session.totalAmount);
+          console.log(req.session.coupon);
+          response.totalAmount = oldAmount
+          res.send(response)
+        }else{
+          res.send(response)
+        }      
       } 
       else {  
         response.totalAmount = req.session.totalAmount
@@ -1645,9 +1703,11 @@ router.post('/productSearch',async (req,res,next) => {
 })
 
 // ******** sweet alert sample *************
-// router.get('/sweetAlert', (req, res, next) => {
-//   res.render('users/sweetAlertSample')
-// })
+router.get('/sweetAlert', (req, res, next) => {
+  res.render('users/sweetAlertSample',{
+    layout : 'users/layout'
+  })
+})
 
 router.post('/addReview',async (req,res,next) => {
 

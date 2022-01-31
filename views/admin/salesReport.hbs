@@ -32,8 +32,11 @@
                             <td>{{this.products.status}}</td>
                             <td>{{this.products.quantity}}</td>
                             <td>{{#each this.products.productDetails}}{{this.price}}{{/each}}</td>
+                            {{#if this.products.cancelled}}
+                            <td>returned</td>
+                            {{else}}
                             <td>{{this.revenue}}</td>
-
+                            {{/if}}
 
 
 

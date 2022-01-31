@@ -197,68 +197,98 @@ function addToWishlist(proId) {
 //     })
 // }
 
-function changeQuantity(userId, proId, cartId, count) {
+function changeQuantity(userId, proId, cartId, count, quantity) {
     console.log(userId);
     console.log(proId);
     console.log(cartId);
     console.log(count);
-
-    $.ajax({
-        url: '/changeQuantity',
-        method: 'post',
-        data: {
-            userId: userId,
-            proId: proId,
-            cartId: cartId,
-            count: count,
-
-        },
-        success: function (result) {
-            console.log("Entered");
-            console.log(result);
-            if (result.response.status) {
-                if (result.response.inc) {
-                    var elements = $(result.renderHtml);
-                    var found = $('#cart_table', elements);
-                    var found2 = $('#total_cart', elements);
-                    $('#cart_table').html(found)
-                    $('#total_cart').html(found2)
-
-                } else {
-                    var elements = $(result.renderHtml);
-                    var found = $('#cart_table', elements);
-                    var found2 = $('#total_cart', elements);
-                    $('#cart_table').html(found)
-                    $('#total_cart').html(found2)
-                }
-
-            } else {
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "Do you want to delete the product!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
-                    }
-                }).then(() => {
-                    var elements = $(result.renderHtml);
-                    var found = $('#cart_table', elements);
-                    var found2 = $('#total_cart', elements);
-                    $('#cart_table').html(found)
-                    $('#total_cart').html(found2)
+    console.log(parseInt(quantity) + parseInt(count))
+    let limit = parseInt(quantity) + parseInt(count)
+    if(limit < 1){
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to delete the product!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                ).then(() => {
+                    $.ajax({
+                        url: '/changeQuantity',
+                        method: 'post',
+                        data: {
+                            userId: userId,
+                            proId: proId,
+                            cartId: cartId,
+                            count: count,
+                
+                        },
+                        success: function (result) {
+                            console.log("Entered");
+                            console.log(result);
+                           
+                               
+                                    var elements = $(result.renderHtml);
+                                    var found = $('#cart_table', elements);
+                                    var found2 = $('#total_cart', elements);
+                                    $('#cart_table').html(found)
+                                    $('#total_cart').html(found2)
+                
+                                
+                                
+                
+                            
+                        }
+                    })
                 })
+                
             }
-        }
-    })
+        })
+    }
+    else{
+        $.ajax({
+            url: '/changeQuantity',
+            method: 'post',
+            data: {
+                userId: userId,
+                proId: proId,
+                cartId: cartId,
+                count: count,
+    
+            },
+            success: function (result) {
+                console.log("Entered");
+                console.log(result);
+                if (result.response.status) {
+                    if (result.response.inc) {
+                        var elements = $(result.renderHtml);
+                        var found = $('#cart_table', elements);
+                        var found2 = $('#total_cart', elements);
+                        $('#cart_table').html(found)
+                        $('#total_cart').html(found2)
+    
+                    } else {
+                        var elements = $(result.renderHtml);
+                        var found = $('#cart_table', elements);
+                        var found2 = $('#total_cart', elements);
+                        $('#cart_table').html(found)
+                        $('#total_cart').html(found2)
+                    }
+    
+                }
+            }
+        })
+    }
+    
 }
 
 
@@ -274,6 +304,8 @@ function deleteProduct(userId, proId) {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
         confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
         if (result.isConfirmed) {
@@ -417,8 +449,8 @@ function cancelOrder(orderId) {
 
 
 
-function cancelProduct(orderId, proId) {
-    // console.log(orderId,proId);
+function cancelProduct(orderId, proId, price) {
+    console.log(orderId,proId,price);
     Swal.fire({
         title: 'Are you sure?',
         text: "Do you want to cancel this product?",
@@ -426,21 +458,27 @@ function cancelProduct(orderId, proId) {
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, cancel it!'
-    }).then(() => {
-        $.ajax({
-            url: '/cancelProduct',
-            method: 'post',
-            data: {
-                orderId: orderId,
-                proId: proId
-            },
-            success: (response) => {
-                if (response) {
-                    location.reload()
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonText: 'Yes, cancel it!',
+        cancelButtonText : "No don't!"
+    }).then((result) => {
+        if (result.isConfirmed){
+            $.ajax({
+                url: '/cancelProduct',
+                method: 'post',
+                data: {
+                    orderId: orderId,
+                    proId: proId,
+                    price : price
+                },
+                success: (response) => {
+                    if (response) {
+                        location.reload()
+                    }
                 }
-            }
-        })
+            })
+        }
     })
 }
 

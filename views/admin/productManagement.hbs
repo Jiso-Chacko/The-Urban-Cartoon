@@ -39,8 +39,25 @@
                             <td><a>{{#each this.productDetails}}{{this.productName}}{{/each}}</a></td>
 
                             <td>{{../this.paymentMethod}}</td>
-                            <td>₹{{../this.totalAmount}}</td>
+                            {{#if this.cancelled}}
+                            <td>₹0</td>
+                            {{/if}}
 
+                            {{#if this.pending}}
+                            <td>₹0</td>
+                            {{/if}}
+
+                            {{#if this.placed}}
+                            <td>₹{{../this.totalAmount}}</td>
+                            {{/if}}
+
+                            {{#if this.delivered}}
+                            <td>₹{{../this.totalAmount}}</td>
+                            {{/if}}
+
+                            {{#if this.shipped}}
+                            <td>₹{{../this.totalAmount}}</td>
+                            {{/if}}
                             {{!-- {{#if this.placed}}
                             <td style="text-transform: uppercase;" class="badge badge-primary ">{{this.status}}</td>
                             {{/if}}
@@ -68,6 +85,9 @@
                             <p style="text-transform: uppercase;" class="badge badge-success">{{this.status}}</p>
                             {{/if}}
                             {{#if this.cancelled}}
+                            <p style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</p>
+                            {{/if}}
+                            {{#if this.pending}}
                             <p style="text-transform: uppercase;" class="badge badge-danger">{{this.status}}</p>
                             {{/if}}
  

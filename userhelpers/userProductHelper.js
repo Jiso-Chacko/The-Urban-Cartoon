@@ -517,7 +517,8 @@ module.exports = {
                     product.placed = true;
                     product.shipped = false;
                     product.deliverd = false;
-                    product.cancelled = false;  
+                    product.cancelled = false; 
+                    product.pending = false;  
                     return product;
                 })
             }
@@ -527,7 +528,8 @@ module.exports = {
                     product.placed = false;
                     product.shipped = false;
                     product.deliverd = false;
-                    product.cancelled = false;   
+                    product.cancelled = false;  
+                    product.pending = true;  
                     return product;
                 })
             }
@@ -631,7 +633,9 @@ module.exports = {
             }, {
                 $set: {
                     "products.$[element].status": "placed",
-                    "products.$[element].placed": true
+                    "products.$[element].placed": true,
+                    "products.$[element].pending": false
+
                 }
             }, {
                 arrayFilters: [{
@@ -677,40 +681,30 @@ module.exports = {
         // console.log(body.orderId,body.proId);
         return new Promise(async (resolve, reject) => {
 
-            // let product = await db.get().collection(collection.ORDER_COLLECTION).aggregate([{
-            //         $match: {
-            //             _id: ObjectID(body.orderId)
-            //         },
-            //     },
-            //     {
-            //         $project: {
-            //             products: 1,
-            //             _id: 0
-            //         }
-            //     },
-            //     {
-            //         $unwind: '$products'
-            //     },
-            //     {
-            //         $match: {
-            //             'products.product': ObjectID(body.proId)
-            //         }
-            //     }
-            // ]).toArray()
+            let product = await db.get().collection(collection.ORDER_COLLECTION).findOne({
+                        _id: ObjectID(body.orderId)                
+                })
 
             // console.log([product[0].products]);
-            // console.log(product.length);
-
-
+            console.log(body.price);
+            console.log(product);
+            console.log(product.totalAmount);
+            let newPrice = product.totalAmount - parseInt(body.price)
+            console.log("New Price" + newPrice);
+            if(parseInt(newPrice)<1){
+                newPrice = 0
+            }
             db.get().collection(collection.ORDER_COLLECTION).updateOne({
                 _id: ObjectID(body.orderId)
             }, {
                 $set: {
+                    totalAmount : parseInt(newPrice),
                     "products.$[element].status": "cancelled",
                     "products.$[element].placed": false,
                     "products.$[element].shipped": false,
                     "products.$[element].delivered": false,
-                    "products.$[element].cancelled": true
+                    "products.$[element].cancelled": true,
+                    "products.$[element].pending": false
                 }
             }, {
                 arrayFilters: [{
@@ -744,20 +738,22 @@ module.exports = {
         })
     },
 
-    applyCoupon: (code) => {
+    applyCoupon: (code,userId) => {
 
         return new Promise(async (resolve,reject) => {
             let response = {}
             let user = await db.get().collection(collection.USER_COLLECTION).findOne({
-                coupon : code.code
+                _id : ObjectID(userId)
             })
             let couponCode = await db.get().collection(collection.COUPON_COLLECTION).findOne({
                 code : code.code
             })
             console.log("/////");
             console.log(couponCode);
-            console.log(user);
-           if(user != null){
+            console.log(user.couponApplied);
+            console.log("Checking condition");
+            console.log(user.coupon == code.code);
+           if(user.coupon == code.code){
                response.userApplied = true
                resolve(response)
            }

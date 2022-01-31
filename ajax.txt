@@ -946,3 +946,34 @@ data: [12, 19, 3, 5, 2, 3],
             <!-- End Tab Content -->
         </div>
         <!-- End Single Product Tab -->
+// ******** change quantity ************
+
+         else {
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Do you want to delete the product!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                        }
+                    }).then(() => {
+                        var elements = $(result.renderHtml);
+                        var found = $('#cart_table', elements);
+                        var found2 = $('#total_cart', elements);
+                        $('#cart_table').html(found)
+                        $('#total_cart').html(found2)
+                    })
+                }
+// ******** change quantity ************
+                 

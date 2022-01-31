@@ -413,7 +413,7 @@ module.exports = {
                 productName : body.productName,
                 description : body.description,
                 price : parseInt(body.price) ,
-                quantity : body.quantity,
+                quantity : parseInt(body.quantity),
                 brand : body.brand,
                 category : body.category,
                 imageName : images
@@ -430,7 +430,7 @@ module.exports = {
                 productName : body.productName,
                 description : body.description,
                 price : parseInt(body.price) ,
-                quantity : body.quantity,
+                quantity : parseInt(body.quantity),
                 brand : body.brand,
                 category : body.category,
                 "imageName.1" : image
@@ -447,7 +447,7 @@ module.exports = {
                 productName : body.productName,
                 description : body.description,
                 price : parseInt(body.price) ,
-                quantity : body.quantity,
+                quantity : parseInt(body.quantity),
                 brand : body.brand,
                 category : body.category,
                 "imageName.0" : image
@@ -463,7 +463,7 @@ module.exports = {
                 productName : body.productName,
                 description : body.description,
                 price : parseInt(body.price) ,
-                quantity : body.quantity,
+                quantity : parseInt(body.quantity),
                 brand : body.brand,
                 category : body.category,
                 "imageName.2" : image
@@ -479,7 +479,7 @@ module.exports = {
                 productName : body.productName,
                 description : body.description,
                 price : parseInt(body.price),
-                quantity : body.quantity,
+                quantity : parseInt(body.quantity),
                 brand : body.brand,
                 category : body.category,
                 "imageName.3" : image

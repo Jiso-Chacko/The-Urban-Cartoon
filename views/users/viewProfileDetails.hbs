@@ -30,7 +30,7 @@
                     <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 " aria-current="page">
                         <a href="/viewProfile/:{{userId}}">My Account</a>
                     </li>
-                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Proflie
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Profile
                     </li>
                 </ol>
             </nav>
@@ -55,8 +55,13 @@
                     <div class="card-body">
 
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-                         <img class="rounded-circle mt-5" width="150px" src="/profileImages/{{user.image}}">
-                                                       
+                            {{#if imgErr}}
+                            {{User.image}}
+                         <img class="rounded-circle mt-5" width="150px" src="/images/profile.png">
+                            {{else}}
+                            
+                         <img class="rounded-circle mt-5" width="150px" src="/profileImages/{{User.image}}">
+                            {{/if}}                           
                         </div>
 
                         <div class="row mt-2 ml-10">
@@ -64,7 +69,7 @@
                                     <h4>First name</h4>
                                 </label></div>
                             <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
-                                    <h4>{{user.userFirstName}}</h4>
+                                    <h4>{{User.userFirstName}}</h4>
                                 </label></div>
                         </div>
                         <div class="row mt-2 ml-10">
@@ -72,7 +77,7 @@
                                     <h4>Last name</h4>
                                 </label></div>
                             <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
-                                    <h4>{{user.userLastName}}</h4>
+                                    <h4>{{User.userLastName}}</h4>
                                 </label></div>
                         </div>
 
@@ -81,7 +86,7 @@
                                     <h4>Email</h4>
                                 </label></div>
                             <div class="col-md-6"><label class="labels" >
-                                    <h4>{{user.userEmail}}</h4>
+                                    <h4>{{User.userEmail}}</h4>
                                 </label></div>
                         </div>
 
@@ -90,7 +95,7 @@
                                     <h4>Phone</h4>
                                 </label></div>
                             <div class="col-md-6"><label class="labels" style="text-transform: uppercase;">
-                                    <h4>+91{{user.userPhone}}</h4>
+                                    <h4>+91{{User.userPhone}}</h4>
                                 </label></div>
                         </div>
 
