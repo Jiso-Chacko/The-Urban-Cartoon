@@ -87,8 +87,16 @@
                                                 <td>{{#each productDetails}}{{this.productName}}{{/each}}<strong
                                                         class="product-quantity"> × {{this.quantity}}</strong></td>
                                                 <td>{{this.individualSum}}</td>
-                                            </tr>
+                                            </tr>                                           
                                             {{/each}}
+
+                                            {{#if refferal}}
+                                            <tr class="cart_item">
+                                                <td>Refferal discount &nbsp(-10%)</td>
+                                                <td>-{{refferalDiscount}}</td>
+                                            </tr>
+                                            {{/if}}
+
                                         </tbody>
                                         <tfoot>
                                             {{!-- <tr>
@@ -144,7 +152,7 @@
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                         order</button>
                                     <button id="newFormPaypal_btn" type="button"
-                                    class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Paypal
+                                    class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Place
                                     order</button>
                                 </div>
                                 <!-- End Order Summary -->
@@ -353,7 +361,7 @@
                             <input type="text" class="form-control" name="coupon" id="coupon3" placeholder="Coupon code"
                                 aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
                             <div class="input-group-append">
-                                <input hidden value="{{productCount}}" id="productCount">
+                                <input hidden value="{{productCountReff}}" id="productCount">
                                 <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
                                     onclick="applyCouponNewUser()"><i class="fas fa-tags d-md-none"></i><span
                                         class="d-none d-md-inline">Apply coupon</span></button>
@@ -474,7 +482,7 @@
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                         order</button>
                                         <button type="button" id="MyFormPaypal_btn"
-                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Paypal
+                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Place
                                         order</button>
 
 

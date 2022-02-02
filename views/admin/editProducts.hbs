@@ -329,9 +329,11 @@
     <script src="../../admin/assets/js/file-upload.js"></script>
     <!-- End custom js for this page -->
 
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" ></script>
 
-
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
 
     <script>
         let result1 = document.querySelector('.result1'), // modal div class
@@ -378,7 +380,7 @@
                     closeOnEsc: false,
                     allowOutsideClick: false,
                 }).then(() => {
-                    document.getElementById("fileinputimage1").value = ""
+                    location.reload()                   
                     e.preventDefault()
                 })
                 fileName = "";
@@ -445,7 +447,7 @@
                     closeOnEsc: false,
                     allowOutsideClick: false,
                 }).then(() => {
-                    document.getElementById("fileinputimage2").value = ""
+                    location.reload()                     
                     e.preventDefault()
                 })
                 fileName = "";
@@ -511,7 +513,7 @@
                     closeOnEsc: false,
                     allowOutsideClick: false,
                 }).then(() => {
-                    document.getElementById("fileinputimage3").value = ""
+                    location.reload()                    
                     e.preventDefault()
                 })
                 fileName = "";
@@ -570,6 +572,7 @@
                     reader.readAsDataURL(e.target.files[0]);
                 }
             } else {
+                
                 Swal.fire({
                     position: 'center',
                     icon: 'error',
@@ -579,7 +582,7 @@
                     closeOnEsc: false,
                     allowOutsideClick: false,
                 }).then(() => {
-                    document.getElementById("fileinputimage4").value = ""
+                    location.reload()                   
                     e.preventDefault()
                 })
                 fileName = "";

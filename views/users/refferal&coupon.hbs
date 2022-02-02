@@ -1,0 +1,179 @@
+<!-- breadcrumb -->
+<div class="bg-gray-13 bg-md-transparent">
+    <div class="container">
+        <!-- breadcrumb -->
+        <div class="my-md-3">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a href="/">Home</a></li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 " aria-current="page">
+                        <a href="/viewProfile/:{{userId}}">My Account</a>
+                    </li>
+                    <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">Refferal and
+                        coupon
+                    </li>
+
+                </ol>
+            </nav>
+        </div>
+        <!-- End breadcrumb -->
+    </div>
+</div>
+<!-- End breadcrumb -->
+
+<div class="container">
+    <div class="card mb-9">
+        <div class="card-body">
+
+            <div class="tab">
+                <button class="tablinks active" id="toggle-transfer">Refferal</button>
+                <button class="tablinks" id="toggle-trade">My wallet</button>
+            </div>
+
+            <div id="transfer" class="tabcontent">
+
+                <img src="https://t3.ftcdn.net/jpg/02/73/79/38/240_F_273793817_7d8fYnrOt47TQrcEKZMsf3ZvowpycWaa.jpg"
+                    style="margin-left: 24rem;">
+                <h1 class="text-center">INVITE FRIENDS & EARN</h1>
+                <P class="text-center">When they signin with your refferal link and places their first order you will
+                    get ₹100 credited into your wallet and they will get 10% off on their first order</P>
+                    <div class="d-flex justify-content-center">
+                  
+                    <div>
+                 <input type="text" placeholder="http://localhost:3000/refferal?code={{userId}}" id="copyLink" value="http://localhost:3000/refferal?code={{userId}}" style="width: 30rem;" disabled>
+                 <button class="btn btn-primary btn-sm ml-3" onclick="copyClicked()" style="cursor: pointer;">Click to share</button>
+                    </div>
+                    
+                    </div>
+            </div>
+
+            <div id="trade" class="tabcontent">
+
+                
+                <img src="/images/wallet.png"
+                    style="margin-left: 24rem; height:10rem">
+                    {{#if userDetails.wallet}}
+                <h2 class="text-center">Current balance : ₹{{userDetails.walletAmount}}</h2>
+                <p class="text-center">Invite your friends to grow your wallet and purchase your dream gadget with that amount.</p>
+                {{else}}
+                <h2 class="text-center">Current balance : ₹0</h2>
+                <p class="text-center">Invite your friends to grow your wallet and purchase your dream gadget with that amount.</p>
+                {{/if}}
+            </div>
+
+            
+
+
+        </div>
+    </div>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#trade').hide();
+        
+
+        $('#toggle-trade').click(function () {
+            $('#trade').fadeIn(1000);
+            $('#transfer').hide();
+            
+            $('#toggle-transfer').removeClass('tablinks active').addClass('tablinks');
+            $('#toggle-trade').removeClass('tablinks').addClass('tablinks active');
+        })
+        $('#toggle-transfer').click(function () {
+            $('#transfer').fadeIn(1000);
+            $('#trade').hide();
+            
+            $('#toggle-transfer').removeClass('tablinks').addClass('tablinks active');
+            $('#toggle-trade').removeClass('tablinks active').addClass('tablinks');
+
+        })
+     
+    })
+
+    function copyClicked() {
+        var copyText = document.getElementById("copyLink").value;
+
+        navigator.clipboard.writeText(copyText);
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
+        Toast.fire({
+            icon: 'success',
+            title: 'Lnk copied to clipboard'
+        })
+    }
+</script>
+
+<style>
+    .card {
+        border-radius: 4px;
+        background: #fff;
+        box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+        transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+        padding: 14px 80px 18px 36px;
+        cursor: pointer;
+    }
+
+    .card:hover {
+        box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+    }
+
+
+
+    .tab {
+        overflow: hidden;
+        border: 0px solid rgb(211, 80, 80);
+        background-color: #ffffff79;
+        width: fit-content;
+        border-radius: 5px 5px 0 0;
+    }
+
+
+    .tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        font-size: 17px;
+    }
+
+
+    .tab button:hover {
+        background-color: rgb(255, 255, 255);
+    }
+
+    .tab button.active {
+        background-color: rgb(240, 225, 15);
+    }
+
+
+    .tabcontent {
+        padding: 6px 120px;
+        border: 0px solid rgb(255, 255, 255);
+        border-radius: 0 5px 5px 5px;
+        background-color: white;
+    }
+
+    .transfer-icon {
+        font-size: 3em;
+        color: rgb(120, 60, 231);
+        text-align: center;
+    }
+</style>

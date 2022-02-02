@@ -21,7 +21,7 @@
                             <th>user</th>
                             <th>Product</th>
                             <th>Payment method</th>
-                            <th>Amount received</th>
+                            <th>Amount</th>
 
                             <th>Status</th>
                             <th>Change Status</th>
@@ -40,11 +40,11 @@
 
                             <td>{{../this.paymentMethod}}</td>
                             {{#if this.cancelled}}
-                            <td>₹0</td>
+                            <td>₹{{../this.totalAmount}}</td>
                             {{/if}}
 
                             {{#if this.pending}}
-                            <td>₹0</td>
+                            <td>₹{{../this.totalAmount}}</td>
                             {{/if}}
 
                             {{#if this.placed}}

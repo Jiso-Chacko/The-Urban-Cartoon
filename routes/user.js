@@ -28,6 +28,9 @@ paypal.configure({
 var sigupData = {}
 var loginPhonenumber = {}
 let count = 0
+let refferal = {}
+refferal.userId = null
+refferal.linkApplied = false
 
 // verify user function
 // function verifyUserLogg (){
@@ -197,7 +200,7 @@ router.get('/', verifyUser, getCartCount, async function (req, res, next) {
     userLoggedIn = false
     user = null
     userCartCount = null,
-      userId = null
+    userId = null
   }
   res.render('users/index', {
     layout: 'users/layout',
@@ -222,7 +225,8 @@ router.get('/signup', (req, res, next) => {
   if (req.session.user) {
     res.redirect('/')
     next()
-  } else {
+  }
+  else {
     console.log("This is signup get router")
     console.log(req.session.userExists);
     res.render('users/signup', {
@@ -242,7 +246,7 @@ router.post('/signup', (req, res, next) => {
     console.log("This is response");
     if (response.userExist) {
       req.session.userExists = true,
-        console.log(req.session.userExists);
+      console.log(req.session.userExists);
       res.redirect('/signup')
     } else {
       req.session.userExists = false
@@ -277,7 +281,7 @@ router.post('/verifyOtp', (req, res, next) => {
   let num4 = req.body.fourth
   let otp = num1.concat(num2, num3, num4)
   console.log("This is otp post router");
-
+  console.log(sigupData);
   client.verify.services(serviceId).verificationChecks.create({
     to: `+91${sigupData.phone}`,
     code: otp
@@ -285,16 +289,29 @@ router.post('/verifyOtp', (req, res, next) => {
     console.log(result.valid);
     if (result.valid) {
       //store users data and redirect to home
+      console.log("*** signing up using refferal ***")
+      console.log(refferal);
+      if(refferal.linkApplied == true){
+        sigupData.refferal = true
+        sigupData.refferer = refferal.userId
+      }
+      else{
+        sigupData.refferal = false
+        sigupData.refferer = null
+      }
+      console.log(sigupData);
       userHelper.doRegister(sigupData).then((result) => {
-        // console.log("This is sign up after otp verification");
-        // console.log(result);
+        console.log("This is sign up after otp verification");
+        console.log(result);
         req.session.user = result;
         req.session.userLoggedIn = true
         req.session.userId = result._id
+        console.log(req.session.user)
+        res.redirect('/')
       }).catch((err) => {
         console.log(err);
+        res.redirect('/otp')
       })
-      res.redirect('/')
     } else {
       //show error message
       req.session.otpErr = true
@@ -337,7 +354,7 @@ function verifyUser(req, res, next) {
 }
 
 // This is view product example
-router.get('/viewProduct',verifyUserLogg, getCartCount, async (req, res, next) => {
+router.get('/viewProduct', getCartCount, async (req, res, next) => {
   let proId = req.query.id
 
   if (req.session.user) {
@@ -504,11 +521,19 @@ router.get('/wishlist', verifyUserLogg, getCartCount, async (req, res, next) => 
 
   let wishlistProducts = await userProductHelper.getProductsForWishlist(req.session.user._id)
 
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  userCartCount = req.session.cartCount
+  userId = req.session.user._id
   console.log("This is /wishlist");
   console.log(wishlistProducts);
   res.render('users/wishlist', {
     layout: 'users/layout',
-    wishlistProducts: wishlistProducts
+    wishlistProducts: wishlistProducts,
+    "loggIn": userLoggedIn,
+    userCartCount: req.session.cartCount,
+    user: user,
+    userId : userId
   })
 })
 
@@ -606,14 +631,12 @@ router.post('/removeWishlist', (req, res, next) => {
 router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => {
   if(req.session.cartCount != 0){
 
-  
-
   let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   let addressType = await userHelper.getAllAddressType(req.session.user._id)
 
-  req.session.totalAmount = price.totalSum
+  // req.session.totalAmount = price.totalSum
   req.session.coupon = {}
   req.session.coupon.Applied =  false
   req.session.coupon.code = null
@@ -628,7 +651,20 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     req.session.addressErr = false
   }
   console.log(req.session);
-
+  console.log(req.session.user.refferal == undefined);
+  if(req.session.user.refferal != undefined && req.session.user.refferal === true){
+    let discount = price.totalSum
+    let discountPrice = discount * 0.1
+    req.session.totalAmount = price.totalSum - parseInt(discountPrice)
+    req.session.refferalDiscount = parseInt(price.totalSum * 0.1)
+    req.session.productCount = req.session.cartCount + 1
+    req.session.refferalApplied = true
+  }
+  else{
+    req.session.totalAmount = price.totalSum
+    req.session.productCount = req.session.cartCount
+    req.session.refferalApplied = false
+  }
   let userFname = req.session.user.userFirstName
   let userLname = req.session.user.userLastName
   user = req.session.user.userFirstName
@@ -650,10 +686,13 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
     "addressErr": req.session.addressErr,
     "loggIn": userLoggedIn,
     user: user,
-    userId: userId,
+    userDetails: userId,
     userCartCount: userCartCount,
     addressType: addressType,
-    address: address.address
+    address: address.address,
+    productCountReff : req.session.productCount,
+    refferalDiscount : req.session.refferalDiscount,
+    refferal : req.session.refferalApplied
   })
   req.session.invalidCoupon = false
 
@@ -682,7 +721,7 @@ router.post('/checkout', verifyUserLogg, async (req, res, next) => {
   console.log("###### coupon applied before place order #######");
   console.log(req.session.coupon);
   
-  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon).then((orderId) => {
+  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon,req.session.user,req.session.refferalApplied).then((orderId) => {
 
     if (req.body.payment === 'cod') {
       res.send({
@@ -786,7 +825,7 @@ router.get('/success',verifyUserLogg, async (req, res) => {
         throw error;
     } else {
       
-  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon)
+  await userProductHelper.placeOrder(req.session.user._id, address.address, cartProducts, req.session.totalAmount,req.session.coupon,req.session.user,req.session.refferalApplied)
         console.log(JSON.stringify(payment));
         // res.send('Success');
         res.redirect('orderSuccess')
@@ -816,7 +855,7 @@ router.post('/checkoutNewAddressSave', verifyUserLogg, async (req, res, next) =>
   address.email = req.body.email
   address.phone = req.body.phone
   await userHelper.addAddress(address, req.session.user._id, req.body.addressType)
-  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, req.session.totalAmount).then((orderId) => {
+  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, req.session.totalAmount,req.session.coupon,req.session.user,req.session.refferalApplied).then((orderId) => {
     if (req.body.payment === 'cod') {
       res.send({
         status: true,
@@ -853,7 +892,7 @@ router.post('/checkoutNewAddress', verifyUserLogg, async (req, res, next) => {
   address.email = req.body.email
   address.phone = req.body.phone
 
-  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, req.session.totalAmount).then((orderId) => {
+  await userProductHelper.placeOrder(req.session.user._id, req.body, cartProducts, req.session.totalAmount,req.session.coupon,req.session.user,req.session.refferalApplied).then((orderId) => {
     if (req.body.payment === 'cod') {
       res.send({
         status: true,
@@ -957,7 +996,7 @@ router.get('/success1',verifyUserLogg, async (req, res) => {
         throw error;
     } else {
       
-  await userProductHelper.placeOrder(req.session.user._id, req.session.address, cartProducts, req.session.totalAmount,req.session.coupon)
+  await userProductHelper.placeOrder(req.session.user._id, req.session.address, cartProducts, req.session.totalAmount,req.session.coupon,req.session.user,req.session.refferalApplied)
         console.log(JSON.stringify(payment));
         // res.send('Success');
         res.redirect('orderSuccess')
@@ -1056,7 +1095,7 @@ router.get('/success2',verifyUserLogg, async (req, res) => {
         throw error;
     } else {
       
-  await userProductHelper.placeOrder(req.session.user._id, req.session.address, cartProducts, req.session.totalAmount,req.session.coupon)
+  await userProductHelper.placeOrder(req.session.user._id, req.session.address, cartProducts, req.session.totalAmount,req.session.coupon,req.session.user,req.session.refferalApplied)
         console.log(JSON.stringify(payment));
         // res.send('Success');
         res.redirect('orderSuccess')
@@ -1349,7 +1388,6 @@ router.get('/viewProfile/:id/profile', verifyUserLogg, async (req, res, next) =>
 // ***************** edit profile page get ******************
 router.get('/viewProfile/:id/editProfile', verifyUserLogg, async (req, res, next) => {
 
-
   console.log("This is edit profile page");
   console.log(req.session.user);
   console.log(req.params.id);
@@ -1463,13 +1501,53 @@ router.get('/viewProfile/:id/orders', verifyUserLogg, async (req, res, next) => 
   console.log(req.params.id);
   let orders = await userProductHelper.getAllOrders(req.params.id)
 
+  if (req.session.user) {
+    user = req.session.user.userFirstName
+    userLoggedIn = req.session.userLoggedIn
+    userCartCount = req.session.cartCount
+    userId = req.session.user._id
+  } else {
+    userLoggedIn = false
+    user = null
+    userCartCount = null,
+    userId = null
+  }
+
   res.render('users/viewOrders2', {
     layout: 'users/layout',
     "loggIn": userLoggedIn,
     user: user,
-    orders: orders
+    orders: orders,
+    userCartCount: userCartCount,
+    userId: userId
   })
+})
 
+// Refferal and Coupons in view profile
+router.get('/viewProfile/:id/refferal&coupons',verifyUserLogg,(req,res,next) => {
+   console.log("***** refferal and coupon get page ******");
+   console.log(req.params);
+   console.log(req.session.user._id);
+   if (req.session.user) {
+    user = req.session.user.userFirstName
+    userLoggedIn = req.session.userLoggedIn
+    userCartCount = req.session.cartCount
+    userId = req.session.user._id
+    userDetails = req.session.user
+  } else {
+    userLoggedIn = false
+    user = null
+    userCartCount = null,
+    userId = null
+  }
+   res.render('users/refferal&coupon',{
+     layout : 'users/layout',
+     userCartCount: userCartCount,
+     userId: userId,
+     "loggIn": userLoggedIn,
+     user: user,
+     userDetails : userDetails
+    })
 })
 
 // ******* cancel product from orders ************
@@ -1690,10 +1768,27 @@ router.post('/productSearch',async (req,res,next) => {
    else{
     req.session.searchErr = false
   }
+
+  if (req.session.user) {
+    user = req.session.user.userFirstName
+    userLoggedIn = req.session.userLoggedIn
+    userCartCount = req.session.cartCount
+    userId = req.session.user._id
+  } else {
+    userLoggedIn = false
+    user = null
+    userCartCount = null,
+    userId = null
+  }
+
   res.render('users/search',{
     layout : 'users/layout',
     'searchErr' : req.session.searchErr,
-    products : products
+    products : products,
+    "loggIn": userLoggedIn,
+    user: user,
+    userCartCount: userCartCount,
+    userId: userId
   })
   req.session.searchErr = false
   }
@@ -1763,6 +1858,18 @@ router.post('/addReview',async (req,res,next) => {
 
 })
 
+
+//******* refferal link **********
+router.get('/refferal',(req,res,next) => {
+  console.log("*** refferal link ****");
+  console.log(req.query);
+  
+  refferal.userId = req.query.code
+  refferal.linkApplied = true
+
+  console.log(req.session.refferal);
+  res.redirect('/signup')
+})
 
 
 

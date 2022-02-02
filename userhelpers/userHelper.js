@@ -29,6 +29,8 @@ module.exports = {
                     userEmail: newUser.email,
                     userPhone: newUser.phone,
                     userPass: hashPass,
+                    refferal : newUser.refferal,
+                    refferer : ObjectID(newUser.refferer),
                     isEnabled: true
                 }).then((result) => {
                     resolve(result.ops[0])

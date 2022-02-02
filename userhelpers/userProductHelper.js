@@ -492,8 +492,8 @@ module.exports = {
         })
     },
 
-    placeOrder: (userId, order, products, totalAmount,coupon) => {
-        return new Promise((resolve, reject) => {
+    placeOrder: (userId, order, products, totalAmount,coupon,user,refferal) => {
+        return new Promise(async (resolve, reject) => {
             console.log("This is coupon in place order");
             console.log(coupon);
             
@@ -508,6 +508,7 @@ module.exports = {
             else{
                 status = 'pending'
             }
+
             console.log("*** status ***");
             console.log(status);
             console.log("--------------------------------------------------------------");
@@ -584,7 +585,50 @@ module.exports = {
                 resolve(result.ops[0]._id)
             })
 
+            console.log("****///*** User in place order ****///***");
+            console.log(user);
+            console.log(refferal);
 
+            if(refferal === true){
+                
+                db.get().collection(collection.USER_COLLECTION).updateOne({
+                    _id :  ObjectID(userId)
+                },
+                {
+                    $set : {
+                        refferal : false,
+                    }
+                })
+                
+                let findUser = await db.get().collection(collection.USER_COLLECTION).findOne({
+                    _id : ObjectID(user.refferer)
+                })
+
+                if(findUser.wallet === undefined){
+                    db.get().collection(collection.USER_COLLECTION).updateOne({
+                        _id : ObjectID(user.refferer)
+                    },
+                    {
+                        $set : {
+                            wallet : true,
+                            walletAmount : 100
+                        }
+                    })
+                }
+                else{
+                    let walletAmount = parseInt(findUser.walletAmount + 100)
+                    db.get().collection(collection.USER_COLLECTION).updateOne({
+                        _id : ObjectID(user.refferer)
+                    },
+                    {
+                        $set : {
+                            wallet : true,
+                            walletAmount : walletAmount
+                        }
+                    })
+                }
+            }
+            
         })
 
     },

@@ -27,26 +27,17 @@
                     </thead>
                     <tbody>
                         {{#each products}}
+                            {{#if this.products.delivered}}
                         <tr>
                             <td>{{#each this.products.productDetails}}{{this.productName}}{{/each}}</td>
                             <td>{{this.products.status}}</td>
                             <td>{{this.products.quantity}}</td>
-                            <td>{{#each this.products.productDetails}}{{this.price}}{{/each}}</td>
-                            {{#if this.products.cancelled}}
-                            <td>returned</td>
-                            {{else}}
+                            <td>{{#each this.products.productDetails}}{{this.price}}{{/each}}</td>                          
                             <td>{{this.revenue}}</td>
-                            {{/if}}
-
-
-
-
-
-
-
                             {{!-- <a class="btn btn-success" style="width: 5.5rem;" onclick="return confirm('Are you sure to enable {{ this.userFirstName }}? ')"  href="/admin/enable-user?id={{ this._id }}">Unblock</a> --}}
 
                         </tr>
+                            {{/if}}
                         {{/each}}
                     </tbody>
                 </table>
