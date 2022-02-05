@@ -156,7 +156,7 @@ router.post('/verifyOtpLogin', getCartCount, (req, res, next) => {
     } else {
       req.session.userExist = false
       req.session.optErr = true
-      res.redirect('/otplogin')
+      res.redirect('/otp4login')
     }
   }).catch((err) => {
     console.log(err);
@@ -452,14 +452,54 @@ router.get('/addToWishlist/:id', (req, res, next) => {
   if (req.session.user) {
     let userId = req.session.user._id;
     let proId = req.params.id;
-    userProductHelper.addToWishlist(userId, proId).then((result) => {
+    userProductHelper.addToWishlist(userId, proId).then( async (result) => {
       console.log("This is result");
       console.log(result.status);
       if (result.status) {
-        res.send({
-          userExist: true,
-          status: true
+
+        let slider = await userProductHelper.getAllSlider()
+        let banner = await userProductHelper.getAllBanner()
+        let products = await userProductHelper.getAllProducts()
+        let featured = await userProductHelper.getAllFeatured()
+        let topRated = await userProductHelper.getAllTopRated()
+        let onSale = await userProductHelper.getAllOnsale()
+        let laptop = await userProductHelper.getAllLaptop()
+        let smartPhone = await userProductHelper.getAllSmartphone()
+
+        if (req.session.user) {
+          user = req.session.user.userFirstName
+          userLoggedIn = req.session.userLoggedIn
+          userCartCount = req.session.cartCount
+          userId = req.session.user._id
+        } else {
+          userLoggedIn = false
+          user = null
+          userCartCount = null,
+          userId = null
+        }
+
+        hb.render('views/users/index.hbs', {
+          layout: 'users/layout',
+          slider: slider,
+          banner: banner,
+          featured: featured,
+          topRated: topRated,
+          onSale: onSale,
+          laptop: laptop,
+          smartPhone: smartPhone,
+          products: products,
+          "loggIn": userLoggedIn,
+          user: user,
+          userCartCount: userCartCount,
+          userId: userId
+        }).then((renderHtml) => {
+          res.send({
+            userExist: true,
+            status: true,
+            renderHtml
+          })
         })
+
       } else {
         res.send({
           userExist: true,
@@ -514,6 +554,7 @@ router.get('/cart', verifyUserLogg, getCartCount, async (req, res, next) => {
     user: user,
     userCartCount: userCartCount,
   })
+
 })
 
 // **** get wishlist *********
@@ -596,12 +637,13 @@ router.post('/deleteProduct', (req, res, next) => {
         renderHtml
       })
     })
+
   })
 })
 
 //*************** delete product in wishlist ajax call *****************
 
-router.post('/removeWishlist', (req, res, next) => {
+router.post('/removeWishlist',verifyUserLogg, (req, res, next) => {
   console.log("This is /removeWishlist");
   console.log(req.session.user._id);
   console.log(req.body.proId);
@@ -612,7 +654,6 @@ router.post('/removeWishlist', (req, res, next) => {
   userProductHelper.deleteProductFromWishlist(userId, proId).then(async (result) => {
 
     let wishlistProducts = await userProductHelper.getProductsForWishlist(req.session.user._id)
-
 
     hb.render('views/users/wishlist.hbs', {
       layout: 'users/layout',
@@ -635,6 +676,7 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   let price = await userProductHelper.getTotalAmount(req.session.user._id)
   let address = await userHelper.getAllAddress(req.session.user._id)
   let addressType = await userHelper.getAllAddressType(req.session.user._id)
+  let userId = await userHelper.getUser(req.session.user._id)
 
   // req.session.totalAmount = price.totalSum
   req.session.coupon = {}
@@ -670,7 +712,6 @@ router.get('/checkout', verifyUserLogg, getCartCount, async (req, res, next) => 
   user = req.session.user.userFirstName
   userLoggedIn = req.session.userLoggedIn
   userCartCount = req.session.cartCount
-  userId = req.session.user
 
   for (var i = 0; i < cartProducts.length; i++) {
     cartProducts[i].individualSum = price.individualSum[i];
@@ -1869,6 +1910,166 @@ router.get('/refferal',(req,res,next) => {
 
   console.log(req.session.refferal);
   res.redirect('/signup')
+})
+
+// ******* apply wallet ********
+router.post('/applyWallet',verifyUserLogg,getCartCount,async (req,res,next) => {
+  console.log("***** apply wallet *****");
+  console.log(req.body);
+  console.log(req.session.totalAmount);
+
+
+
+  if(req.body.checked === 'true'){
+
+    let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+    let price = await userProductHelper.getTotalAmount(req.session.user._id)
+    let address = await userHelper.getAllAddress(req.session.user._id)
+    let addressType = await userHelper.getAllAddressType(req.session.user._id)
+    await userHelper.changeWalletStatus(req.body)
+    let userId = await userHelper.getUser(req.session.user._id)
+    console.log("userid");
+    console.log(userId);
+  // req.session.totalAmount = price.totalSum
+  req.session.coupon = {}
+  req.session.coupon.Applied =  false
+  req.session.coupon.code = null
+  console.log("This is /checkout get");
+  console.log("Address  : " + address.address);
+ 
+  if (address.status == false) {
+    req.session.addressErr = true
+    req.session.userAddress = null
+  } else {
+    // req.session.userAddress = address.address[0]
+    req.session.addressErr = false
+  }
+  console.log(req.session);
+  console.log(req.session.user.refferal == undefined);
+  if(req.session.user.refferal != undefined && req.session.user.refferal === true){
+    let discount = price.totalSum
+    let discountPrice = discount * 0.1
+    req.session.totalAmount = price.totalSum - parseInt(discountPrice)
+    req.session.refferalDiscount = parseInt(price.totalSum * 0.1)
+    req.session.productCount = req.session.cartCount + 1
+    req.session.refferalApplied = true
+  }
+  else{
+    req.session.totalAmount = price.totalSum
+    req.session.productCount = req.session.cartCount
+    req.session.refferalApplied = false
+  }
+  let userFname = req.session.user.userFirstName
+  let userLname = req.session.user.userLastName
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  userCartCount = req.session.cartCount
+
+
+  for (var i = 0; i < cartProducts.length; i++) {
+    cartProducts[i].individualSum = price.individualSum[i];
+  }
+
+  req.session.totalAmount = req.session.totalAmount - parseInt(req.body.walletAmount)
+  console.log(req.session.totalAmount);
+
+  hb.render('views/users/checkout.hbs', {
+    layout: 'users/layout',
+    cartProducts: cartProducts,
+    productCount :  cartProducts.length,
+    totalAmount: req.session.totalAmount,
+    userFname: userFname,
+    userLname: userLname,
+    "addressErr": req.session.addressErr,
+    "loggIn": userLoggedIn,
+    user: user,
+    userDetails: userId,
+    userCartCount: userCartCount,
+    addressType: addressType,
+    address: address.address,
+    productCountReff : req.session.productCount,
+    refferalDiscount : req.session.refferalDiscount,
+    refferal : req.session.refferalApplied
+
+  }).then((renderHtml) => {
+    res.send({applied : true,renderHtml})
+  })
+ 
+  }
+  else{
+
+    let cartProducts = await userProductHelper.getProductsForCart(req.session.user._id)
+    let price = await userProductHelper.getTotalAmount(req.session.user._id)
+    let address = await userHelper.getAllAddress(req.session.user._id)
+    let addressType = await userHelper.getAllAddressType(req.session.user._id)
+    await userHelper.changeWalletStatus(req.body)
+    let userId = await userHelper.getUser(req.session.user._id)
+    console.log("userid");
+    console.log(userId);
+
+  // req.session.totalAmount = price.totalSum
+  req.session.coupon = {}
+  req.session.coupon.Applied =  false
+  req.session.coupon.code = null
+  console.log("This is /checkout get");
+  console.log("Address  : " + address.address);
+ 
+  if (address.status == false) {
+    req.session.addressErr = true
+    req.session.userAddress = null
+  } else {
+    // req.session.userAddress = address.address[0]
+    req.session.addressErr = false
+  }
+  console.log(req.session);
+  console.log(req.session.user.refferal == undefined);
+  if(req.session.user.refferal != undefined && req.session.user.refferal === true){
+    let discount = price.totalSum
+    let discountPrice = discount * 0.1
+    req.session.totalAmount = price.totalSum - parseInt(discountPrice)
+    req.session.refferalDiscount = parseInt(price.totalSum * 0.1)
+    req.session.productCount = req.session.cartCount + 1
+    req.session.refferalApplied = true
+  }
+  else{
+    req.session.totalAmount = price.totalSum
+    req.session.productCount = req.session.cartCount
+    req.session.refferalApplied = false
+  }
+  let userFname = req.session.user.userFirstName
+  let userLname = req.session.user.userLastName
+  user = req.session.user.userFirstName
+  userLoggedIn = req.session.userLoggedIn
+  userCartCount = req.session.cartCount
+
+
+  for (var i = 0; i < cartProducts.length; i++) {
+    cartProducts[i].individualSum = price.individualSum[i];
+  }
+
+  hb.render('views/users/checkout.hbs', {
+    layout: 'users/layout',
+    cartProducts: cartProducts,
+    productCount :  cartProducts.length,
+    totalAmount: req.session.totalAmount,
+    userFname: userFname,
+    userLname: userLname,
+    "addressErr": req.session.addressErr,
+    "loggIn": userLoggedIn,
+    user: user,
+    userDetails: userId,
+    userCartCount: userCartCount,
+    addressType: addressType,
+    address: address.address,
+    productCountReff : req.session.productCount,
+    refferalDiscount : req.session.refferalDiscount,
+    refferal : req.session.refferalApplied
+
+  }).then((renderHtml) => {
+    res.send({applied : false,renderHtml})
+  })
+    
+  }
 })
 
 

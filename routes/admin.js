@@ -36,23 +36,31 @@ router.get('/', async function (req, res, next) {
     let totalProfit = parseInt(totalSales - totalSales * (10 / 100))
     let graphData = await adminProductHelper.categoryWiseChartData()
     let donutCartData = await adminProductHelper.brandWiseChartData()
-
+    let users = await adminProductHelper.getAllUsers()
+    let topSellingProducts = await adminProductHelper.topSellingProducts()
     console.log("**///");
+    console.log(users.length);
     console.log(totalSales);
     console.log(totalProfit);
+    console.log(topSellingProducts);
     let brands = donutCartData.brands
     let brandCount = donutCartData.count
     let smartPhoneCount = graphData.smartPhone
     let laptopCount = graphData.laptop
+    let products = topSellingProducts.products
+    let productsSale = topSellingProducts.count
     res.render('admin/dashboard', {
       layout: 'admin/layout',
       orders: orders,
       totalSales: totalSales,
       totalProfit: totalProfit,
+      totalUsers : users.length,
       smartPhoneCount: smartPhoneCount,
       laptopCount: laptopCount,
       brands: brands,
-      brandCount: brandCount
+      brandCount: brandCount,
+      products : products,
+      productsSale : productsSale
     });
   } else {
     res.redirect('/admin/login')
@@ -922,6 +930,7 @@ router.get('/stockReport', async (req, res, next) => {
   let products = await adminProductHelper.getSalesReport()
   let productArray = []
   console.log("******** products ********");
+  console.log(products);
   for (i = 0; i < products.length; i++) {
     productArray.push({
       name : products[i].products.productDetails[0].productName,

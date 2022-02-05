@@ -1,3 +1,9 @@
+{{!-- <style>
+    #wishlistAdded {
+        display: none;
+    }
+</style> --}}
+
 <main id="content" role="main">
     {{!-- <h1>{{title}}</h1>
 <p>Welcome to {{title}}</p>
@@ -200,8 +206,8 @@
                     <ul class="row list-unstyled products-group no-gutters">
 
                         {{#each featured}}
-                        <li class="col-6 col-md-4 col-xl product-item">
-                            <div class="product-item__outer h-100 w-100">
+                        <li class="col-6 col-md-4 col-xl product-item" id="productList">
+                            <div class="product-item__outer h-100 w-100" >
                                 <div class="product-item__inner px-xl-4 p-3">
                                     <div class="product-item__body pb-xl-2">
                                         <div class="mb-2"><a
@@ -282,14 +288,19 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="product-item__footer">
+                                    <div class="product-item__footer" id="productDiv">
                                         <div class="border-top pt-2 flex-center-between flex-wrap">
                                             
                                             {{!-- <a href="" id="tag"
                                                 class="text-gray-6 font-size-13"><i
                                                     class="ec ec-favorites mr-1 font-size-15"></i> Wishlist</a> --}}
-                                                    <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                    <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>
                                                     {{!-- <button class="text-gray-6 font-size-13" onclick="sweetAlert()"><i
                                                     class="ec ec-favorites mr-1 font-size-15"></i>Wishlist </button> --}}
                                                     
@@ -391,8 +402,15 @@
                                     <div class="product-item__footer">
                                         <div class="border-top pt-2 flex-center-between flex-wrap">
                                         
-                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                        class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                        <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>
                                         </div>
                                     </div>
                                 </div>
@@ -500,8 +518,15 @@
                                     <div class="product-item__footer">
                                         <div class="border-top pt-2 flex-center-between flex-wrap">
                                            
-                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                            {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                        <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>            
                                         </div>
                                     </div>
                                 </div>
@@ -619,8 +644,15 @@
                                         </div>
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
-                                               <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                               {{!-- <a class="btn-add-wishlist transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                               <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>     
                                             </div>
                                         </div>
                                     </div>
@@ -722,8 +754,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                                 
-                                                <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                                    <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -821,8 +860,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                               
-                                                <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>
                                             </div>
                                         </div>
                                     </div>
@@ -935,8 +981,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                                
-                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                            {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>        
                                             </div>
                                         </div>
                                     </div>
@@ -1033,8 +1086,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                                
-                                             <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                             {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>        
                                             </div>
                                         </div>
                                     </div>
@@ -1130,8 +1190,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                             
-                                                <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                             <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>       
                                             </div>
                                         </div>
                                     </div>
@@ -1244,8 +1311,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                             
-                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                            {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>        
                                             </div>
                                         </div>
                                     </div>
@@ -1344,8 +1418,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                               
-                                     <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                     {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>        
                                             </div>
                                         </div>
                                     </div>
@@ -1441,8 +1522,15 @@
                                         <div class="product-item__footer">
                                             <div class="border-top pt-2 flex-center-between flex-wrap">
                                 
-                                         <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                         {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                            <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>        
                                             </div>
                                         </div>
                                     </div>
@@ -1560,8 +1648,15 @@
                                                     </div>
                                                     <div class="product-item__footer">
                                                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                           <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                           {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                                    <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1650,8 +1745,15 @@
                                                     </div>
                                                     <div class="product-item__footer">
                                                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                  <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                  {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
+                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a> --}}
+                                                    <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1742,8 +1844,15 @@
                                                     </div>
                                                     <div class="product-item__footer">
                                                         <div class="border-top pt-2 flex-center-between flex-wrap">
-                                                           <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')"><i
-                                                    class="ec ec-favorites mr-1 font-size-15"></i>Wishlist</a>
+                                                           {{!-- <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}')">
+                                                               <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i>Wishlist</a> --}}
+                                                           <a class="btn-add-wishlist  transition-3d-hover" style="cursor: pointer;" onclick="addToWishlist('{{this._id}}',event)">
+                                                        {{#if wishlist}}
+                                                        <i class="fas fa-heart" id="wishlistAdded"></i>
+                                                        {{else}}  
+                                                        <i class="ec ec-favorites mr-1 font-size-15" id="wishlistNotAdded"></i> 
+                                                        {{/if}}
+                                                        Wishlist</a>    
                                                         </div>
                                                     </div>
                                                 </div>

@@ -393,6 +393,40 @@ module.exports = {
             })
             resolve(unblock =  true)
         })
+    },
+
+    changeWalletStatus : (body) => {
+        return new Promise(async (resolve,reject) => {
+            console.log("**** changeWalletStatus *******");
+            console.log(body);
+            let user = await db.get().collection(collection.USER_COLLECTION).findOne({
+                _id : ObjectID(body.userId)
+            })
+            console.log(user);
+            let originalAmount = parseInt(body.walletAmount)
+            if(body.checked === 'true'){
+                let amount = parseInt(user.walletAmount) - parseInt(body.walletAmount)
+                db.get().collection(collection.USER_COLLECTION).updateOne({
+                    _id : ObjectID(body.userId)
+                },
+                {
+                    $set : {
+                        walletAmount : parseInt(amount)
+                    }
+                })
+            }
+            else{
+                db.get().collection(collection.USER_COLLECTION).updateOne({
+                    _id : ObjectID(body.userId)
+                },
+                {
+                    $set : {
+                        walletAmount : parseInt(originalAmount)
+                    }
+                })
+            }
+            resolve()
+        })
     }
 
 }

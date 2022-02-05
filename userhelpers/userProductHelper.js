@@ -412,6 +412,16 @@ module.exports = {
                     userId: ObjectID(userId),
                     proId: ObjectID(proId)
                 })
+
+                db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                    _id : ObjectID(proId)
+                },
+                {
+                    $set : {
+                        wishlist : true
+                    }
+                })
+
                 response.status = true
                 resolve(response)
             } else {
@@ -487,6 +497,17 @@ module.exports = {
                 proId: ObjectID(proId)
 
             })
+
+            db.get().collection(collection.PRODUCT_COLLECTION).updateOne({
+                _id: ObjectID(proId)
+
+            },
+            {
+                $set : {
+                    wishlist : false
+                }
+            })
+
             console.log("Product deleted");
             resolve(deleted = true)
         })

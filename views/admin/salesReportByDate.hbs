@@ -27,6 +27,7 @@
                     </thead>
                     <tbody>
                         {{#each products}}
+                        {{#if this.products.delivered}}
                         <tr>
                             <td>{{#each this.products.productDetails}}{{this.productName}}{{/each}}</td>
                             <td>{{this.products.status}}</td>
@@ -34,16 +35,10 @@
                             <td>{{#each this.products.productDetails}}{{this.price}}{{/each}}</td>
                             <td>{{this.revenue}}</td>
 
-
-
-
-
-
-
-
                             {{!-- <a class="btn btn-success" style="width: 5.5rem;" onclick="return confirm('Are you sure to enable {{ this.userFirstName }}? ')"  href="/admin/enable-user?id={{ this._id }}">Unblock</a> --}}
 
                         </tr>
+                        {{/if}}
                         {{/each}}
                     </tbody>
                 </table>
@@ -74,21 +69,7 @@
 
 
 <script>
-    $(document).ready(function () {
-
-        $('#myTable').DataTable({
-            
-            dom: 'Bfrtip',
-            buttons : [
-            {extend : 'pdf', className : 'downloadButton'},
-            {extend : 'excel', className : 'downloadButton'},
-            {extend : 'print', className : 'downloadButton'},
-
-            ]
-
-        }).buttons().container().appendTo("#downloadButton")
-
-    });
+   
 
 
     function selectdate() {

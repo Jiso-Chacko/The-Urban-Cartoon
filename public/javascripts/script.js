@@ -58,13 +58,23 @@ function addToCart(proId) {
             if (response.userStatus == true) {
                 console.log(response);
                 console.log('User exist')
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Produt added to cart',
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
                     showConfirmButton: false,
-                    timer: 1000
-                }).then(() => {
+                    timer: 1500,
+                    
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'Product added to cart'
+                  }).then(() => {
                     var element = $(response.renderHtml)
                     var fount = $('#cartCount', element)
                     // var fount2 = $('#cartCountList', element)
@@ -72,6 +82,21 @@ function addToCart(proId) {
                     console.log("Element fount");
                     // console.log(response.renderHtml);
                 })
+
+                // Swal.fire({
+                //     position: 'center',
+                //     icon: 'success',
+                //     title: 'Produt added to cart',
+                //     showConfirmButton: false,
+                //     timer: 1000
+                // }).then(() => {
+                //     var element = $(response.renderHtml)
+                //     var fount = $('#cartCount', element)
+                //     // var fount2 = $('#cartCountList', element)
+                //     $('#cartCount').html(fount)
+                //     console.log("Element fount");
+                //     // console.log(response.renderHtml);
+                // })
             } 
             else {
                 Swal.fire({
@@ -95,8 +120,9 @@ function addToCart(proId) {
 
 
 
-function addToWishlist(proId) {
+function addToWishlist(proId,event) {
 
+    
     console.log("This is addtoWishlist");
 
     $.ajax({
@@ -106,21 +132,53 @@ function addToWishlist(proId) {
             console.log(response);
             if (response.userExist) {
                 if (response.status) {
-                    Swal.fire({
-                        position: 'center',
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1500,
+                        
+                        didOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                      })
+                      
+                      Toast.fire({
                         icon: 'success',
-                        title: 'Produt added to Wishlist',
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
+                        title: 'Product added to wishlist'
+                      })
+                                   
+                 
+                    location.reload()
+                
                 } else {
-                    Swal.fire({
-                        position: 'center',
-                        icon: 'warning',
-                        title: 'Produt already exist in Wishlist!',
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
                         showConfirmButton: false,
-                        timer: 1000
-                    })
+                        timer: 1500,
+                        
+                        didOpen: (toast) => {
+                          toast.addEventListener('mouseenter', Swal.stopTimer)
+                          toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                      })
+                      
+                      Toast.fire({
+                        icon: 'info',
+                        title: 'Product already exist in wishlist'
+                      })
+
+                    // Swal.fire({
+                    //     position: 'center',
+                    //     icon: 'warning',
+                    //     title: 'Produt already exist in Wishlist!',
+                    //     showConfirmButton: false,
+                    //     timer: 1000
+                    // })
                 }
             } else {
                 Swal.fire({
@@ -235,18 +293,13 @@ function changeQuantity(userId, proId, cartId, count, quantity) {
                         success: function (result) {
                             console.log("Entered");
                             console.log(result);
-                           
-                               
-                                    var elements = $(result.renderHtml);
-                                    var found = $('#cart_table', elements);
-                                    var found2 = $('#total_cart', elements);
-                                    $('#cart_table').html(found)
-                                    $('#total_cart').html(found2)
-                
-                                
-                                
-                
-                            
+                             
+                            var elements = $(result.renderHtml);
+                            var found = $('#cart_table', elements);
+                            var found2 = $('#total_cart', elements);
+                            $('#cart_table').html(found)
+                            $('#total_cart').html(found2)
+                  
                         }
                     })
                 })
@@ -330,11 +383,13 @@ function deleteProduct(userId, proId) {
                             $('#cart_table').html(found)
                             $('#total_cart').html(found2)
                         }
+                        location.reload()
                     }
                 })
 
             })
         }
+
     })
 }
 
@@ -359,21 +414,43 @@ function sweetAlert() {
 function removeFromWishlist(proId) {
     console.log("This is remove");
 
-    $.ajax({
-        url: '/removeWishlist',
-        method: 'post',
-        data: {
-            proId: proId
-        },
-        success: function (response) {
-            if (response) {
-                var elements = $(response);
-                var found = $('#wishlist_table', elements);
-                $('#wishlist_table').html(found)
-            }
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "Product will be removed from wishlist!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        confirmButtonText: 'Yes, remove it!'
+    }).then((result) => {
+        if (result.isConfirmed){
+            Swal.fire(
+                'Deleted!',
+                'Your product has been removed!',
+                'success'
+            ).then(() => {
 
+                $.ajax({
+                    url: '/removeWishlist',
+                    method: 'post',
+                    data: {
+                        proId: proId
+                    },
+                    success: function (response) {
+                        if (response) {
+                            var elements = $(response);
+                            var found = $('#wishlist_table', elements);
+                            $('#wishlist_table').html(found)
+                        }
+            
+                    }
+                })
+            })
         }
     })
+
 }
 
 function checkSave() {

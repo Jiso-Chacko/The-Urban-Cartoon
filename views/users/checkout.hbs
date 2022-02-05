@@ -73,7 +73,7 @@
                                     <!-- End Title -->
 
                                     <!-- Product Content -->
-                                    <table class="table" id="newUserCheckout">  
+                                    <table class="table" id="newUserCheckout">
                                         <thead>
                                             <tr>
                                                 <th class="product-name">Product</th>
@@ -87,7 +87,7 @@
                                                 <td>{{#each productDetails}}{{this.productName}}{{/each}}<strong
                                                         class="product-quantity"> × {{this.quantity}}</strong></td>
                                                 <td>{{this.individualSum}}</td>
-                                            </tr>                                           
+                                            </tr>
                                             {{/each}}
 
                                             {{#if refferal}}
@@ -119,22 +119,23 @@
                                         <div id="basicsAccordion1">
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal2()"
-                                                    id="flexRadioDefault1" value="cod">
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    onchange="billingPaypal2()" id="flexRadioDefault1" value="cod">
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     Cash on delivery
                                                 </label>
                                             </div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal2()"
-                                                    id="flexRadioDefault2" value="razorpay">
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    onchange="billingPaypal2()" id="flexRadioDefault2" value="razorpay">
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Razorpay
                                                 </label>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" id="flexRadioDefault3" value="paypal" onchange="billingPaypal2()">                                                    
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    id="flexRadioDefault3" value="paypal" onchange="billingPaypal2()">
                                                 <label class="form-check-label" for="flexRadioDefault3">
                                                     Paypal
                                                 </label>
@@ -152,8 +153,9 @@
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                         order</button>
                                     <button id="newFormPaypal_btn" type="button"
-                                    class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Place
-                                    order</button>
+                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3"
+                                        style="display: none;">Place
+                                        order</button>
                                 </div>
                                 <!-- End Order Summary -->
                             </div>
@@ -346,31 +348,31 @@
 
                             </div>
                             <!-- End Billing Form -->
-                            
-                               
+
+
                         </div>
                     </div>
                 </div>
             </form>
 
-                <div class="mb-3 mb-md-0 w-xl-40">
-                    <!-- Apply coupon Form -->
-                    <form class="js-focus-state">
-                        <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
-                        <div class="input-group mb-6">
-                            <input type="text" class="form-control" name="coupon" id="coupon3" placeholder="Coupon code"
-                                aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
-                            <div class="input-group-append">
-                                <input hidden value="{{productCountReff}}" id="productCount">
-                                <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
-                                    onclick="applyCouponNewUser()"><i class="fas fa-tags d-md-none"></i><span
-                                        class="d-none d-md-inline">Apply coupon</span></button>
+            <div class="mb-3 mb-md-0 w-xl-40">
+                <!-- Apply coupon Form -->
+                <form class="js-focus-state">
+                    <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
+                    <div class="input-group mb-6">
+                        <input type="text" class="form-control" name="coupon" id="coupon3" placeholder="Coupon code"
+                            aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
+                        <div class="input-group-append">
+                            <input hidden value="{{productCountReff}}" id="productCount">
+                            <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
+                                onclick="applyCouponNewUser()"><i class="fas fa-tags d-md-none"></i><span
+                                    class="d-none d-md-inline">Apply coupon</span></button>
 
-                            </div>
                         </div>
-                    </form>
-                    <!-- End Apply coupon Form -->
-                </div>
+                    </div>
+                </form>
+                <!-- End Apply coupon Form -->
+            </div>
         </div>
 
         {{else}}
@@ -407,6 +409,8 @@
 
                                     <!-- Product Content -->
                                     <table class="table" id="checkoutTable">
+                                        {{userDetails.wallet}}
+                                        {{userDetails.walletAmount}}
                                         <thead>
                                             <tr>
                                                 <th class="product-name">Product</th>
@@ -444,30 +448,30 @@
                                         <div id="basicsAccordion1">
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal1()"
-                                                    id="flexRadioDefault1" value="cod" >
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    onchange="billingPaypal1()" id="flexRadioDefault1" value="cod">
                                                 <label class="form-check-label" for="flexRadioDefault1">
                                                     Cash on delivery
                                                 </label>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal1()"
-                                                    id="flexRadioDefault2" value="razorpay" >
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    onchange="billingPaypal1()" id="flexRadioDefault2" value="razorpay">
                                                 <label class="form-check-label" for="flexRadioDefault2">
                                                     Razorpay
                                                 </label>
                                             </div>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="payment" onchange="billingPaypal1()"
-                                                    id="flexRadioDefault3" value="paypal" >
+                                                <input class="form-check-input" type="radio" name="payment"
+                                                    onchange="billingPaypal1()" id="flexRadioDefault3" value="paypal">
                                                 <label class="form-check-label" for="flexRadioDefault3">
                                                     paypal
                                                 </label>
                                             </div>
 
-                                           
+
 
 
 
@@ -481,8 +485,9 @@
                                     <button type="button" id="MyForm_btn"
                                         class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                         order</button>
-                                        <button type="button" id="MyFormPaypal_btn"
-                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Place
+                                    <button type="button" id="MyFormPaypal_btn"
+                                        class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3"
+                                        style="display: none;">Place
                                         order</button>
 
 
@@ -686,25 +691,25 @@
                     </div>
                 </div>
             </form>
-            
-            <div class="mb-3 mb-md-0 w-xl-40" id="applyCouponNew" style="display: none;">
-                    <!-- Apply coupon Form -->
-                    <form class="js-focus-state">
-                        <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
-                        <div class="input-group mb-6">
-                            <input type="text" class="form-control" name="coupon" id="coupon2" placeholder="Coupon Code"
-                                aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
-                            <div class="input-group-append">
-                                <input hidden value="{{productCount}}" id="productCount">
-                                <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
-                                    onclick="applyCouponMyform()"><i class="fas fa-tags d-md-none"></i><span
-                                        class="d-none d-md-inline">Apply coupon</span></button>
 
-                            </div>
+            <div class="mb-3 mb-md-0 w-xl-40" id="applyCouponNew" style="display: none;">
+                <!-- Apply coupon Form -->
+                <form class="js-focus-state">
+                    <label class="sr-only" for="subscribeSrEmailExample1">Coupon code</label>
+                    <div class="input-group mb-6">
+                        <input type="text" class="form-control" name="coupon" id="coupon2" placeholder="Coupon Code"
+                            aria-label="Coupon code" aria-describedby="subscribeButtonExample2">
+                        <div class="input-group-append">
+                            <input hidden value="{{productCount}}" id="productCount">
+                            <button class="btn btn-block btn-dark px-4" type="button" id="subscribeButtonExample2"
+                                onclick="applyCouponMyform()"><i class="fas fa-tags d-md-none"></i><span
+                                    class="d-none d-md-inline">Apply coupon</span></button>
+
                         </div>
-                    </form>
-                    <!-- End Apply coupon Form -->
-                </div>
+                    </div>
+                </form>
+                <!-- End Apply coupon Form -->
+            </div>
 
 
 
@@ -721,7 +726,7 @@
                 <form id="billingDetails">
 
                     <div class="row">
-                        <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0">
+                        <div class="col-lg-5 order-lg-2 mb-7 mb-lg-0" >
                             <div class="pl-lg-3 ">
                                 <div class="bg-gray-1 rounded-lg">
                                     <!-- Order Summary -->
@@ -734,6 +739,15 @@
 
                                         <!-- Product Content -->
                                         <table class="table" id="checkoutTable1">
+
+                                               {{#if userDetails.wallet}}
+                                            <div id="walletDiv">
+                                            <input class="filled-in" type="checkbox" id="wallet"
+                                                style="cursor: pointer;"
+                                                onchange="walletApply('{{userDetails._id}}','{{userDetails.walletAmount}}')" />&nbsp;
+                                            <label for="test1" id="walletAmount"> Wallet balance : ₹{{userDetails.walletAmount}}</label>
+                                            </div>
+                                            {{/if}}
                                             <thead>
                                                 <tr>
                                                     <th class="product-name">Product</th>
@@ -752,7 +766,7 @@
 
                                             </tbody>
                                             <tfoot>
-                                    
+
                                                 <tr>
                                                     <th>Total</th>
                                                     <td><strong>{{totalAmount}}</strong></td>
@@ -768,27 +782,28 @@
                                             <div id="basicsAccordion1">
 
                                                 <div class="form-check">
-                                                    <input type="radio" name="payment" onchange="billingPaypal()" id="flexRadioDefault1"
-                                                        value="cod"  >
+                                                    <input type="radio" name="payment" onchange="billingPaypal()"
+                                                        id="flexRadioDefault1" value="cod">
                                                     <label class="form-check-label" for="flexRadioDefault1">
                                                         Cash on delivery
                                                     </label>
                                                 </div>
 
                                                 <div class="form-check">
-                                                    <input type="radio" name="payment" onchange="billingPaypal()" id="flexRadioDefault2"
-                                                        value="razorpay" >
+                                                    <input type="radio" name="payment" onchange="billingPaypal()"
+                                                        id="flexRadioDefault2" value="razorpay">
                                                     <label class="form-check-label" for="flexRadioDefault2">
                                                         Razorpay
                                                     </label>
                                                 </div>
 
-                                            <div class="form-check">
-                                                <input  type="radio" name="payment" id="flexRadioDefault2" value="paypal" onchange="billingPaypal()">                                                    
-                                                <label class="form-check-label" for="flexRadioDefault3">
-                                                    Paypal
-                                                </label>
-                                            </div>
+                                                <div class="form-check">
+                                                    <input type="radio" name="payment" id="flexRadioDefault2"
+                                                        value="paypal" onchange="billingPaypal()">
+                                                    <label class="form-check-label" for="flexRadioDefault3">
+                                                        Paypal
+                                                    </label>
+                                                </div>
 
                                             </div>
                                             <!-- End Basics Accordion -->
@@ -802,8 +817,9 @@
                                         <button id="billingDetails_btn" type="button"
                                             class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3">Place
                                             order</button>
-                                            <button id="billingPaypal_btn" type="button"
-                                            class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3" style="display: none;">Place
+                                        <button id="billingPaypal_btn" type="button"
+                                            class="btn btn-primary-dark-w btn-block btn-pill font-size-20 mb-3 py-3"
+                                            style="display: none;">Place
                                             order</button>
                                     </div>
                                     <!-- End Order Summary -->
@@ -925,6 +941,8 @@
     })
 </script>
 {{else}}
+
+
 <script>
     const Toast = Swal.mixin({
         toast: true,
@@ -946,16 +964,118 @@
 {{/if}}
 
 
+{{!-- **************** Apply wallet form checkout ************************ --}}
 
- {{!-- // ******** apply coupon for user with existing address ************ --}}
 <script>
-     var successCount = 0;
+    function walletApply(userId, amount) {
+        let walletChecked = document.getElementById('wallet').checked
+        console.log(walletChecked)
+        console.log(userId)
+        console.log(typeof amount)
+
+        if(amount == '0'){
+            const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1800,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'Insufficient balance'
+                    })
+
+                    return false
+        }
+        
+        $.ajax({
+            url: '/applyWallet',
+            method: 'post',
+            data: {
+                userId: userId,
+                walletAmount: amount,
+                checked: walletChecked
+            },
+            success: (response) => {
+
+                if (response.applied === true) {
+
+                    var element = $(response.renderHtml)
+                    var fount = $('#checkoutTable1', element) 
+                  
+                    console.log("Element fount");
+                    console.log(fount.html());
+                    
+                    $('#checkoutTable1').html(fount)
+                    document.getElementById('walletAmount').innerHTML = `Wallet balance : ₹0`          
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1800,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Wallet amount applied'
+                    })
+
+                } 
+                else {
+                    
+                    console.log(amount) 
+                    var element = $(response.renderHtml)
+                    var fount = $('#checkoutTable1', element)
+                    
+                    console.log("Element fount");
+                    console.log(fount);
+
+                    $('#checkoutTable1').html(fount)
+                    document.getElementById('walletAmount').innerHTML = `Wallet balance : ₹${amount}` 
+
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 1800,
+                        
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: 'info',
+                        title: 'wallet amount removed!'
+                    })
+
+                }
+            }
+        })
+    }
+</script>
+
+
+{{!-- // ******** apply coupon for user with existing address ************ --}}
+<script>
+    var successCount = 0;
 
     function applyCoupon() {
-       
+
         let code = document.getElementById('coupon1').value
         let count = parseInt(document.getElementById('productCount').value)
-        console.log("apply coupon "+ code)
+        console.log("apply coupon " + code)
         $.ajax({
             url: '/applyCoupon',
             method: 'post',
@@ -965,8 +1085,8 @@
             success: (response) => {
                 console.log("*** response ***")
                 console.log(response)
-                         
-                    if (response.invalidCode == true) {
+
+                if (response.invalidCode == true) {
                     Swal.fire({
                         title: 'Please enter a valid coupon code!',
                         icon: 'info',
@@ -976,23 +1096,21 @@
                         closeOnEsc: false,
                         allowOutsideClick: false,
                     })
-                } 
-                else if(response.userApplied == true){
+                } else if (response.userApplied == true) {
                     const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top',
-                            showConfirmButton: false,
-                            timer: 2100,
-                            timerProgressBar: false,
-                           
-                        })
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2100,
+                        timerProgressBar: false,
 
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'You have already applied this coupon!'
-                        })
-                }
-                else {
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'You have already applied this coupon!'
+                    })
+                } else {
                     successCount++
                     console.log(successCount)
 
@@ -1019,15 +1137,14 @@
 
                         cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
                         cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
-                    }                     
-                    else {
+                    } else {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top',
                             showConfirmButton: false,
                             timer: 2100,
                             timerProgressBar: false,
-                           
+
                         })
 
                         Toast.fire({
@@ -1036,7 +1153,7 @@
                         })
                     }
                 }
-                
+
             }
         })
     }
@@ -1045,10 +1162,10 @@
 {{!-- // ******** apply coupon for new user ************** --}}
 
 <script>
-     var successCount = 0;
+    var successCount = 0;
 
     function applyCouponNewUser() {
-        
+
         let code = document.getElementById('coupon3').value
         let count = parseInt(document.getElementById('productCount').value)
         console.log(code + "code")
@@ -1061,8 +1178,8 @@
             success: (response) => {
                 console.log("*** response ***")
                 console.log(response)
-                         
-                    if (response.invalidCode == true) {
+
+                if (response.invalidCode == true) {
                     Swal.fire({
                         title: 'Please enter a valid coupon code!',
                         icon: 'info',
@@ -1072,23 +1189,21 @@
                         closeOnEsc: false,
                         allowOutsideClick: false,
                     })
-                } 
-                else if(response.userApplied == true){
+                } else if (response.userApplied == true) {
                     const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top',
-                            showConfirmButton: false,
-                            timer: 2100,
-                            timerProgressBar: false,
-                           
-                        })
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2100,
+                        timerProgressBar: false,
 
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'You have already applied this coupon!'
-                        })
-                }
-                else {
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'You have already applied this coupon!'
+                    })
+                } else {
                     successCount++
                     console.log(successCount)
 
@@ -1115,15 +1230,14 @@
 
                         cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
                         cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
-                    }                     
-                    else {
+                    } else {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top',
                             showConfirmButton: false,
                             timer: 2100,
                             timerProgressBar: false,
-                           
+
                         })
 
                         Toast.fire({
@@ -1132,7 +1246,7 @@
                         })
                     }
                 }
-                
+
             }
         })
     }
@@ -1141,24 +1255,22 @@
 {{!-- // ********* paypal checkout for existing user *************** --}}
 
 <script>
-
-    function billingPaypal(){
+    function billingPaypal() {
 
         let payment = document.querySelector('input[name=payment]:checked').value
 
-        if(payment === 'paypal'){
+        if (payment === 'paypal') {
 
-        $('#billingDetails_btn').hide()
-        $('#billingPaypal_btn').show()
+            $('#billingDetails_btn').hide()
+            $('#billingPaypal_btn').show()
+        } else {
+            $('#billingDetails_btn').show()
+            $('#billingPaypal_btn').hide();
         }
-        else{
-        $('#billingDetails_btn').show()
-        $('#billingPaypal_btn').hide();
-        }        
     }
     $('#billingPaypal_btn').click((e) => {
-       if( !document.querySelector('input[name = address]:checked')){
-           Swal.fire({
+        if (!document.querySelector('input[name = address]:checked')) {
+            Swal.fire({
                 title: 'Please select an address!',
                 icon: 'error',
                 confirmButtonColor: '#42ba96',
@@ -1167,23 +1279,21 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-       }
-       else{
-        let type = document.querySelector('input[name=address]:checked').value
-        $.ajax({
-            url : '/pay',
-            method : 'post',
-            data : {
-                address : type,
-                payment : 'paypal'
-            },
-            success : (res) => {    
-                window.location = res.forwardLink            
-            }
-        })
-       }
+        } else {
+            let type = document.querySelector('input[name=address]:checked').value
+            $.ajax({
+                url: '/pay',
+                method: 'post',
+                data: {
+                    address: type,
+                    payment: 'paypal'
+                },
+                success: (res) => {
+                    window.location = res.forwardLink
+                }
+            })
+        }
     })
-
 </script>
 
 
@@ -1191,24 +1301,22 @@
 {{!-- // ************* paypal checkout for new user **************** --}}
 
 <script>
-
-    function billingPaypal2(){
+    function billingPaypal2() {
 
         let payment = document.querySelector('input[name=payment]:checked').value
 
-        if(payment === 'paypal'){
+        if (payment === 'paypal') {
 
-        $('#newForm_btn').hide()
-        $('#newFormPaypal_btn').show()
+            $('#newForm_btn').hide()
+            $('#newFormPaypal_btn').show()
+        } else {
+            $('#newForm_btn').show()
+            $('#newFormPaypal_btn').hide();
         }
-        else{
-        $('#newForm_btn').show()
-        $('#newFormPaypal_btn').hide();
-        }        
     }
 
     $('#newFormPaypal_btn').click((e) => {
-       
+
         console.log("clicked")
         let fname = document.getElementById('firstName').value
         let lname = document.getElementById('lastName').value
@@ -1271,32 +1379,30 @@
             e.preventDefault()
             document.getElementById('phone').focus();
             document.getElementById('phoneErr').innerHTML = "Enter valid phone number"
+        } else {
+            console.log("New user paypal")
+            $.ajax({
+                url: '/payNewUser',
+                method: 'post',
+                data: $("#newForm").serialize(),
+                success: (res) => {
+                    window.location = res.forwardLink
+                }
+            })
         }
-       else{
-        console.log("New user paypal")
-        $.ajax({
-            url : '/payNewUser',
-            method : 'post',
-            data : $("#newForm").serialize(),
-            success : (res) => {    
-                window.location = res.forwardLink            
-            }
-        })
-       }
     })
-
 </script>
 
- {{!-- // ******** existing user apply coupon with new address ***********//  --}}
+{{!-- // ******** existing user apply coupon with new address ***********//  --}}
 
 <script>
-     var successCountNew = 0;
+    var successCountNew = 0;
 
     function applyCouponMyform() {
-        
+
         let code = document.getElementById('coupon2').value
         let count = parseInt(document.getElementById('productCount').value)
-        console.log("This is code " +code)
+        console.log("This is code " + code)
         $.ajax({
             url: '/applyCoupon',
             method: 'post',
@@ -1306,8 +1412,8 @@
             success: (response) => {
                 console.log("*** response ***")
                 console.log(response)
-                         
-                    if (response.invalidCode == true) {
+
+                if (response.invalidCode == true) {
                     Swal.fire({
                         title: 'Please enter a valid coupon code!',
                         icon: 'info',
@@ -1317,23 +1423,21 @@
                         closeOnEsc: false,
                         allowOutsideClick: false,
                     })
-                } 
-                else if(response.userApplied == true){
+                } else if (response.userApplied == true) {
                     const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top',
-                            showConfirmButton: false,
-                            timer: 2100,
-                            timerProgressBar: false,
-                           
-                        })
+                        toast: true,
+                        position: 'top',
+                        showConfirmButton: false,
+                        timer: 2100,
+                        timerProgressBar: false,
 
-                        Toast.fire({
-                            icon: 'error',
-                            title: 'You have already applied this coupon!'
-                        })
-                }
-                else {
+                    })
+
+                    Toast.fire({
+                        icon: 'error',
+                        title: 'You have already applied this coupon!'
+                    })
+                } else {
                     successCountNew++
                     console.log(successCountNew)
 
@@ -1360,15 +1464,14 @@
 
                         cell3.innerHTML = "<strong>" + `Amount Payable` + "</strong> ";
                         cell4.innerHTML = "<strong>" + `${sumTotal}` + "</strong> ";
-                    }                     
-                    else {
+                    } else {
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top',
                             showConfirmButton: false,
                             timer: 2100,
                             timerProgressBar: false,
-                           
+
                         })
 
                         Toast.fire({
@@ -1377,32 +1480,31 @@
                         })
                     }
                 }
-                
+
             }
         })
     }
 </script>
 
- {{!-- // ********** paypal checkout for existing users with new address **********// --}}
+{{!-- // ********** paypal checkout for existing users with new address **********// --}}
 
 
- <script>
-     function billingPaypal1(){
-         let payment = document.querySelector('input[name=payment]:checked').value
+<script>
+    function billingPaypal1() {
+        let payment = document.querySelector('input[name=payment]:checked').value
 
-        if(payment === 'paypal'){
+        if (payment === 'paypal') {
 
-        $('#MyForm_btn').hide()
-        $('#MyFormPaypal_btn').show()
+            $('#MyForm_btn').hide()
+            $('#MyFormPaypal_btn').show()
+        } else {
+            $('#MyForm_btn').show()
+            $('#MyFormPaypal_btn').hide();
         }
-        else{
-        $('#MyForm_btn').show()
-        $('#MyFormPaypal_btn').hide();
-        }
-     }
+    }
 
-     $('#MyFormPaypal_btn').click((e) => {
-       
+    $('#MyFormPaypal_btn').click((e) => {
+
         console.log("clicked")
         let fname = document.getElementById('firstName').value
         let lname = document.getElementById('lastName').value
@@ -1465,8 +1567,7 @@
             e.preventDefault()
             document.getElementById('phone').focus();
             document.getElementById('phoneErr').innerHTML = "Enter valid phone number"
-        }
-        else {
+        } else {
 
             Swal.fire({
                 title: 'Do you want to save the changes?',
@@ -1482,29 +1583,28 @@
                     console.log(payment)
                     console.log('This is confirmed')
                     $.ajax({
-                        url : '/payNewUser',
-                        method : 'post',
-                        data : $("#MyForm").serialize(),
-                        success : (res) => {    
-                            window.location = res.forwardLink            
+                        url: '/payNewUser',
+                        method: 'post',
+                        data: $("#MyForm").serialize(),
+                        success: (res) => {
+                            window.location = res.forwardLink
                         }
                     })
                 } else if (result.isDenied) {
                     console.log('This is denied')
                     $.ajax({
-                        url : '/payDontSave',
-                        method : 'post',
-                        data : $("#MyForm").serialize(),
-                        success : (res) => {    
-                            window.location = res.forwardLink            
+                        url: '/payDontSave',
+                        method: 'post',
+                        data: $("#MyForm").serialize(),
+                        success: (res) => {
+                            window.location = res.forwardLink
                         }
                     })
                 }
             })
         }
     })
-
- </script>
+</script>
 
 <script>
     $(document).ready(function () {
@@ -1513,12 +1613,12 @@
             $('#billingDetails').toggle(500);
             $('#applyCoupon').toggle(500)
             $('#applyCouponNew').toggle(500)
-            
+
             $.ajax({
-                url : '/clearCoupon',
-                method : 'get',
-                success : () => {
-                    
+                url: '/clearCoupon',
+                method: 'get',
+                success: () => {
+
                 }
             })
         });
@@ -1541,8 +1641,7 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-        } 
-        else if (!document.querySelector('input[name = address]:checked')) {
+        } else if (!document.querySelector('input[name = address]:checked')) {
             e.preventDefault()
             Swal.fire({
                 title: 'Please select an address!',
@@ -1553,8 +1652,7 @@
                 closeOnEsc: false,
                 allowOutsideClick: false,
             })
-        } 
-        else {
+        } else {
             let type = document.querySelector('input[name=address]:checked').value
             let payment = document.querySelector('input[name=payment]:checked').value
             console.log(type, payment)
@@ -1574,8 +1672,7 @@
                         alert('success')
                         location.href = '/orderSuccess'
 
-                    }
-                    else if(response.payment === 'razorpay') {
+                    } else if (response.payment === 'razorpay') {
                         razorpayPayment(response.response)
                     }
                 }
@@ -1837,7 +1934,8 @@
     function razorpayPayment(order) {
         var options = {
             "key": "rzp_test_SDgCuI5x7u6nU2", // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise                
+            "amount": order
+            .amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise                
             "currency": "INR",
             "name": "Acme Corp",
             "description": "Test Transaction",
@@ -1885,8 +1983,7 @@
                     }).then(() => {
                         location.href = '/orderSuccess'
                     })
-                } 
-                else {
+                } else {
                     Swal.fire({
                         position: 'center',
                         icon: 'error',
@@ -1897,6 +1994,4 @@
             }
         })
     }
-
-   
 </script>

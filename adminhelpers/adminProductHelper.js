@@ -319,6 +319,40 @@ module.exports = {
         })
     },
 
+    topSellingProducts : () => {
+        return new Promise(async (resolve,reject) => {
+            let products = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+                {
+                    $project: {
+                        products : 1,
+                        _id : 0
+                    }
+                },
+                {
+                    $unwind : '$products'
+                }
+                                        
+            ]).toArray()
+            console.log("***** topSellingProducts *******");
+            let productsArray = []
+            let productsCount =[]
+            for(let i=0;i<products.length;i++){
+                console.log(products[i].products.productDetails[0].productName);
+                productsArray.push(products[i].products.productDetails[0].productName)
+            }
+
+            let counts = {};
+            productsArray.forEach(function (x) { counts[x] = (counts[x] || 0) + 1; });
+            console.log(counts)
+            console.log(Object.keys(counts));
+            for(i=0;i<Object.keys(counts).length;i++){
+                productsCount.push(counts[Object.keys(counts)[i]])
+            }
+
+            resolve({products : Object.keys(counts), count : productsCount})
+        })
+    },
+
     changeOrderStatus : (body) => {
         console.log("This is change order status");
         return new Promise((resolve,reject) => {
@@ -865,6 +899,14 @@ module.exports = {
             console.log(products);
             console.log("***** Produts by date *****");
             resolve(products)
+        })
+    },
+
+    getAllUsers : () => {
+        return new Promise(async (resolve,reject) => {
+
+            let users = await db.get().collection(collection.USER_COLLECTION).find({}).toArray()
+            resolve(users)
         })
     }
 }

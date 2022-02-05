@@ -103,9 +103,13 @@
                 </div>
 
                 {{!-- <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/editProfile">Edit Profile </a>   --}}
-                <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/viewProfile/:{{userId}}/editProfile">Edit Profile </a>                       
+                <div class="d-flex justify-content-between">
 
+                <div class="mt-5 text-center"><a class="btn btn-primary profile-button" style="cursor: pointer;" href="/viewProfile/:{{userId}}/editProfile">Edit Profile </a>                       
                 </div>
+                <div><a class="btn btn-primary profile-button mt-5" style="cursor: pointer;" href="/viewProfile/:{{userId}}/changePassword">Change password</a></div>
+                </div>
+                    
             </div>
         </div>
 
