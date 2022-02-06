@@ -51,7 +51,7 @@ var adminRouter = require('./routes/admin');
 // creating database
 db.connect((err) => {
   if(err){
-    console.log('Connection Error'+err);
+    console.log('Connection Error to mongoDB'+err);
   }
   else{
     console.log('Connected successfull to port 27017');
