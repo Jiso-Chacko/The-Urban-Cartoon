@@ -271,6 +271,8 @@ module.exports = {
            let user = await db.get().collection(collection.USER_COLLECTION).findOne({
                _id : ObjectID(userId)
            })
+        //    console.log("*** user ***");
+        //    console.log(user);
          resolve(user)
        }) 
     },

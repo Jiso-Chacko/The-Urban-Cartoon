@@ -6,13 +6,18 @@ var adminProductHelper = require('../adminhelpers/adminProductHelper')
 var fs = require('fs')
 const multer = require('multer')
 const path = require('path');
+const cloudinary = require('cloudinary').v2
 const {
   response
 } = require('express');
 const userHelper = require('../userhelpers/userHelper');
 var hb = require('express-handlebars').create()
 
-
+cloudinary.config({ 
+  cloud_name: 'dnn5ya2z2', 
+  api_key: '784129157722169', 
+  api_secret: 'V-XRIp9tNFdV-SPzwWRHm6NCr7c' 
+});
 
 var username = "jiso"
 var password = 987
@@ -38,8 +43,9 @@ router.get('/', async function (req, res, next) {
     let donutCartData = await adminProductHelper.brandWiseChartData()
     let users = await adminProductHelper.getAllUsers()
     let topSellingProducts = await adminProductHelper.topSellingProducts()
+    let order4Dashboard = await adminProductHelper.getRecentOrders()
     console.log("**///");
-    console.log(users.length);
+    console.log(order4Dashboard);
     console.log(totalSales);
     console.log(totalProfit);
     console.log(topSellingProducts);
@@ -49,6 +55,7 @@ router.get('/', async function (req, res, next) {
     let laptopCount = graphData.laptop
     let products = topSellingProducts.products
     let productsSale = topSellingProducts.count
+
     res.render('admin/dashboard', {
       layout: 'admin/layout',
       orders: orders,
@@ -60,7 +67,8 @@ router.get('/', async function (req, res, next) {
       brands: brands,
       brandCount: brandCount,
       products : products,
-      productsSale : productsSale
+      productsSale : productsSale,
+      order4Dashboard : order4Dashboard
     });
   } else {
     res.redirect('/admin/login')
@@ -224,7 +232,7 @@ const imageUpload = upload.fields([{
 // POST addProduct
 router.post('/addProduct', function (req, res, next) {
 
-  imageUpload(req, res, (err) => {
+  imageUpload(req, res, async (err) => {
     if (err) {
       console.log(err);
     }
@@ -234,8 +242,23 @@ router.post('/addProduct', function (req, res, next) {
       console.log(res.req.body);
       var body = res.req.body
       // console.log(req.files.fileinputimage1[0].filename);
+      const img1 = await cloudinary.uploader.upload(req.files.fileinputimage1[0].path,{folder : 'ecommerce'})
+      const image1 = img1.secure_url  
+      fs.unlinkSync(req.files.fileinputimage1[0].path)
 
-      var images = [req.files.fileinputimage1[0].filename, req.files.fileinputimage2[0].filename, req.files.fileinputimage3[0].filename, req.files.fileinputimage4[0].filename]
+      const img2 = await cloudinary.uploader.upload(req.files.fileinputimage2[0].path,{folder : 'ecommerce'})
+      const image2 = img2.secure_url
+      fs.unlinkSync(req.files.fileinputimage2[0].path)
+
+      const img3 = await cloudinary.uploader.upload(req.files.fileinputimage2[0].path,{folder : 'ecommerce'})
+      const image3 = img3.secure_url
+      fs.unlinkSync(req.files.fileinputimage3[0].path)
+
+      const img4 = await cloudinary.uploader.upload(req.files.fileinputimage2[0].path,{folder : 'ecommerce'})
+      const image4 = img4.secure_url
+      fs.unlinkSync(req.files.fileinputimage4[0].path)
+
+      var images = [image1, image2, image3, image4]
       console.log("Success");
       adminProductHelper.addProduct(body, images, (id) => {
         console.log(id);
@@ -666,6 +689,7 @@ router.get('/deleteProduct', verifyAdminLogin, (req, res, next) => {
 router.get('/userManagement', verifyAdminLogin, async (req, res, next) => {
 
   let users = await userHelper.getUsersForAdmin()
+  console.log(users);
   res.render('admin/userManagement', {
     layout: 'admin/layout',
     users: users
@@ -677,7 +701,7 @@ router.get('/productMangement', verifyAdminLogin, async (req, res, next) => {
 
   let orders = await adminProductHelper.getAllOrders()
   console.log("this is product management route");
-  console.log(orders);
+  // console.log(orders);
   res.render('admin/productManagement', {
     layout: 'admin/layout',
     orders: orders

@@ -59,33 +59,7 @@
 
     <div class="container">
         <!-- Banner -->
-        <div class="row mb-6 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
-            <div class="col-md-6 mb-4 mb-xl-0 col-xl-4 col-wd-3 flex-shrink-0 flex-xl-shrink-1">
-
-                <a href="/viewProducts?value=offer&category=smartphone"
-                    class="min-height-146 py-1 py-xl-2 py-wd-1  d-flex align-items-center text-gray-90">
-                    {{#each banner}}
-                    <div class="col-6 col-xl-7 col-wd-6 pr-0">
-                        <img class="img-fluid" src="/productimages/{{this.bannerImage}}" alt="Image Description">
-                    </div>
-                    <div class="col-6 col-xl-5 col-wd-6 pr-xl-4 pr-wd-3">
-                        <div class="mb-2 pb-1 font-size-18 font-weight-light text-ls-n1 text-lh-23">
-                            {{!-- CATCH BIG <strong>DEALS</strong> ON THE CAMERAS --}}
-                            {{this.bannerTitle}}
-                        </div>
-                        <div class="link text-gray-90 font-weight-bold font-size-15" href="#">
-                            Shop now
-                            <span class="link__icon ml-1">
-                                <span class="link__icon-inner"><i class="ec ec-arrow-right-categproes"></i></span>
-                            </span>
-                        </div>
-                    </div>
-                    {{/each}}
-                </a>
-
-            </div>
-
-        </div>
+        
         <!-- End Banner -->
 
 
@@ -217,10 +191,10 @@
                                                 href="/viewProduct?id={{this._id}}"
                                                 class="text-blue font-weight-bold">{{this.productName}}</a></h5>
                                         <div class="mb-2">
-                                            <a href=""
+                                            <a href="/viewProduct?id={{this._id}}"
                                                 class="d-block text-center"><img class="img-fluid"
                                                     style="width:10rem; height:10rem"
-                                                    src="/productimages/{{this.imageName.[0]}}"
+                                                    src="{{this.imageName.[0]}}"
                                                     alt="Image Description"></a>
                                         </div>
                                         <div class="flex-center-between mb-1">
@@ -326,7 +300,7 @@
                                 <div class="product-item__inner px-xl-4 p-3">
                                     <div class="product-item__body pb-xl-2">
                                         <div class="mb-2"><a
-                                                href=""
+                                                href="/viewProduct?id={{this._id}}"
                                                 class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                         <h5 class="mb-1 product-item__title"><a
                                                 href="/viewProduct?id={{this._id}}"
@@ -335,7 +309,7 @@
                                             <a href=""
                                                 class="d-block text-center"><img class="img-fluid"
                                                     style="width:10rem; height:10rem"
-                                                    src="/productimages/{{this.imageName.[0]}}"
+                                                    src="{{this.imageName.[0]}}"
                                                     alt="Image Description"></a>
                                         </div>
                                         <div class="flex-center-between mb-1">
@@ -448,10 +422,10 @@
                                                 href="/viewProduct?id={{this._id}}"
                                                 class="text-blue font-weight-bold">{{this.productName}}</a></h5>
                                         <div class="mb-2">
-                                            <a href=""
+                                            <a href="/viewProduct?id={{this._id}}"
                                                 class="d-block text-center"><img class="img-fluid"
                                                     style="width:10rem; height:10rem"
-                                                    src="/productimages/{{this.imageName.[0]}}"
+                                                    src="{{this.imageName.[0]}}"
                                                     alt="Image Description"></a>
                                         </div>
                                         <div class="flex-center-between mb-1">
@@ -569,7 +543,7 @@
                                     <div class="col col-lg-auto col-xl-5 col-wd-auto product-media-left">
                                         <a href="/viewProduct?id={{this._id}}"
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div
                                         class="col col-xl-7 col-wd product-item__body pl-2 pl-lg-3 pl-xl-0 pl-wd-3 mr-wd-1">
@@ -679,12 +653,12 @@
                                     <div class="col col-lg-auto product-media-left">
                                         <a href=""
                                             class="max-width-150 d-block" tabindex="0"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4 mb-xl-2 mb-wd-6">
                                             <div class="mb-2"><a
-                                                    href=""
+                                                    href="/viewProduct?id={{this._id}}"
                                                     class="font-size-12 text-gray-5" tabindex="0">{{this.productTitle}}</a></div>
                                             <h5 class="product-item__title"><a
                                                     href="/viewProduct?id={{this._id}}"
@@ -782,9 +756,9 @@
                             <div class="product-item__outer h-100 w-100">
                                 <div class="product-item__inner p-md-3 row no-gutters">
                                     <div class="col col-lg-auto col-xl-5 col-wd-auto product-media-left">
-                                        <a href=""
+                                        <a href="/viewProduct?id={{this._id}}"
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div
                                         class="col col-xl-7 col-wd product-item__body pl-2 pl-lg-3 pl-xl-0 pl-wd-3 mr-wd-1">
@@ -904,12 +878,12 @@
                                     <div class="col col-lg-auto product-media-left">
                                         <a href=""
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4">
                                             <div class="mb-2"><a
-                                                    href=""
+                                                    href="/viewProduct?id={{this._id}}"
                                                     class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                             <h5 class="product-item__title"><a
                                                     href="/viewProduct?id={{this._id}}"
@@ -1011,12 +985,12 @@
                                     <div class="col col-lg-auto product-media-left">
                                         <a href=""
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4">
                                             <div class="mb-2"><a
-                                                    href=""
+                                                    href="/viewProduct?id={{this._id}}"
                                                     class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                             <h5 class="product-item__title"><a
                                                     href="/viewProduct?id={{this._id}}"
@@ -1115,12 +1089,12 @@
                                     <div class="col col-lg-auto product-media-left">
                                         <a href=""
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4">
                                             <div class="mb-2"><a
-                                                    href=""
+                                                    href="/viewProduct?id={{this._id}}"
                                                     class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                             <h5 class="product-item__title"><a
                                                     href="/viewProduct?id={{this._id}}"
@@ -1233,9 +1207,9 @@
                             <div class="product-item__outer h-100 w-100">
                                 <div class="product-item__inner p-md-3 row no-gutters">
                                     <div class="col col-lg-auto product-media-left">
-                                        <a href=""
+                                        <a href="/viewProduct?id={{this._id}}"
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4">
@@ -1342,12 +1316,12 @@
                                     <div class="col col-lg-auto product-media-left">
                                         <a href=""
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4">
                                             <div class="mb-2"><a
-                                                    href=""
+                                                    href="/viewProduct?id={{this._id}}"
                                                     class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                             <h5 class="product-item__title"><a
                                                     href="/viewProduct?id={{this._id}}"
@@ -1447,12 +1421,12 @@
                                     <div class="col col-lg-auto product-media-left">
                                         <a href=""
                                             class="max-width-150 d-block"><img class="img-fluid"
-                                                src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                     </div>
                                     <div class="col product-item__body pl-2 pl-lg-3 mr-xl-2 mr-wd-1">
                                         <div class="mb-4">
                                             <div class="mb-2"><a
-                                                    href=""
+                                                    href="/viewProduct?id={{this._id}}"
                                                     class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                             <h5 class="product-item__title"><a
                                                     href="/viewProduct?id={{this._id}}"
@@ -1585,7 +1559,7 @@
                                                         <div class="mb-2"><a href="" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                                         <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
                                                         <div class="mb-2">
-                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                                         </div>
                                                         <div class="flex-center-between mb-1">
                                                             <div class="prodcut-price">
@@ -1682,7 +1656,7 @@
                                                         <div class="mb-2"><a href="" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                                         <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
                                                         <div class="mb-2">
-                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                            <a href="/viewProduct?id={{this._id}}" class="d-block text-center"><img class="img-fluid" src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                                         </div>
                                                         <div class="flex-center-between mb-1">
                                                             <div class="prodcut-price">
@@ -1781,7 +1755,7 @@
                                                         <div class="mb-2"><a href="" class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                                         <h5 class="mb-1 product-item__title"><a href="/viewProduct?id={{this._id}}" class="text-blue font-weight-bold">{{this.productName}}</a></h5>
                                                         <div class="mb-2">
-                                                            <a href="" class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                            <a href="/viewProduct?id={{this._id}}" class="d-block text-center"><img class="img-fluid" src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                                         </div>
                                                         <div class="flex-center-between mb-1">
                                                             <div class="prodcut-price">
@@ -2878,7 +2852,7 @@
                                             <div class="mb-2"><a  class="font-size-12 text-gray-5">{{this.productTitle}}</a></div>
                                             <h5 class="mb-1 product-item__title"><a  class="text-blue font-weight-bold">{{this.productName}}</a></h5>
                                             <div class="mb-2">
-                                                <a  class="d-block text-center"><img class="img-fluid" src="/productimages/{{this.imageName.[0]}}" alt="Image Description"></a>
+                                                <a  class="d-block text-center" href="/viewProduct?id={{this._id}}"><img class="img-fluid" src="{{this.imageName.[0]}}" alt="Image Description"></a>
                                             </div>
                                             <div class="flex-center-between mb-1">
                                                 <div class="prodcut-price">

@@ -242,9 +242,17 @@ module.exports = {
     getAllOrders : () => {
 
         return new Promise(async (resolve, reject) => {
-           let orders = await db.get().collection(collection.ORDER_COLLECTION).find({}).toArray()
+           let orders = await db.get().collection(collection.ORDER_COLLECTION).find().sort({_id : -1}).toArray()
+           console.log("*** ---------------------------------------------------------- ***");
         //    console.log(orders);
            resolve(orders)
+        })
+    },
+
+    getRecentOrders : () => {
+        return new Promise(async (resolve,reject) => {
+            let orders = await db.get().collection(collection.ORDER_COLLECTION).find().sort({_id : -1}).limit(5).toArray()
+            resolve(orders)
         })
     },
 

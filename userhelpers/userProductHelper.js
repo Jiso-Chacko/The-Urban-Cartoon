@@ -734,8 +734,7 @@ module.exports = {
 
             let orders = await db.get().collection(collection.ORDER_COLLECTION).find({
                 userId: ObjectID(userId)
-            }).toArray()
-
+            }).sort({_id : -1}).toArray()
             console.log("This is orders :", orders);
             resolve(orders)
         })

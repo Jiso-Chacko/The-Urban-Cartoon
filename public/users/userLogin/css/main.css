@@ -146,7 +146,7 @@ iframe {
 .txt2 {
   font-family: Poppins-Regular;
   font-size: 15px;
-  color: #57b846;
+  color: #FED700;
   line-height: 1.5;
 }
 
@@ -255,7 +255,7 @@ iframe {
   -moz-transition: all 0.4s;
   transition: all 0.4s;
 
-  background: #57b846;
+  background: #FED700;
 }
 
 .focus-input100::after {
@@ -327,14 +327,14 @@ iframe {
   padding: 0 20px;
   width: 100%;
   height: 50px;
-  background-color: #57b846;
+  background-color: #FED700;
   border-radius: 25px;
 
-  box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -moz-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -webkit-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -o-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
-  -ms-box-shadow: 0 10px 30px 0px rgba(87, 184, 70, 0.5);
+  box-shadow: 0 10px 30px 0px rgba(182, 184, 70, 0.551);
+  -moz-box-shadow: 0 10px 30px 0px rgba(182, 184, 70, 0.551);
+  -webkit-box-shadow: 0 10px 30px 0px rgba(182, 184, 70, 0.551);
+  -o-box-shadow: 0 10px 30px 0px rgba(182, 184, 70, 0.551);
+  -ms-box-shadow: 0 10px 30px 0px rgba(182, 184, 70, 0.551);
 
   -webkit-transition: all 0.4s;
   -o-transition: all 0.4s;

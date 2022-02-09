@@ -17,8 +17,11 @@
                     <tbody>
                         {{#each users}}
                         <tr>
-                            <td><img style="width:100px; height:100px" src="/profileImages/{{this.image}}" alt="Image">
-                            </td>
+                            {{#if this.image}}
+                            <td><img style="width:100px; height:100px" src="{{this.image}}" alt="Image"></td>
+                            {{else}}
+                            <td><img style="width:100px; height:100px" src="https://res.cloudinary.com/dnn5ya2z2/image/upload/v1644382157/ecommerce/profile_bmjzfj.png" alt="Image"></td>
+                            {{/if}}
                             <td>{{this.userFirstName}}</td>
                             <td>{{this.userEmail}}</td>
                             <td>+91{{this.userPhone}}</td>
@@ -52,10 +55,7 @@
         $('#myTable').DataTable();
     });
 
-    $('img').bind('error', function () {
-        console.log('error');
-        $(this).hide().after('<img src="/images/profile.png" style="width:100px; height:100px">');
-    });
+   
 
     function blockUser(userFname, userId) {
         console.log(userFname, userId)

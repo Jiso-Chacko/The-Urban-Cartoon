@@ -7,6 +7,14 @@ var userHelper = require('../userhelpers/userHelper')
 const multer = require('multer')
 const path = require('path');
 const paypal = require('paypal-rest-sdk');
+const cloudinary =  require('cloudinary').v2
+const fs = require('fs')
+
+cloudinary.config({ 
+  cloud_name: 'dnn5ya2z2', 
+  api_key: '784129157722169', 
+  api_secret: 'V-XRIp9tNFdV-SPzwWRHm6NCr7c' 
+});
 
 var serviceId = "VA6a2e7c39a684110d315bb5f33dbaa6ea";
 var accountSid = "AC32945c998d7d8a3d3f6e401b8947654b";
@@ -50,6 +58,7 @@ router.get('/login', (req, res, next) => {
     next()
   } else {
     res.render('users/login', {
+      layout : 'users/layout',
       "logInErr": req.session.userLoggedInErr
     })
     req.session.userLoggedInErr = false
@@ -82,6 +91,7 @@ router.post('/login', (req, res, next) => {
 // Phonenumber page for login
 router.get('/enterPhn', (req, res, next) => {
   res.render('users/phoneNumber', {
+    layout : 'users/layout',
     "phnExistErr": req.session.logInPhnErr
   })
   req.session.logInPhnErr = false
@@ -125,7 +135,9 @@ router.post('/otplogin', (req, res, next) => {
 // get otp page for login
 router.get('/otp4login', (req, res, next) => {
   res.render('users/otp4Login', {
+    layout : 'users//layout',
     "otpErr": req.session.optErr
+    
   })
   req.session.optErr = false
 })
@@ -230,6 +242,7 @@ router.get('/signup', (req, res, next) => {
     console.log("This is signup get router")
     console.log(req.session.userExists);
     res.render('users/signup', {
+      layout : 'users/layout',
       "userErr": req.session.userExists
     })
     req.session.userExists = false
@@ -268,6 +281,7 @@ router.post('/signup', (req, res, next) => {
 router.get('/otp', (req, res, next) => {
   console.log("This is otp page");
   res.render('users/sampleOtp', {
+    layout : 'users/layout',
     "otpErr": req.session.otpErr
   })
 })
@@ -1407,8 +1421,8 @@ router.get('/viewProfile/:id/profile', verifyUserLogg, async (req, res, next) =>
   userCartCount = req.session.cartCount
   let User = await userHelper.getUser(userId)
   console.log("*******");
-  console.log(user);
-  console.log(user.image);
+  // console.log(user);
+  // console.log(User.image);
   if(User.image === undefined || User.image === null){
     req.session.imgErr = true
   }else{
@@ -1475,13 +1489,13 @@ const imageUpload = upload.fields([{
 //**************** edit profile post page ********************
 router.post('/viewProfile/:id/editProfile', verifyUserLogg, (req, res, next) => {
 
-  console.log("This is edit profile page");
-  console.log();
+  console.log("*** This is edit profile page ****");
   imageUpload(req, res, async (err) => {
+    // console.log(res.req.file.path);
+    // console.log(req.file.path)
     if (err) {
       console.log(err);
     } else {
-      console.log(res.req.body);
       console.log(Object.keys(req.files).length === 0);
       console.log(Object.keys(res.req.files).length === 0);
 
@@ -1493,8 +1507,14 @@ router.post('/viewProfile/:id/editProfile', verifyUserLogg, (req, res, next) => 
         })
       } else {
         var body = res.req.body
-        var image = req.files.profile_photo[0].filename
-        console.log(image);
+        console.log("**/ path **/");
+        console.log(req.files)
+        console.log(req.files.profile_photo[0].path)
+        const response = await cloudinary.uploader.upload(req.files.profile_photo[0].path,{folder : 'ecommerce'})
+        // console.log(res.json(response));
+        // console.log(response.secure_url);
+        const image = response.secure_url
+        fs.unlinkSync(req.files.profile_photo[0].path)
         userHelper.editProfile(body, image, req.session.user._id).then(() => {
           res.redirect(`/viewProfile/:${req.session.user._id}/profile`)
         })
@@ -1565,10 +1585,12 @@ router.get('/viewProfile/:id/orders', verifyUserLogg, async (req, res, next) => 
 })
 
 // Refferal and Coupons in view profile
-router.get('/viewProfile/:id/refferal&coupons',verifyUserLogg,(req,res,next) => {
+router.get('/viewProfile/:id/refferal&coupons',verifyUserLogg,async (req,res,next) => {
    console.log("***** refferal and coupon get page ******");
    console.log(req.params);
-   console.log(req.session.user._id);
+   console.log(req.session.user);
+   let userWallet = await userHelper.getUser(req.session.user._id)
+   console.log(userWallet.walletAmount);
    if (req.session.user) {
     user = req.session.user.userFirstName
     userLoggedIn = req.session.userLoggedIn
@@ -1587,7 +1609,8 @@ router.get('/viewProfile/:id/refferal&coupons',verifyUserLogg,(req,res,next) => 
      userId: userId,
      "loggIn": userLoggedIn,
      user: user,
-     userDetails : userDetails
+     userDetails : userDetails,
+     walletAmount : userWallet.walletAmount
     })
 })
 

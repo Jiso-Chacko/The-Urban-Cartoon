@@ -57,10 +57,9 @@
                         <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                             {{#if imgErr}}
                             {{User.image}}
-                         <img class="rounded-circle mt-5" width="150px" src="/images/profile.png">
-                            {{else}}
-                            
-                         <img class="rounded-circle mt-5" width="150px" src="/profileImages/{{User.image}}">
+                         <img class="rounded-circle mt-5" width="150px" src="https://res.cloudinary.com/dnn5ya2z2/image/upload/v1644382157/ecommerce/profile_bmjzfj.png">
+                            {{else}}                         
+                         <img class="rounded-circle mt-5" width="150px" src="{{User.image}}">
                             {{/if}}                           
                         </div>
 

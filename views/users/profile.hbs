@@ -27,7 +27,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-3 flex-nowrap flex-xl-wrap overflow-auto overflow-xl-visble">
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1"><a
-                                href="https://transvelo.github.io/electro-html/2.0/html/home/index.html">Home</a></li>
+                                href="/">Home</a></li>
                         <li class="breadcrumb-item flex-shrink-0 flex-xl-shrink-1 active" aria-current="page">My Account
                         </li>
                     </ol>
@@ -49,44 +49,51 @@
               
             {{!-- start body --}}
             <div>
-
+            <a href="/viewProfile/:{{userId}}/profile" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">
             <div class="card" style="width: 20rem; height:10rem">
                 <div class="card-body">
                     <h5 class="card-title">
-                        <a href="/viewProfile/:{{userId}}/profile" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">View Profile</a></h5>                            
+                        View Profile</h5>                            
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">View and edit your Profile details.</p>
                 </div>
             </div>
-
+                </a>
+            
+            <a href="/viewProfile/:{{userId}}/address" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">
             <div class="card mt-8" style="width: 20rem; height:10rem">
                 <div class="card-body">
                     <h5 class="card-title">
-                    <a href="/viewProfile/:{{userId}}/address" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">Your address</a></h5>                          
+                    Your address</h5>                          
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">View and edit your Profile details.</p>
                 </div>
             </div>
             </div>
+            </a>
 
+            <a href="/viewProfile/{{userId}}/orders" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">
             <div>
             <div class="card" style="width: 20rem; height:10rem">
                 <div class="card-body">
                     <h5 class="card-title">
-                    <a href="/viewProfile/{{userId}}/orders" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">Your Orders</a></h5>                               
+                    Your Orders</h5>                               
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">View and edit your Profile details.</p>
                 </div>
             </div>
-          
+            </a>    
+
+            <a href="/viewProfile/{{userId}}/refferal&coupons" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">
             <div class="card mt-8" style="width: 20rem; height:10rem">
                 <div class="card-body">
                     <h5 class="card-title">
-                    <a href="/viewProfile/{{userId}}/refferal&coupons" class="alert-link" aria-expanded="false" aria-controls="shopCartOne">Refferal and wallet</a></h5>                               
+                    Refferal and wallet</h5>                               
                     <h6 class="card-subtitle mb-2 text-muted"></h6>
                     <p class="card-text">view refferal and wallet.</p>
                 </div>
             </div>
+            </a>
 
             </div>
 

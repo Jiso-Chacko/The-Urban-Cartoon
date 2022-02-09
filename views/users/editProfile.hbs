@@ -65,11 +65,11 @@
                             <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                                 {{#if imgErr}}
                          <img id="profileImage" class="rounded-circle mt-5" width="150px"
-                                    src="/images/profile.png" alt="Upload image">
+                                    src="https://res.cloudinary.com/dnn5ya2z2/image/upload/v1644382157/ecommerce/profile_bmjzfj.png" alt="Upload image">
                          <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" onchange="return imgValidation()" capture>
                             {{else}}
                                 <img id="profileImage" class="rounded-circle mt-5" width="150px"
-                                    src="/profileImages/{{User.image}}" alt="Upload image">
+                                    src="{{User.image}}" alt="Upload image">
                                 <input id="imageUpload" type="file" name="profile_photo" placeholder="Photo" onchange="return imgValidation()" capture>
                                 {{/if}}
                             </div>
