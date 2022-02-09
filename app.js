@@ -7,6 +7,7 @@ var session = require('express-session')
 const bp = require('body-parser')
 var db = require('./config/connections') //  requiring database
 var Swal = require('sweetalert2')
+const MongoStore = require('connect-mongo')(session)
 
 var {create} =  require('express-handlebars');
 var app = express();
@@ -39,7 +40,12 @@ app.use(session({
   cookie:{
     maxAge:3600000000000,
     resave : false,
-    saveUninitialized : false
+    saveUninitialized : false,
+    store : new MongoStore({
+      url : 'mongodb+srv://jisoChacko:jiso123456@cluster0.lunqa.mongodb.net/ecommerce?retryWrites=true&w=majority',
+      ttl : 6 * 24 * 60 * 60,
+      autoRemove : 'native'
+    })
   }
 }))
 
