@@ -67,9 +67,9 @@ router.get('/login', (req, res, next) => {
 })
 
 // login post method
-router.post('/login', (req, res, next) => {
+router.post('/login', async (req, res, next) => {
 
-  userHelper.doLogin(req.body).then((response) => {
+ await userHelper.doLogin(req.body).then((response) => {
     console.log("This is response");
     console.log(response);
     if (response.userExist) {

@@ -37,15 +37,15 @@ app.use(bp.urlencoded({ extended: true }))
 //creating session
 app.use(session({
   secret:'secret',
+  store : MongoStore.create({
+    mongoUrl : 'mongodb+srv://jisoChacko:jiso123456@cluster0.lunqa.mongodb.net/ecommerce?retryWrites=true&w=majority',
+    ttl : 6 * 24 * 60 * 60,
+    autoRemove : 'native'
+  }),
   cookie:{
     maxAge:3600000000000,
     resave : false,
     saveUninitialized : false,
-    store : MongoStore.create({
-      mongoUrl : 'mongodb+srv://jisoChacko:jiso123456@cluster0.lunqa.mongodb.net/ecommerce?retryWrites=true&w=majority',
-      ttl : 6 * 24 * 60 * 60,
-      autoRemove : 'native'
-    })
   }
 }))
 
